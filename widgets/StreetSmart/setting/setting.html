@@ -1,0 +1,48 @@
+<div class="settings-street-smart">
+    <div>
+        <div class="settingsForm">
+            <div class="settingsLabel">${nls.username}</div>
+            <input class="settingsBox" id="userName" data-dojo-attach-point="uNameCyclomedia"  placeholder=${nls.username}>
+        </div>
+        <div class="settingsForm">
+            <div class="settingsLabel">${nls.password}</div>
+            <input class="settingsBox" id="password" type="password" data-dojo-attach-point="uPwdCyclomedia" placeholder=${nls.password}>
+        </div>
+        <div class="settingsForm">
+            <div class="settingsLabel">${nls.locale}</div>
+            <select class="settingSelect" data-dojo-attach-point="selectCyclomediaLocation" data-dojo-type="dijit/form/Select">
+                <option value="en-US" selected="selected">USA</option>
+                <option value="en-EN">EN</option>
+                <option value="nl">NL</option>
+                <option value="de">DE</option>
+                <option value="de">FR</option>
+            </select>
+        </div>
+        <div class="settingsForm">
+            <div class="settingsLabel">${nls.srs}</div>
+            <input id="srsComboBox" data-dojo-attach-point="srsCyclomedia">
+        </div>
+        <div class="settingsForm">
+            <div class="settingsLabel">${nls.measure}</div>
+            <input data-dojo-attach-point="measuementEnable" type="checkbox" id="enableMeasurement">
+        </div>
+        <div class="settingsForm">
+            <div class="settingsLabel">${nls.overlay}</div>
+            <input data-dojo-attach-point="overlayEnable" type="checkbox" id="enableOverlay">
+        </div>
+        <div class="settingsForm">
+            <div class="settingsLabel">${nls.navigation}</div>
+            <input data-dojo-attach-point="navigationEnable" type="checkbox" id="enableNavigation">
+        </div>
+        <div class="settingsForm">
+            <div class="settingsLabel">${nls.agreement1} <a href="#" id="userAgreementLink" > ${nls.agreement2}</a></div>
+            <input data-dojo-attach-point="agreementCheck" id="acceptCmtAgreement" type="checkbox" name="userAgreement" >
+        </div>
+        <div id="agreementContainer" style="display:none;">
+            <div class="headAgree">${nls.headAgreement}</div>
+            <div id="agreementData"></div>
+        </div>
+        <div class="versionLabel">${nls.version}</div>
+    </div>
+
+</div>

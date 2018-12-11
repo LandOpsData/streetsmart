@@ -1,0 +1,11 @@
+{
+  "uName": "PGE_EsriWAB2",
+  "uPwd": "rc6wtefw",
+  "locale": "en-US",
+  "atlasHost": "https://atlas.cyclomedia.com",
+  "agreement": true,
+  "measurement": true,
+  "overlay": true,
+  "navigation": true,
+  "srs": "EPSG:26910"
+}

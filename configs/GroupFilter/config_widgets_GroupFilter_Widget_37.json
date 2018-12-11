@@ -1,0 +1,42 @@
+{
+  "groups": [
+    {
+      "name": "Filter by Circuit Name",
+      "desc": "",
+      "operator": "=",
+      "defaultVal": "",
+      "appendSameLayer": true,
+      "appendSameLayerConjunc": "OR",
+      "caseSearch": false,
+      "layers": [
+        {
+          "layer": "EVM_Cond_Parcel_Relation_V1_DesktopEditor_AO_VW_1523",
+          "field": "CIRCUITNAME",
+          "dataType": "esriFieldTypeString",
+          "useDomain": ""
+        },
+        {
+          "layer": "EVM_Vegetation_v4_DesktopEditor_FullEditing_VW_2222",
+          "field": "CIRCUITNAME",
+          "dataType": "esriFieldTypeString",
+          "useDomain": ""
+        },
+        {
+          "layer": "EVM_Vegetation_V3_FullEditing_VW_9607",
+          "field": "CIRCUITNAME",
+          "dataType": "esriFieldTypeString",
+          "useDomain": ""
+        },
+        {
+          "layer": "EVM_Vegetation_v4_DesktopEditor_FullEditing_VW_1880",
+          "field": "CIRCUITNAME",
+          "dataType": "esriFieldTypeString",
+          "useDomain": ""
+        }
+      ]
+    }
+  ],
+  "persistOnClose": true,
+  "slAppendChoice": "OR",
+  "zoomMode": true
+}
