@@ -334,7 +334,7 @@ define([
 
             var baseUrl = window.location.protocol + "//" + window.location.host + require.toUrl("jimu");
 
-            var imageName = this._getIconImageName(item, opened);
+            var imageName = this._getIconInfo(item, opened).imageName;
 
             if (imageName) {
               a.backgroundImage = "url(" + baseUrl + "/css/images/" + imageName + ")";
@@ -342,6 +342,10 @@ define([
             }
 
             return icon;
+          }),
+
+          getIconClass: lang.hitch(this, function(item, opend) {
+            return this._getIconInfo(item, opend).className;
           }),
 
           getTooltip: lang.hitch(this, function(item){
@@ -356,44 +360,59 @@ define([
         return item.hasChildren;
       },
 
-      _getIconImageName: function(item, opened) {
+      _getIconInfo: function(item, opened) {
         var imageName = '';
+        var className = '';
 
         if (item.type === 'ArcGISDynamicMapServiceLayer' ||
           item.type === 'ArcGISTiledMapServiceLayer') {
           if (opened) {
             imageName = 'mapserver_open.png';
+            className = 'mapservice-layer-icon open';
           } else {
             imageName = 'mapserver_close.png';
+            className = 'mapservice-layer-icon close';
           }
         } else if (item.type === 'GroupLayer') {
           if (opened) {
             imageName = 'group_layer2.png';
+            className = 'group-layer-icon open';
           } else {
             imageName = 'group_layer1.png';
+            className = 'group-layer-icon close';
           }
         } else if (item.type === 'FeatureLayer') {
           var geoType = jimuUtils.getTypeByGeometryType(item.layerInfo.layerObject.geometryType);
           if (geoType === 'point') {
             imageName = 'point_layer1.png';
+            className = 'point-layer-icon';
           } else if (geoType === 'polyline') {
             imageName = 'line_layer1.png';
+            className = 'line-layer-icon';
           } else if (geoType === 'polygon') {
             imageName = 'polygon_layer1.png';
+            className = 'polygon-layer-icon';
           }
         } else if(item.type === 'Table'){
           imageName = "table.png";
+          className = 'table-icon';
         } else if(item.type === 'ArcGISImageServiceLayer' ||
          item.type === 'ArcGISImageServiceVectorLayer'){
           imageName = 'image_layer.png';
+          className = 'iamge-layer-icon';
         } else {
           if (opened) {
             imageName = 'mapserver_open.png';
+            className = 'mapservice-layer-icon open';
           } else {
             imageName = 'mapserver_close.png';
+            className = 'mapservice-layer-icon close';
           }
         }
-        return imageName;
+        return {
+          imageName: imageName,
+          className: className
+        };
       },
 
       _onTreeOpen: function(item, node) { /*jshint unused: false*/

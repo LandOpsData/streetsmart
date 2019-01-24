@@ -5,6 +5,7 @@ define({
   "labelLayer": "Nama layer",
   "itemZoomTo": "Perbesar hingga",
   "itemTransparency": "Transparansi",
+  "itemSetVisibilityRange": "Atur rentang visibilitas",
   "itemTransparent": "Transparan",
   "itemOpaque": "Buram",
   "itemMoveUp": "Pindahkan ke atas",

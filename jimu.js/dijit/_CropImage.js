@@ -21,15 +21,15 @@ define([
   'dojo/_base/lang',
   'dojo/on',
   //'dojo/query',
-  'jimu/utils',
+  //'jimu/utils',
   'dijit/_WidgetBase',
   'dijit/_TemplatedMixin',
   'dojo/text!./templates/_CropImage.html',
-  //'jimu/dijit/Message',
+  'jimu/dijit/Message',
   'dojo/NodeList-dom'
 ],
-  function (/*Evented, */declare, html, lang, on, /*query, */ utils,
-    _widgetBase, _TemplatedMixin, template/* Message,*/) {
+  function (/*Evented, */declare, html, lang, on,/*query,  utils,*/
+    _widgetBase, _TemplatedMixin, template, Message) {
     var Cropper = window.Cropper;
     return declare([_widgetBase, _TemplatedMixin], {
       templateString: template,
@@ -39,6 +39,8 @@ define([
       goldenWidth: 4,
       goldenHeight: 3,
 
+      _haveShowReadErrMsg: false,
+
       postCreate: function () {
         if (!this.type) {
           this.type = 'image/jpeg';
@@ -46,6 +48,8 @@ define([
         this.setImageSrc(this.imageSrc);
 
         this.loadingImg.src = require.toUrl('jimu') + '/images/loading.gif';
+        this._checkImgError();//show error msg, if can't load img after 5's
+
         this.own(on(this.baseImage, 'load', lang.hitch(this, function () {
           html.setStyle(this.loadingImg, 'display', 'none');
           this._initCropper();
@@ -99,11 +103,16 @@ define([
       },
 
       getData: function () {
-        var imgData = this.cropper.getCroppedCanvas();
-        var uploadedImageType = this.type || 'image/jpeg';
-        var data = imgData.toDataURL(uploadedImageType);
-
-        return data;
+        try {
+          var imgData = this.cropper.getCroppedCanvas();
+          this.cropper.getCroppedCanvas();
+          var uploadedImageType = this.type || 'image/jpeg';
+          var data = imgData.toDataURL(uploadedImageType);
+          return data;
+        } catch (e) {
+          this._readError();
+          return null;
+        }
       },
 
       destroy: function () {
@@ -112,6 +121,24 @@ define([
         }
 
         this.inherited(arguments);
+      },
+
+      _checkImgError: function () {
+        setTimeout(lang.hitch(this, function () {
+          var isStillLoading = (html.getStyle(this.loadingImg, "display") !== "none");
+          if (isStillLoading) {
+            this._readError();
+          }
+        }), 5000);
+      },
+      _readError: function () {
+        if (!this._haveShowReadErrMsg) {
+          new Message({
+            message: this.nls.readError
+          });
+
+          this._haveShowReadErrMsg = true;
+        }
       }
     });
   });

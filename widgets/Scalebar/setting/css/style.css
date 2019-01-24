@@ -4,6 +4,10 @@
   font-size: 14px;
   color: #596679;
 }
+
+.jimu-widget-scalebar-setting .setting-group{
+  margin: 10px 20px;
+}
 /*.jimu-widget-scalebar-setting .dijitArrowButtonContainer{
   width: 17px;
 }

@@ -8,7 +8,7 @@
         "relativeTo": "map",
         "zIndex": 0
       },
-      "version": "2.10"
+      "version": "2.11"
     }, {
       "uri": "themes/LaunchpadTheme/widgets/Header/Widget",
       "position": {
@@ -18,7 +18,7 @@
         "height": 46,
         "relativeTo": "map"
       },
-      "version": "2.10"
+      "version": "2.11"
     }, {
       "uri": "widgets/Search/Widget",
       "position": {
@@ -27,21 +27,21 @@
         "width": 300,
         "zIndex": 1
       },
-      "version": "2.10"
+      "version": "2.11"
     }, {
       "uri": "widgets/OverviewMap/Widget",
       "position": {
         "right": 20,
         "top": 20
       },
-      "version": "2.10"
+      "version": "2.11"
     }, {
       "uri": "widgets/ZoomSlider/Widget",
       "position": {
         "left": 25,
         "top": 95
       },
-      "version": "2.10"
+      "version": "2.11"
     }, {
       "uri": "widgets/HomeButton/Widget",
       "position": {
@@ -55,10 +55,10 @@
         "left": 25,
         "top": 215
       },
-      "version": "2.10"
+      "version": "2.11"
     }, {
       "uri": "widgets/AttributeTable/Widget",
-      "version": "2.10",
+      "version": "2.11",
       "position": {
         "right": 20,
         "bottom": 80
@@ -76,14 +76,14 @@
         "left": 27,
         "bottom": 25
       },
-      "version": "2.10"
+      "version": "2.11"
     }, {
       "uri": "widgets/Splash/Widget",
       "visible": false,
       "position": {
         "relativeTo": "browser"
       },
-      "version": "2.10"
+      "version": "2.11"
     }, {
       "position": {
         "right": 20,
@@ -106,7 +106,7 @@
         "top": 255,
         "left": 25
       },
-      "version": "2.10"
+      "version": "2.11"
     }]
   },
 
@@ -135,7 +135,7 @@
             "width": "100%",
             "zIndex": 0
           },
-          "version": "2.10"
+          "version": "2.11"
         },
         "themes/LaunchpadTheme/widgets/Header/Widget":{
           "position": {
@@ -145,7 +145,7 @@
             "height": 46,
             "relativeTo": "map"
           },
-          "version": "2.10"
+          "version": "2.11"
         },
         "widgets/Search/Widget":{
           "position": {
@@ -154,7 +154,7 @@
             "right": 10,
             "zIndex": 0
           },
-          "version": "2.10"
+          "version": "2.11"
         },
         "widgets/ExtentNavigate/Widget": {
           "position": {
@@ -167,14 +167,14 @@
             "right": 10,
             "bottom": 160
           },
-          "version": "2.10"
+          "version": "2.11"
         },
         "widgets/HomeButton/Widget":{
           "position": {
             "right": 10,
             "bottom": 75
           },
-          "version": "2.10"
+          "version": "2.11"
         },
         "widgets/MyLocation/Widget":{
           "inPanel": false,
@@ -182,10 +182,10 @@
             "right": 10,
             "bottom": 115
           },
-          "version": "2.10"
+          "version": "2.11"
         },
         "widgets/AttributeTable/Widget":{
-          "version": "2.10",
+          "version": "2.11",
           "position": {
             "left": 10,
             "bottom": 70
@@ -197,7 +197,7 @@
             "left": 50,
             "bottom": 70
           },
-          "version": "2.10"
+          "version": "2.11"
         },
         "ph_11":{
           "position": {

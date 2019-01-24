@@ -152,6 +152,7 @@ define([
             height: 600,
             content:  this.valueProvider,
             titleLabel: this.indexBtnTips.title,
+            useFocusLogic: false,
             onClose: lang.hitch(this, function () {
               //save popup content to a hidden dom, so we don't need init provider every time.
               //this.popup.content = null;

@@ -92,7 +92,8 @@ define({
     "stay": "הישאר",
     "search": "חיפוש",
     "searchMore": "חפש עוד",
-    "tooltipText": "טקסט הסבר לכלי"
+    "tooltipText": "טקסט הסבר לכלי",
+    "findAddressOrPlace": "חיפוש כתובת או מקום"
   },
   "errorCode": "קוד",
   "errorMessage": "הודעה",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "הוסף ווידג'טים לכאן דרך הכרטיסיה 'ווידג'ט'",
     "modifyLayout": "שנה פריסה",
     "dragToAdd": "גרור כדי להוסיף",
-    "mapArea": "אזור מפה"
+    "mapArea": "אזור מפה",
+    "sceneArea": "שטח הסצנה"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "לחשבונך אין הרשאות ליצור נתונים או לשנות אותם.",
   "noEditableLayers": "לחשבונך אין הרשאה ליצור או לשנות נתונים, או שמפת אינטרנט זו לא מכילה שכבות הניתנות לעריכה.",
-  "invalidConfiguration": "תצורת הווידג'ט לא הוגדרה או שהשכבות בתצורה אינן נמצאות עוד במפה. פתח את האפליקציה במצב עריכה והגדר מחדש את תצורת הווידג'ט."
+  "invalidConfiguration": "תצורת הווידג'ט לא הוגדרה או שהשכבות בתצורה אינן נמצאות עוד במפה. פתח את האפליקציה במצב עריכה והגדר מחדש את תצורת הווידג'ט.",
+  "essentialAppsLicenseErrorForApp": "החשבון שלך אינו מורשה להשתמש באפליקציה שאינה ציבורית. בקש ממנהל המערכת בארגון שלך להקצות לך סוג משתמש שכולל את Essential Apps או רישיון הרחבה ל-Essential Apps.",
+  "essentialAppsLicenseErrorForBuilder": "החשבון שלך אינו מורשה עבור Web AppBuilder. בקש ממנהל המערכת בארגון שלך להקצות לך סוג משתמש שכולל את Essential Apps או רישיון הרחבה ל-Essential Apps."
 });

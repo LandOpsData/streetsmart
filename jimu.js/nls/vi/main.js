@@ -92,7 +92,8 @@ define({
     "stay": "Ở lại",
     "search": "Tìm kiếm",
     "searchMore": "Tìm kiếm thêm",
-    "tooltipText": "Văn bản Chú giải công cụ"
+    "tooltipText": "Văn bản Chú giải công cụ",
+    "findAddressOrPlace": "Tìm địa chỉ hoặc địa điểm"
   },
   "errorCode": "Mã",
   "errorMessage": "Thông báo",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Thêm tiện ích ở đây thông qua tab tiện ích",
     "modifyLayout": "Chỉnh sửa bố cục",
     "dragToAdd": "Kéo để thêm",
-    "mapArea": "VÙNG BẢN ĐỒ"
+    "mapArea": "VÙNG BẢN ĐỒ",
+    "sceneArea": "KHU VỰC SCENE"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "Tài khoản của bạn không có quyền tạo hoặc sửa đổi dữ liệu.",
   "noEditableLayers": "Tài khoản của bạn không có quyền tạo hoặc sửa đổi dữ liệu. Hoặc bản đồ web này không chứa bất kỳ lớp nào có thể chỉnh sửa.",
-  "invalidConfiguration": "Tiện ích chưa được cấu hình hoặc lớp trong cấu hình không còn trong bản đồ. Vui lòng mở ứng dụng trong chế độ bộ thiết lập và cấu hình lại tiện ích."
+  "invalidConfiguration": "Tiện ích chưa được cấu hình hoặc lớp trong cấu hình không còn trong bản đồ. Vui lòng mở ứng dụng trong chế độ bộ thiết lập và cấu hình lại tiện ích.",
+  "essentialAppsLicenseErrorForApp": "Tài khoản của bạn không được cấp phép để sử dụng ứng dụng không được công khai. Vui lòng yêu cầu quản trị viên của tổ chức bạn gán cho bạn loại người dùng nào có bao gồm các ứng dụng thiết yếu hoặc có giấy phép sử dụng các ứng dụng thiết yếu bổ trợ.",
+  "essentialAppsLicenseErrorForBuilder": "Tài khoản của bạn không được cấp phép để sử dụng ứng dụng Web AppBuilder. Vui lòng yêu cầu quản trị viên của tổ chức bạn gán cho bạn loại người dùng nào có bao gồm các ứng dụng thiết yếu hoặc có giấy phép sử dụng các ứng dụng thiết yếu bổ trợ."
 });

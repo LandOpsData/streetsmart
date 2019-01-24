@@ -58,7 +58,9 @@ define([
         if(config.contextMenu) {
           this.zoomto.setValue(config.contextMenu.ZoomTo);
           this.transparency.setValue(config.contextMenu.Transparency);
+          this.setVisibilityRange.setValue(config.contextMenu.SetVisibilityRange);
           this.controlPopup.setValue(config.contextMenu.EnableOrDisablePopup);
+          this.controlLabels.setValue(config.contextMenu.ControlLabels);
           this.moveupDown.setValue(config.contextMenu.MoveupOrMovedown);
           this.table.setValue(config.contextMenu.OpenAttributeTable);
           this.url.setValue(config.contextMenu.DescriptionOrShowItemDetailsOrDownload);
@@ -75,7 +77,9 @@ define([
         }
         this.config.contextMenu.ZoomTo = this.zoomto.getValue();
         this.config.contextMenu.Transparency = this.transparency.getValue();
+        this.config.contextMenu.SetVisibilityRange = this.setVisibilityRange.getValue();
         this.config.contextMenu.EnableOrDisablePopup = this.controlPopup.getValue();
+        this.config.contextMenu.ControlLabels = this.controlLabels.getValue();
         this.config.contextMenu.MoveupOrMovedown = this.moveupDown.getValue();
         this.config.contextMenu.OpenAttributeTable = this.table.getValue();
         this.config.contextMenu.DescriptionOrShowItemDetailsOrDownload = this.url.getValue();

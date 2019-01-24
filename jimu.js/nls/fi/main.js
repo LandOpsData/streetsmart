@@ -92,7 +92,8 @@ define({
     "stay": "Jää",
     "search": "Hae",
     "searchMore": "Hae lisää",
-    "tooltipText": "Työkaluvihjeen teksti"
+    "tooltipText": "Työkaluvihjeen teksti",
+    "findAddressOrPlace": "Etsi osoite tai paikka"
   },
   "errorCode": "Koodi",
   "errorMessage": "Viesti",
@@ -429,7 +430,7 @@ define({
     "unsupportReaderAPI": "Tehtävä: selain ei tue tiedoston lukuohjelman ohjelmointirajapintaa",
     "readError": "Tiedoston luku epäonnistui.",
     "unknowError": "toimintoja ei voi suorittaa loppuun",
-    "invalidType": "Invalid file type.",
+    "invalidType": "Virheellinen tiedostotyyppi.",
     "cropImage": "Rajaa kuva",
     "exceed": "Tiedoston koko ei saa ylittää 1024 kt",
     "enableFlash": "Ota käyttöön Adobe Flash ennen kuvaan selaamista.",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Lisää pienoisohjelmat tähän Pienoisohjelma-välilehden kautta",
     "modifyLayout": "Muokkaa asettelua",
     "dragToAdd": "Lisää vetämällä",
-    "mapArea": "KARTTA-ALUE"
+    "mapArea": "KARTTA-ALUE",
+    "sceneArea": "MAISEMA-ALUE"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "Tililläsi ei ole tietojen luonti- tai muokkausoikeuksia.",
   "noEditableLayers": "Tilisi käyttöoikeudet eivät riitä aineiston luontiin tai muokkaamiseen. Vaihtoehtoisesti tämä web-kartta ei sisällä muokattavia karttatasoja.",
-  "invalidConfiguration": "Pienoisohjelmaa ei ole joko määritetty tai määrityksen karttatasoja ei ole enää kartassa. Avaa sovellus luontitilassa ja määritä pienoisohjelma uudelleen."
+  "invalidConfiguration": "Pienoisohjelmaa ei ole joko määritetty tai määrityksen karttatasoja ei ole enää kartassa. Avaa sovellus luontitilassa ja määritä pienoisohjelma uudelleen.",
+  "essentialAppsLicenseErrorForApp": "Tiliäsi ei ole lisensoitu käyttämään sovellusta, joka ei ole julkinen. Pyydä organisaatiosi pääkäyttäjää määrittämään sinulle käyttäjätyyppi, joka sisältää keskeiset sovellukset tai keskeisten sovellusten lisäosan lisenssin.",
+  "essentialAppsLicenseErrorForBuilder": "Tiliäsi ei ole lisensoitu Web AppBuilderille. Pyydä organisaatiosi pääkäyttäjää määrittämään sinulle käyttäjätyyppi, joka sisältää keskeiset sovellukset tai keskeisten sovellusten lisäosan lisenssin."
 });

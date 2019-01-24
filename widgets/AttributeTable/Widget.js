@@ -28,6 +28,7 @@ define([
     "esri/lang",
     'dojo/_base/lang',
     "dojo/on",
+    'dojo/keys',
     'dojo/touch',
     'dojo/topic',
     'dojo/aspect',
@@ -54,6 +55,7 @@ define([
     esriLang,
     lang,
     on,
+    keys,
     touch,
     topic,
     aspect,
@@ -89,6 +91,8 @@ define([
 
       postCreate: function() {
         this.inherited(arguments);
+        html.setAttr(this.domNode, 'aria-label', this.nls._widgetLabel);
+
         utils.loadStyleLink("dgrid", apiUrl + "dgrid/css/dgrid.css");
         this._loadInfoDef = null;
         this.AttributeTableDiv = null;
@@ -152,6 +156,25 @@ define([
         //   'class': 'esriAttributeTableCloseImage close-button'
         // }, this.domNode);
         // this.own(on(this.closeBtn, 'click', lang.hitch(this, '_onCloseBtnClicked')));
+
+        this.own(on(this.domNode, 'keydown', lang.hitch(this, function (evt) {
+          if(html.hasClass(evt.target, this.baseClass) && evt.keyCode === keys.ENTER) {
+            this.focusToDisplay = false;
+          }
+        })));
+
+        this.focusToDisplay = true;
+        this.own(on(this.domNode, 'focus', lang.hitch(this, function () {
+          if(utils.isInNavMode() && this.focusToDisplay &&
+            html.getStyle(this.domNode, 'height') < 10) {
+            this._switchTable(); //show widget temporarily
+          }
+        })));
+        this.own(on(this.domNode, 'blur', lang.hitch(this, function () {
+          if(utils.isInNavMode() && this.focusToDisplay) {
+            this._switchTable(); //hide widget
+          }
+        })));
       },
 
       _createUtilitiesUI: function() {
@@ -184,8 +207,10 @@ define([
       _createSwitchUI: function() {
         if (!this._isOnlyTable()) {
           this.switchBtn = html.create("div", {
-            className: "jimu-widget-attributetable-switch"
+            className: "jimu-widget-attributetable-switch",
+            tabindex: '0'
           }, this.domNode);
+          utils.initFirstFocusNode(this.domNode, this.switchBtn);
           // html.addClass(this.switchBtn, "jimu-widget-attributetable-switch");
           // html.place(this.switchBtn, this.domNode);
           // this.highlightLine = html.create("div", {
@@ -193,6 +218,14 @@ define([
           // }, this.domNode);
 
           this.own(on(this.switchBtn, 'click', lang.hitch(this, this._switchTable)));
+
+          this.own(on(this.switchBtn, 'keydown', lang.hitch(this, function (evt) {
+            if(evt.keyCode === keys.ENTER) {
+              this._switchTable();
+              //back to focus and display widgetDom temperly when set it closed.
+              this.focusToDisplay = this.showing ? false : true;
+            }
+          })));
         }
       },
 

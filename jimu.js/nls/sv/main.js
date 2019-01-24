@@ -92,7 +92,8 @@ define({
     "stay": "Stanna",
     "search": "Sök",
     "searchMore": "Sök mer",
-    "tooltipText": "Tipsrutetext"
+    "tooltipText": "Tipsrutetext",
+    "findAddressOrPlace": "Sök efter adress eller plats"
   },
   "errorCode": "Kod",
   "errorMessage": "Meddelande",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Lägg till widgetar här via fliken Widget",
     "modifyLayout": "Ändra layout",
     "dragToAdd": "Dra för att lägga till",
-    "mapArea": "KARTOMRÅDE"
+    "mapArea": "KARTOMRÅDE",
+    "sceneArea": "SCENOMRÅDE"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "Ditt konto har inte behörighet att skapa eller ändra data.",
   "noEditableLayers": "Ditt konto har inte behörighet att skapa eller ändra data. Eller så innehåller webbkartan inga redigerbara lager.",
-  "invalidConfiguration": "Widgeten är antingen inte konfigurerad eller så finns lagren i konfigurationen inte längre i kartan. Öppna appen i byggläge och konfigurera om widgeten."
+  "invalidConfiguration": "Widgeten är antingen inte konfigurerad eller så finns lagren i konfigurationen inte längre i kartan. Öppna appen i byggläge och konfigurera om widgeten.",
+  "essentialAppsLicenseErrorForApp": "Ditt konto har ingen licens för att använda en app som inte är tillgänglig för allmänheten. Be din organisations administratör att tilldela dig en användartyp som omfattar Essential Apps eller en tilläggslicens för Essential Apps.",
+  "essentialAppsLicenseErrorForBuilder": "Ditt konto har ingen licens för Web AppBuilder. Be din organisations administratör att tilldela dig en användartyp som omfattar Essential Apps eller en tilläggslicens för Essential Apps."
 });

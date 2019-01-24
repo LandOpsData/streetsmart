@@ -126,3 +126,26 @@
   display: none;
 }
 /**********End Mobile View*************/
+
+/**********Start Edit Widget*************/
+.jimu-widget-layerList .popup-menu-transparency-body .dijitSliderImageHandleH{
+  background: #fff;
+  width: 16px;
+  border: 1px solid #3b8fc4;
+  height: 16px;
+}
+
+.jimu-widget-layerList .popup-menu-visible-scale-range-body .dijitSliderImageHandleH{
+  background: #fff;
+  width: 16px;
+  border: 1px solid #3b8fc4;
+  height: 16px;
+}
+
+.jimu-widget-layerList .popup-menu-visible-scale-range-body .dijitSliderImageHandle.dijitSliderThumbHover{
+  background: #fff;
+  width: 16px;
+  border: 1px solid #3b8fc4;
+  height: 16px;
+}
+/**********End Edit Widget*************/

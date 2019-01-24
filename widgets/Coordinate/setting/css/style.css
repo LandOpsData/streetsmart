@@ -82,7 +82,7 @@
 }
 
 .jimu-coordinate-edit table{
-  width: 100%;
+  width: calc(100% - 2px);
 }
 
 .jimu-coordinate-edit .wkid-header{
@@ -116,6 +116,10 @@
 
 .jimu-coordinate-edit .display-units .display{
   width: 20%;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .jimu-coordinate-edit .older-version{
@@ -138,17 +142,7 @@
   margin-left: 10px;
   margin-right: auto;
 }
-.jimu-widget-coordinate-setting .displayOrder .jimu-radio {
-  border: 1px solid #ccc;
-  vertical-align: top;
-}
-.jimu-widget-coordinate-setting .displayOrder .jimu-radio-checked .jimu-radio-inner {
-  width: 6px;
-  height: 6px;
-  margin: 4px;
-  border-radius: 50%;
-  background-color: #24B5CC;
-}
+
 .jimu-widget-coordinate-setting .displayOrder .order-btn{
   margin: 0 10px 0 10px;
 }

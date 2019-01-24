@@ -6,7 +6,9 @@
   "contextMenu": {
 	"ZoomTo": true,
 	"Transparency": true,
+	"SetVisibilityRange": true,
 	"EnableOrDisablePopup": true,
+        "ControlLabels": true,
 	"MoveupOrMovedown": true,
 	"OpenAttributeTable": true,
 	"DescriptionOrShowItemDetailsOrDownload": true

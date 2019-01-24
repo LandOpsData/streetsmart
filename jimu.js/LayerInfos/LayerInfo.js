@@ -33,9 +33,11 @@ define([
   'jimu/utils',
   './RequestBuffer',
   'esri/kernel',
+  'esri/tasks/query',
   'esri/request'
 ], function(declare, array, lang, Deferred, all, /*NlsStrings,*/ domConstruct, topic, aspect,
-Evented, /*xhr,*/ scriptRequest, portalUrlUtils, portalUtils, LayerNode, jimuUtils, RequestBuffer, esriNS, esriRequest) {
+Evented, /*xhr,*/ scriptRequest, portalUrlUtils, portalUtils, LayerNode, jimuUtils, RequestBuffer, esriNS,
+Query, esriRequest) {
   var clazz = declare([Evented], {
     declaredClass:            "jimu.LayerInfo",
     originOperLayer:          null,
@@ -576,12 +578,17 @@ Evented, /*xhr,*/ scriptRequest, portalUrlUtils, portalUtils, LayerNode, jimuUti
       return null;
     },
 
-    setFilter: function(/*layerDefinitionExpression*/) {
+    setFilter: function(/*layerDefinitionExpression, objectPassWithFilterChangeEvent*/) {
       // summary:
       //   set layer definition expression to layerObject.
-      // paramtter
+      // parameter
       //   layerDefinitionExpression: layer definition expression
-      //   set 'null' to delete layer definition expression
+      //     set 'null' to delete layer definition expression
+      //   objectPassWithFilterChangeEvent: {
+      //     zoomAfterFilter: true/false
+      //   };
+      //    this parameter will pass to FilterChangeEvent.
+      //    'zoomAfterFilter' means that the user will invoke 'zoom scale' operation after called this method.
       // description:
       //   operation will skip layer if it does not support filter.
       // implemented by sub class.
@@ -666,6 +673,15 @@ Evented, /*xhr,*/ scriptRequest, portalUrlUtils, portalUtils, LayerNode, jimuUti
     //       "esriRelRoleOrigin"
     //       "esriRelRoleDestination"
     getRelatedTableInfoArray: function(relationshipRole) {
+      /*jshint unused: false*/
+      var def = new Deferred();
+      def.resolve([]);
+      return def;
+    },
+
+    // summary:
+    //   get related records
+    getRelatedRecords: function(feature, relatedLayerInfo) {
       /*jshint unused: false*/
       var def = new Deferred();
       def.resolve([]);
@@ -775,8 +791,52 @@ Evented, /*xhr,*/ scriptRequest, portalUrlUtils, portalUtils, LayerNode, jimuUti
       return def;
     },
 
+    _requerySelectdFeatures: function() {
+      var def = new Deferred();
+      this.getLayerObject().then(lang.hitch(this, function(layerObject) {
+        var selectedFeatures = [];
+        var objectIdField;
+        // only applicable for cannot editable layers
+        if(layerObject && layerObject.isEditable && !layerObject.isEditable()) {
+          objectIdField = layerObject.objectIdField;
+          selectedFeatures = layerObject.getSelectedFeatures();
+
+          var handle = layerObject.on("update-end", lang.hitch(this, function() {
+            var query = new Query();
+            var objectIds = [];
+            array.forEach(selectedFeatures, function(feature) {
+              objectIds.push(feature.attributes[objectIdField]);
+            }, this);
+            query.objectIds = objectIds;
+            query.maxAllowableOffset = 0; // must set maxAllowableOffset even if the udpate is over,
+            layerObject.queryFeatures(query, lang.hitch(this, function(featureSet) {
+              array.forEach(featureSet.features, function(queryedFeature) {
+                array.some(selectedFeatures, function(selectedFeature) {
+                  if(selectedFeature.attributes[objectIdField] === queryedFeature.attributes[objectIdField]) {
+                    selectedFeature.setGeometry(queryedFeature.geometry);
+                    return true;
+                  } else {
+                    return false;
+                  }
+                });
+              }, this);
+              def.resolve();
+            }), lang.hitch(this, function() {
+              def.resolve();
+            }));
+
+            if(handle && handle.remove) {
+              handle.remove();
+            }
+          }));
+        }
+      }));
+      return def;
+    },
+
     zoomTo: function(extentParam) {
       var def;
+      this._requerySelectdFeatures();
       if(extentParam) {
         def = jimuUtils.projectToMapSpatialReference(this.map, extentParam).then(lang.hitch(this, function(extent) {
           return this._zoomTo(extent);
@@ -892,6 +952,13 @@ Evented, /*xhr,*/ scriptRequest, portalUrlUtils, portalUtils, LayerNode, jimuUti
         };
       }
       return scaleRange;
+    },
+
+    setScaleRange: function(minScale, maxScale) {
+      if(this.layerObject &&
+         this.layerObject.setScaleRange) {
+        this.layerObject.setScaleRange(minScale, maxScale);
+      }
     },
 
     getLayerScaleRange: function() {
@@ -1246,6 +1313,11 @@ Evented, /*xhr,*/ scriptRequest, portalUrlUtils, portalUtils, LayerNode, jimuUti
           this._eventHandles.push(handle);
         }
 
+        // bind scale-range-change event
+        handle = this.layerObject.on('scale-range-change',
+                                     lang.hitch(this, this._onScaleRangeChanged));
+        this._eventHandles.push(handle);
+
         // bind time extent change event when map's time extend has been changed. just for root layer.
         if(this.isRootLayer()) {
           handle = this.map.on('time-extent-change', lang.hitch(this, function() {
@@ -1288,9 +1360,13 @@ Evented, /*xhr,*/ scriptRequest, portalUrlUtils, portalUtils, LayerNode, jimuUti
       currentFilter = currentFilter ? currentFilter : null;
 
       if(oldFilter !== currentFilter) {
-        topic.publish('layerInfos/layerInfo/filterChanged', [this]);
+        topic.publish('layerInfos/layerInfo/filterChanged',
+                      [this],
+                      lang.getObject("_wabProperties.objectPassWithFilterChangeEvent", true, this.layerObject));
         // update old layerDefinitions
         this._oldFilter = currentFilter;
+        // clear the temporary variable 'objectPassWithFilterChangeEvent'
+        lang.setObject('_wabProperties.objectPassWithFilterChangeEvent', {}, this.layerObject);
       }
     },
 
@@ -1302,6 +1378,11 @@ Evented, /*xhr,*/ scriptRequest, portalUrlUtils, portalUtils, LayerNode, jimuUti
     _onOpacityChanged: function() {
       var changedLayerInfos = [this];
       topic.publish('layerInfos/layerInfo/opacityChanged', changedLayerInfos);
+    },
+
+    _onScaleRangeChanged: function() {
+      var changedLayerInfos = [this];
+      topic.publish('layerInfos/layerInfo/scaleRangeChanged', changedLayerInfos);
     },
 
     _onTimeExtentChanged: function() {

@@ -92,7 +92,8 @@ define({
     "stay": "Bliv",
     "search": "Søg",
     "searchMore": "Søg efter mere",
-    "tooltipText": "Tekst til værktøjstip"
+    "tooltipText": "Tekst til værktøjstip",
+    "findAddressOrPlace": "Find adresse eller sted"
   },
   "errorCode": "Kode",
   "errorMessage": "Meddelelse",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Tilføj widgets her via Widget-fanen",
     "modifyLayout": "Redigér layout",
     "dragToAdd": "Træk for at tilføje",
-    "mapArea": "KORTOMRÅDE"
+    "mapArea": "KORTOMRÅDE",
+    "sceneArea": "SCENEOMRÅDE"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "Din konto har ikke rettigheder til at oprette eller redigere data.",
   "noEditableLayers": "Din konto har ikke rettigheder til at oprette eller redigere data, eller også indeholder webkortet ikke nogen redigérbare lag.",
-  "invalidConfiguration": "Widget'en er enten ikke konfigureret, eller lagene i konfigurationen findes ikke længere i kortet. Åbn app'en i builder-tilstand, og omkonfigurér widget'en."
+  "invalidConfiguration": "Widget'en er enten ikke konfigureret, eller lagene i konfigurationen findes ikke længere i kortet. Åbn app'en i builder-tilstand, og omkonfigurér widget'en.",
+  "essentialAppsLicenseErrorForApp": "Din konto har ikke licens til at bruge en app, der ikke er offentlig. Bed din organisationsadministrator om at knytte dig til en brugertype, der omfatter Essential Apps eller en add-on Essential Apps-licens.",
+  "essentialAppsLicenseErrorForBuilder": "Din konto har ikke licens til Web AppBuilder. Bed din organisationsadministrator om at knytte dig til en brugertype, der omfatter Essential Apps eller en add-on Essential Apps-licens."
 });

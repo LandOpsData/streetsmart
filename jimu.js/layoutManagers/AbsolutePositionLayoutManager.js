@@ -20,6 +20,8 @@ define([
   'dojo/_base/array',
   'dojo/_base/html',
   'dojo/topic',
+  'dojo/on',
+  'dojo/keys',
   'dojo/dom-construct',
   'dojo/dom-geometry',
   'dojo/promise/all',
@@ -31,7 +33,7 @@ define([
   './BaseLayoutManager'
 ],
 
-function(declare, lang, array, html, topic, domConstruct, domGeometry,
+function(declare, lang, array, html, topic, on, keys, domConstruct, domGeometry,
   all, when, WidgetManager, PanelManager, utils, LoadingShelter, BaseLayoutManager) {
   /* global jimuConfig:true */
   var instance = null, clazz;
@@ -90,6 +92,10 @@ function(declare, lang, array, html, topic, domConstruct, domGeometry,
       var loading = new LoadingShelter(), defs = [];
       loading.placeAt(this.layoutId);
       loading.startup();
+
+      this._setTabindex(appConfig);
+      // topic.publish('tabIndexChanged', appConfig);//this line will change this.appConfig
+
       //load widgets
       defs.push(this.loadOnScreenWidgets(appConfig));
 
@@ -114,6 +120,163 @@ function(declare, lang, array, html, topic, domConstruct, domGeometry,
         console.timeEnd('Load widgetOnScreen');
         topic.publish('preloadWidgetsLoaded');
       }));
+    },
+
+    _setTabindex: function(appConfig){
+      var rtoWindowElements = [];
+      var rtoMapElements = [];
+
+      appConfig.visitElement(function(e, info){
+        //the pool widgets tabindex will be handled by controller.
+        if(!info.isOnScreen){
+          return;
+        }
+        var pos = e.position || e.panel && e.panel.position;
+        if(!pos){
+          return;
+        }
+        if(pos.relativeTo === 'browser'){
+          rtoWindowElements.push(e);
+        }else{
+          rtoMapElements.push(e);
+        }
+      });
+
+      var layoutBox = domGeometry.getMarginBox(this.layoutId);
+      var mapBox = domGeometry.getMarginBox(this.mapId);
+
+      rtoWindowElements = rtoWindowElements.sort(lang.hitch(this, sortElements, layoutBox));
+      //if splash widget is in this array, set it as first tabindex
+      rtoWindowElements.sort(function(e1, e2){
+        if(e1.name === 'Splash'){
+          return -1;
+        }else if(e2.name === 'Splash'){
+          return 1;
+        }else{
+          return 0;
+        }
+      });
+
+      rtoMapElements = rtoMapElements.sort(lang.hitch(this, sortElements, mapBox));
+
+      var tabIndex = 1;
+      rtoWindowElements.forEach(function(e){
+        e.tabIndex = tabIndex;
+
+        if(e.isController){
+          tabIndex += 5000;
+        }else{
+          tabIndex += 200;
+        }
+      });
+
+      html.setAttr(this.map.container, 'tabindex', tabIndex);
+      html.setAttr(this.map.container, 'aria-label', window.jimuNls.gridLayout.mapArea);
+      html.setAttr(this.map.container, 'role', 'application');
+
+      //allow map's pan-action with arrow and support cancel-event
+      this.own(on(this.map.container, 'keydown', lang.hitch(this, function(evt) {
+        if(html.getAttr(evt.target, 'id') === 'map' && evt.keyCode === keys.ESCAPE){
+          utils.trapToNextFocusContainer(this.map.container);
+        }
+      })));
+
+      window.isMoveFocusFromMap = true;
+      this.own(on(this.map.container, 'focus', lang.hitch(this, function(evt) {
+        if(utils.isInNavMode() && html.getAttr(evt.target, 'id') === 'map'){
+          //Go to the dom it should be focusing on when using screenReader-chrome&chromeVox
+          //Tips: Chrome&chromeVox will focus first focusable node that tabindex > 0, not min-tabindex > 0
+          var splashWidget = this.widgetManager.getWidgetsByName('Splash')[0];
+          if(splashWidget && html.getStyle(splashWidget.domNode, 'display') !== 'none'){
+            window.isMoveFocusFromMap = false;
+            splashWidget.domNode.focus();
+            return;
+          }else if(window.currentMsgPopup && window.currentMsgPopup.firstFocusNode){
+            window.isMoveFocusFromMap = false;
+            window.currentMsgPopup.focusedNodeBeforeOpen = utils.trapToNextFocusContainer(this.map.container, true);
+            window.currentMsgPopup.firstFocusNode.focus();
+            return;
+          }else if(window.isMoveFocusFromMap){
+            window.isMoveFocusFromMap = false;
+            utils.trapToNextFocusContainer(this.map.container, true);
+            return;
+          }
+
+          var myTarget = document.getElementById("map_container");
+          myTarget.addEventListener("mouseover", function(){});
+          //simulate a hover event
+          myTarget.simulateEvent = new MouseEvent('mouseover', {
+            'view': window,
+            'bubbles': true,
+            'cancelable': true
+          });
+          this.map.isKeyboardNavigationOrigin = this.map.isKeyboardNavigation;
+          var isTrue = myTarget.dispatchEvent(myTarget.simulateEvent);
+          if(isTrue){
+            this.map.enableKeyboardNavigation();
+          }
+        }
+      })));
+      this.own(on(this.map.container, 'blur', lang.hitch(this, function(evt) {
+        if(utils.isInNavMode() && html.getAttr(evt.target, 'id') === 'map'){
+          var myTarget = document.getElementById('map_container');
+          myTarget.removeEventListener("mouseover", function(){});
+          // this.map.disableKeyboardNavigation();
+          //reset to original state
+          if(!this.map.isKeyboardNavigationOrigin){
+            this.map.disableKeyboardNavigation();
+          }
+        }
+      })));
+
+
+      tabIndex += 1000;
+
+      rtoMapElements.forEach(function(e){
+        if(e.inPanel){ //inPanel widgets only need tabindex to init icons
+          e.tabIndexJimu = tabIndex;
+        }else{
+          e.tabIndex = tabIndex;
+        }
+
+        if(e.isController){
+          tabIndex += 5000;
+        }else{
+          tabIndex += 200;
+        }
+      });
+
+      function changePosition(pos, box){
+        var widgetBox = {w: 100, h: 100};// hard code the widget box here for simple.
+
+        if(!pos){
+          return;
+        }
+        if(typeof pos.bottom !== 'undefined'){
+          pos.top = box.h - pos.bottom - widgetBox.h;
+          delete pos.bottom;
+        }
+        if(typeof pos.right !== 'undefined'){
+          pos.left = box.w - pos.right - widgetBox.w;
+          delete pos.right;
+        }
+      }
+
+      //sort nodes by position, compare top and then left.
+      function sortElements(box, e1, e2){
+        var pos1 = lang.clone(e1.position || e1.panel && e1.panel.position);
+        var pos2 = lang.clone(e2.position || e2.panel && e2.panel.position);
+
+        //change position to x, y
+        changePosition(pos1, box);
+        changePosition(pos2, box);
+
+        if(pos1.top === pos2.top){
+          return pos1.left - pos2.left;
+        }else{
+          return pos1.top - pos2.top;
+        }
+      }
     },
 
     destroyOnScreenWidgetsAndGroups: function(){

@@ -46,6 +46,33 @@ td, th{
   outline: none;
 }
 
+.jimu-nav-mode *:focus{
+  outline: 2px solid #24B5CC !important;
+}
+
+/*use border, for some fullscreen dom*/
+.jimu-nav-mode * .jimu-widget-header-controller:focus,
+.jimu-nav-mode * .jimu-multiple-items-list:focus{
+  outline-offset: -2px !important;
+}
+
+/*outline style changes its postion or doesn't work*/
+.jimu-nav-mode * #map:focus,
+.jimu-nav-mode * .jimu-widget-overview:focus,
+.jimu-nav-mode * .jimu-widget-splash:focus,
+.ie-low-nav-mode.jimu-nav-mode * .jimu-multiple-items-list:focus, /*for ie v<=9*/
+.jimu-nav-mode * .jimu-widget-attributetable.jimu-widget.closed:focus{
+  outline: none !important;
+  border: 2px solid #24B5CC;
+  /* box-shadow: inset 0px 0px 0px 2px #24B5CC; */
+}
+
+/*ie doesn't support outline-offset, use box-shadow instead.*/
+.ie-nav-mode.jimu-nav-mode * .jimu-multiple-items-list:focus{
+  outline: none !important;
+  box-shadow: inset 0px 0px 0px 2px #24B5CC; /*v>9*/
+}
+
 input[type="text"]::-ms-clear{
   display: none;
 }
@@ -70,6 +97,10 @@ input[type="text"]::-ms-clear{
 
 .esriControlsBR{
   z-index: auto;
+}
+
+.esriAttribution{
+  background: #fff;/*508*/
 }
 
 .jimu-rtl .esriControlsBR{
@@ -800,18 +831,28 @@ css for the dijits
   width: 16px;
   height: 16px;
   display: inline-block;
-  border-radius: 8px;
-  border: 1px solid #8a8a8a;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  background-color: transparent;
+  align-items: center;
+  vertical-align: text-bottom;
   cursor: pointer;
-  background-color: white;
+  position: relative;
+  box-sizing: border-box;
+}
+.jimu-radio-checked.jimu-radio{
+  border: 1px solid #24B5CC;
 }
 .jimu-radio-inner{
-  width: 10px;
-  height: 10px;
-  margin: 2px;
   display: none;
-  border-radius: 5px;
-  background-color: black;
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #24B5CC;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
 }
 .jimu-radio-checked .jimu-radio-inner{
   display: block;
@@ -1152,11 +1193,32 @@ css for the dijits
 .jimu-popup .button-container{
   overflow: hidden;
   padding: 15px 30px;
-  width: 100%;
+  /* width: 100%; */
+  width: auto;
+  float: right;
+}
+.jimu-rtl .jimu-popup .button-container{
+  float: left;
 }
 .jimu-popup .button-container-absolute{
   position: absolute;
   bottom: 0;
+  width: auto;
+  right: 0;
+}
+.jimu-rtl .jimu-popup .button-container-absolute{
+  left: 0;
+  right: auto;
+}
+.jimu-popup .button-container .jimu-float-trailing,
+.jimu-popup .button-container-absolute .jimu-float-trailing {
+  float: left;
+  margin-left: 1em;
+}
+.jimu-rtl .jimu-popup .button-container .jimu-float-trailing,
+.jimu-rtl .jimu-popup .button-container-absolute .jimu-float-trailing {
+  float: right;
+  margin-right: 1em;
 }
 .jimu-popup .button-container .jimu-btn:nth-child(1).jimu-trailing-margin1,
 .jimu-popup .button-container .jimu-btn:nth-child(2).jimu-trailing-margin1 {
@@ -2989,11 +3051,18 @@ html.hr .jimu-filter .allExpsBox > div{
 
 .jimu-item-selector .groups-section{
   font-size: 14px;
+  position:absolute;
+  width:100%;
+  margin-top: 50px;
+  align-items: center;
+  margin: 0 1px;
 }
 
 .jimu-item-selector .groups-section .groups-select{
+  display: flex;
   height: 30px;
-  padding: 0 30px;
+  border: solid 1px #000;
+  margin: 0 5px;
 }
 
 /* css for _ItemTable */
@@ -3699,7 +3768,8 @@ html.hr .jimu-filter .allExpsBox > div{
   width: 100%;
   background-color: #485566;
   box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.4);
-  position: relative;
+  /* position: relative; */
+  display: flex;
 }
 .jimu-on-screen-widget-panel>.title-full{
   cursor: default;
@@ -3713,11 +3783,19 @@ html.hr .jimu-filter .allExpsBox > div{
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  width: 66%;
+  /* width: 66%; */
+  flex-grow: 1;
+  padding: 0 10px;
 }
-.jimu-on-screen-widget-panel>.jimu-panel-title>.close-btn,
-.jimu-on-screen-widget-panel>.jimu-panel-title>.foldable-btn,
-.jimu-on-screen-widget-panel>.jimu-panel-title>.max-btn{
+.jimu-on-screen-widget-panel>.jimu-panel-title>.btns-container{
+  min-width: 35px;
+  max-width: 105px;
+  flex-grow: 0;
+  display: flex;
+}
+.jimu-on-screen-widget-panel>.jimu-panel-title>.btns-container>.close-btn,
+.jimu-on-screen-widget-panel>.jimu-panel-title>.btns-container>.foldable-btn,
+.jimu-on-screen-widget-panel>.jimu-panel-title>.btns-container>.max-btn{
   width: 35px;
   height: 100%;
   border-radius: 11px;
@@ -3725,16 +3803,16 @@ html.hr .jimu-filter .allExpsBox > div{
   cursor: pointer;
   margin: 0 !important;
 }
-.jimu-on-screen-widget-panel>.jimu-panel-title>.close-btn{
+.jimu-on-screen-widget-panel>.jimu-panel-title>.btns-container>.close-btn{
   background: url(images/white_close_default.png) no-repeat center center;
 }
-.jimu-on-screen-widget-panel>.jimu-panel-title>.fold-down{
+.jimu-on-screen-widget-panel>.jimu-panel-title>.btns-container>.fold-down{
   background: url(images/fold_down.png) no-repeat center center;
 }
-.jimu-on-screen-widget-panel>.jimu-panel-title>.fold-up{
+.jimu-on-screen-widget-panel>.jimu-panel-title>.btns-container>.fold-up{
   background: url(images/fold_up.png) no-repeat center center;
 }
-.jimu-on-screen-widget-panel>.jimu-panel-title>.max-btn{
+.jimu-on-screen-widget-panel>.jimu-panel-title>.btns-container>.max-btn{
   background: url(images/max.png) no-repeat center center;
 }
 .jimu-on-screen-widget-panel>.jimu-panel-content{
@@ -4438,7 +4516,8 @@ html.hr .jimu-filter .allExpsBox > div{
   width: 10px;
   height: 10px;
   cursor: pointer;
-  background: url('images/close_8_default.png') no-repeat center;
+  background: url('images/close_btn_gray.svg') no-repeat center;
+  background-size: contain;
 }
 
 .jimu-appstate-popup .appstate-close:hover {
@@ -4495,7 +4574,8 @@ html.hr .jimu-filter .allExpsBox > div{
   top: auto;
   width: 100%;
   height: 12px;
-  background: url('images/close_default.png') no-repeat center;
+  background: url('images/close_btn_gray.svg') no-repeat center;
+  background-size: contain;
 }
 
 .jimu-appstate-popup.mobile .appstate-close:hover {
@@ -6706,10 +6786,10 @@ html.hr .jimu-filter .allExpsBox > div{
   background-image: url(images/checked_default.png);
 }
 .jimu-multiple-set-container .items-list-content .item .label.radio{
-  background-image: url(images/radio_normal.png);
+  background-image: url(images/radioBtn_normal.svg);
 }
 .jimu-multiple-set-container .items-list-content .item .label.radio.checked{
-  background-image: url(images/radio_selected.png);
+  background-image: url(images/radioBtn_selected.svg);
 }
 .jimu-multiple-set-container .items-list-content .item .label.checkbox.checkboxEmpty{
   width: 16px;
@@ -6774,6 +6854,11 @@ html.hr .jimu-filter .allExpsBox > div{
   display: none;
 }
 
+/*Keep empty predefined radio item as first place all the time. #14241*/
+.jimu-multiple-set-container .items-list-content.radio-items-list-content .item:nth-child(2) .action.up{
+  display: none;
+}
+
 /* .jimu-multiple-set-container .items-list-content .item .action.enabled{
   width: 34px;
   height: 19px;
@@ -6829,7 +6914,7 @@ html.hr .jimu-filter .allExpsBox > div{
   width: 20px;
   height: 16px;
   /* vertical-align: middle; */
-  background-image: url(images/radio_normal.png);
+  background-image: url(images/radioBtn_normal.svg);
   background-repeat: no-repeat;
   /* display: inline-block; */
   display: none; /*hide radio in UI for setting*/
@@ -6837,7 +6922,7 @@ html.hr .jimu-filter .allExpsBox > div{
   margin-right: 10px; */
 }
 .jimu-multiple-items-list .item .radio.checked{
-  background-image: url(images/radio_selected.png);
+  background-image: url(images/radioBtn_selected.svg);
 }
 .jimu-multiple-items-list .item .label{
   font-size: 12px;
@@ -6979,7 +7064,7 @@ html.hr .jimu-filter .allExpsBox > div{
   background: url(images/showAllNormal.svg) no-repeat center;
 }
 .jimu-list-multiple-select .selectedToggleDiv .showSelectedIcon{
-  left: 34px;
+  left: 36px;
   background: url(images/showSelectedNormal.svg) no-repeat center;
 }
 .jimu-list-multiple-select .selectedToggleDiv .showAllIcon.iconHover{
@@ -7185,12 +7270,12 @@ html.hr .jimu-filter .allExpsBox > div{
   height: 16px;
   margin-left: 10px;
   vertical-align: middle;
-  background-image: url(images/radio_normal.png);
+  background-image: url(images/radioBtn_normal.svg);
   background-repeat: no-repeat;
   background-position-x: left;
 }
 .jimu-popup .displayTypes .option.checked .radio{
-  background-image: url(images/radio_selected.png);
+  background-image: url(images/radioBtn_selected.svg);
 }
 .jimu-popup .displayTypes .option .label{
   width: auto;

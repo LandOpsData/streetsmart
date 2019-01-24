@@ -5,6 +5,7 @@ define({
   "labelLayer": "Lagernamn",
   "itemZoomTo": "Zooma till",
   "itemTransparency": "Transparens",
+  "itemSetVisibilityRange": "Ange visningsintervall",
   "itemTransparent": "Transparent",
   "itemOpaque": "Opak",
   "itemMoveUp": "Flytta uppåt",

@@ -92,7 +92,8 @@ define({
     "stay": "停留",
     "search": "搜尋",
     "searchMore": "搜尋更多",
-    "tooltipText": "工具提示文字"
+    "tooltipText": "工具提示文字",
+    "findAddressOrPlace": "尋找位址或地點"
   },
   "errorCode": "代碼",
   "errorMessage": "訊息",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "透過 Widget 頁籤從這裡新增 widget",
     "modifyLayout": "修改版面配置",
     "dragToAdd": "拖曳以新增",
-    "mapArea": "地圖區域"
+    "mapArea": "地圖區域",
+    "sceneArea": "場景區域"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "您的帳號沒有建立或修改資料的權限。",
   "noEditableLayers": "您的帳號沒有建立或修改資料的權限。或此 Web 地圖不含任何可編輯圖層。",
-  "invalidConfiguration": "未配置 widget，或配置中的圖層已從地圖中消失。請在建構器模式中開啟應用程式，並重新配置 widget。"
+  "invalidConfiguration": "未配置 widget，或配置中的圖層已從地圖中消失。請在建構器模式中開啟應用程式，並重新配置 widget。",
+  "essentialAppsLicenseErrorForApp": "您的帳號沒有使用非公開應用程式的權限。 請聯繫您的組織管理員，請其將包含基礎應用程式或附加元件基礎應用程式授權的使用者類型指派給您。",
+  "essentialAppsLicenseErrorForBuilder": "您的帳號沒有 Web AppBuilder 授權。 請聯繫您的組織管理員，請其將包含基礎應用程式或附加元件基礎應用程式授權的使用者類型指派給您。"
 });

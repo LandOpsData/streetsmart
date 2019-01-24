@@ -32,6 +32,10 @@ define(['dojo/_base/declare',
       this.featureLayer = featureLayer;
     },
 
+    setLayerObject: function(layerObject) {
+      this.layerObject = layerObject;
+    },
+
     setSymbolLayer: function(symbolLayer) {
       this.symbolLayer = symbolLayer;
     },
@@ -143,7 +147,7 @@ define(['dojo/_base/declare',
       if (typeof places !== 'number') {
         return value;
       }
-      if (value === null || typeof places !== 'number') {
+      if (!value && value !== 0) {
         return value;
       }
       var str = value.toFixed(places);
@@ -381,7 +385,8 @@ define(['dojo/_base/declare',
       var value;
       var attributes = {};
       attributes[fieldName] = fieldValue;
-      var res = jimuUtils.getDisplayValueForCodedValueOrSubtype(this.featureLayer, fieldName, attributes);
+      var res = jimuUtils.getDisplayValueForCodedValueOrSubtype(this.layerObject ||
+        this.featureLayer, fieldName, attributes);
       if (res.isCodedValueOrSubtype) {
         value = res.displayValue;
       } else {
@@ -1375,6 +1380,43 @@ define(['dojo/_base/declare',
       }.bind(this));
     },
 
+    _updateDataItemNameForCustom: function(dataItem, nullLabel, categories) {
+      var label;
+      if (typeof dataItem.name !== 'undefined') {
+        label = dataItem.name;
+        if (dataItem.name === '_NULL&UNDEFINED_' && nullLabel) {
+          label = nullLabel;
+        } else {
+          var originName = typeof dataItem.originName !== 'undefined' ? dataItem.originName : dataItem.name;
+          var matchLabel = this._getMatchingCustomLabel(originName, categories);
+          if (matchLabel) {
+            label = matchLabel;
+          }
+        }
+        dataItem.name = label;
+      }
+      return label;
+    },
+
+    _updateSerieDataItemName: function(dataItem, mode, clusterField) {
+      var name = dataItem.name;
+      var formatedName = name;
+
+      if (dataItem.unit && name) {
+        formatedName = this.getCategoryDisplayForDateUnit(name, dataItem.unit);
+      } else {
+        if (mode !== 'field') {
+          formatedName = this.getBestDisplayValue(clusterField, name);
+        } else {
+          formatedName = this.getFieldAlias(name);
+        }
+      }
+
+      dataItem.name = formatedName;
+      dataItem.originName = name;
+      return formatedName;
+    },
+
     updateChartSeriesDisplayName: function(chartSeriesOption, displayOption, dataOption) {
 
       var clusterField = dataOption.mode === 'feature' ?
@@ -1384,44 +1426,9 @@ define(['dojo/_base/declare',
       var labels = [];
       //setting label
       var seriesStyle = displayOption.seriesStyle;
+      var categories, nullLabel, others, nullConfig;
 
-      if (seriesStyle.type === 'custom') {
-        var customColor = seriesStyle.customColor;
-        if (customColor && customColor.categories && customColor.categories.length) {
-          var categories = customColor.categories;
-
-          var nullLabel;
-          var others = customColor.others || [];
-          var nullConfig = others.filter(function(oc) {
-            return oc.id === 'null';
-          })[0];
-          if (nullConfig && nullConfig.label) {
-            nullLabel = nullConfig.label;
-          }
-          series.forEach(function(serie, index) {
-            var data = serie.data;
-            if (data && data.length) {
-              data.forEach(function(dataItem, dataIndex) {
-                if (typeof dataItem.name !== 'undefined') {
-                  var label = dataItem.name;
-                  if (dataItem.name === '_NULL&UNDEFINED_' && nullLabel) {
-                    label = nullLabel;
-                  } else {
-                    var matchLabel = this._getMatchingCustomLabel(dataItem.name, categories);
-                    if (matchLabel) {
-                      label = matchLabel;
-                    }
-                  }
-                  dataItem.name = label;
-                  if (index === 0) {
-                    labels[dataIndex] = label;
-                  }
-                }
-              }.bind(this));
-            }
-          }.bind(this));
-        }
-      }
+      var label;
       //default
       series.forEach(function(serie, index) {
         if (serie.name) {
@@ -1430,26 +1437,40 @@ define(['dojo/_base/declare',
         var data = serie.data;
         if (data && data.length) {
           data.forEach(function(dataItem, dataIndex) {
-            var name = dataItem.name;
-            var formatedName = name;
-
-            if (dataItem.unit && name) {
-              formatedName = this.getCategoryDisplayForDateUnit(name, dataItem.unit);
-            } else {
-              if (mode !== 'field') {
-                formatedName = this.getBestDisplayValue(clusterField, name);
-              } else {
-                formatedName = this.getFieldAlias(name);
-              }
-            }
-
-            dataItem.name = formatedName;
+            label = this._updateSerieDataItemName(dataItem, mode, clusterField);
             if (index === 0) {
-              labels[dataIndex] = formatedName;
+              labels[dataIndex] = label;
             }
           }.bind(this));
         }
       }.bind(this));
+
+      if (seriesStyle.type === 'custom') {
+        var customColor = seriesStyle.customColor;
+
+        if (customColor && customColor.categories && customColor.categories.length) {
+          categories = customColor.categories;
+          others = customColor.others || [];
+          nullConfig = others.filter(function(oc) {
+            return oc.id === 'null';
+          })[0];
+          if (nullConfig && nullConfig.label) {
+            nullLabel = nullConfig.label;
+          }
+        }
+
+        series.forEach(function(serie, index) {
+          var data = serie.data;
+          if (data && data.length) {
+            data.forEach(function(dataItem, dataIndex) {
+              label = this._updateDataItemNameForCustom(dataItem, nullLabel, categories);
+              if (index === 0) {
+                labels[dataIndex] = label;
+              }
+            }.bind(this));
+          }
+        }.bind(this));
+      }
 
       chartSeriesOption.labels = null;
       chartSeriesOption.labels = labels;

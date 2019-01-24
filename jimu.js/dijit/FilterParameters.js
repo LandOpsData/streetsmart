@@ -336,8 +336,8 @@ define([
           var defs = array.map(sps, lang.hitch(this, function(sp){
             return sp.init();
           }));
-          all(defs).then(lang.hitch(this, function(){
-            resultDef.resolve();
+          all(defs).then(lang.hitch(this, function(vp){
+            resultDef.resolve(vp);
           }), lang.hitch(this, function(){
             resultDef.reject();
           }));

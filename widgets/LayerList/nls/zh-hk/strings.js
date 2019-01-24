@@ -5,6 +5,7 @@ define({
   "labelLayer": "圖層名稱",
   "itemZoomTo": "縮放至",
   "itemTransparency": "透明度",
+  "itemSetVisibilityRange": "設定可見範圍",
   "itemTransparent": "透明",
   "itemOpaque": "不透明",
   "itemMoveUp": "上移",

@@ -92,7 +92,8 @@ define({
     "stay": "Bleiben",
     "search": "Durchsuchen",
     "searchMore": "Weitere suchen",
-    "tooltipText": "Quickinfo-Text"
+    "tooltipText": "Quickinfo-Text",
+    "findAddressOrPlace": "Adresse oder Ort suchen"
   },
   "errorCode": "Code",
   "errorMessage": "Meldung",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Fügen Sie hier Widgets über die Registerkarte \"Widget\" hinzu.",
     "modifyLayout": "Layout ändern",
     "dragToAdd": "Zum Hinzufügen ziehen",
-    "mapArea": "KARTENFLÄCHE"
+    "mapArea": "KARTENFLÄCHE",
+    "sceneArea": "SZENENBEREICH"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "Ihrem Konto sind keine Berechtigungen zum Erstellen oder Ändern von Daten zugewiesen.",
   "noEditableLayers": "Ihrem Konto sind keine Berechtigungen zum Erstellen oder Ändern von Daten zugewiesen. Oder diese Webkarte enthält keine editierbaren Layer.",
-  "invalidConfiguration": "Das Widget wurde nicht konfiguriert oder die Layer in der Konfiguration sind nicht mehr in der Karte enthalten. Öffnen Sie die App im Builder-Modus, und konfigurieren Sie das Widget neu."
+  "invalidConfiguration": "Das Widget wurde nicht konfiguriert oder die Layer in der Konfiguration sind nicht mehr in der Karte enthalten. Öffnen Sie die App im Builder-Modus, und konfigurieren Sie das Widget neu.",
+  "essentialAppsLicenseErrorForApp": "Ihr Konto ist nicht für die Verwendung einer nicht öffentlichen App lizenziert. Bitten Sie den Administrator der Organisation, Ihnen einen Benutzertyp mit Essential Apps oder eine Add-On-Lizenz für Essential Apps zuzuweisen.",
+  "essentialAppsLicenseErrorForBuilder": "Ihr Konto ist nicht für Web AppBuilder lizenziert. Bitten Sie den Administrator der Organisation, Ihnen einen Benutzertyp mit Essential Apps oder eine Add-On-Lizenz für Essential Apps zuzuweisen."
 });

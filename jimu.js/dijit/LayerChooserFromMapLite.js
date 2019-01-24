@@ -277,7 +277,7 @@ define([ 'dojo/on',
             };
 
             var baseUrl = window.location.protocol + "//" + window.location.host + require.toUrl("jimu");
-            var imageName = this._getIconImageName(item, opened);
+            var imageName = this._getIconInfo(item, opened).imageName;
             if (imageName) {
               var backgroundImageUrl = "url(" + baseUrl + "/css/images/" + imageName + ")";
               html.setStyle(layerData.iconSpan, 'background-image', backgroundImageUrl);

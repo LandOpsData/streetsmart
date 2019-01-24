@@ -1303,6 +1303,16 @@ function(BaseVersionManager, utils) {
       },
 
       compatible: true
+    }, {
+      version: '2.11',
+
+      description: 'The version for Online 6.4.',
+
+      upgrader: function(oldConfig){
+        return oldConfig;
+      },
+
+      compatible: true
     }];
 
     this.isCompatible = function(_oldVersion, _newVersion){

@@ -742,7 +742,8 @@ define([
       }
 
       var title = layer.label || layer.name || "";
-      if (layer.url) {
+      // does not add the service name if the layer is an item layer.
+      if (layer.url && !lang.getObject("_wabProperties.itemLayerInfo", false, layer)) {
         var serviceName;
         var index = layer.url.indexOf("/FeatureServer");
         if (index === -1) {
@@ -898,7 +899,7 @@ define([
       //   will be listened events by this module
       var handleAdd, handleRemove, handleBeforeMapUnload, handleIsShowInMapChanged,
       handleVisibleChanged, handleFilterChanged, handleReorder, handleRendererChanged,
-      handleOpacityChanged, handleTimeExtentChanged;
+      handleOpacityChanged, handleTimeExtentChanged, handleScaleRangeChanged;
       handleAdd = on(this.map, "layer-add-result", lang.hitch(this, this._onLayersChange, clazz.ADDED));
       handleRemove = on(this.map, "layer-remove", lang.hitch(this, this._onLayersChange, clazz.REMOVED));
 
@@ -923,6 +924,9 @@ define([
       handleOpacityChanged = topic.subscribe('layerInfos/layerInfo/opacityChanged',
         lang.hitch(this, this._onOpacityChanged));
 
+      handleScaleRangeChanged = topic.subscribe('layerInfos/layerInfo/scaleRangeChanged',
+        lang.hitch(this, this._onScaleRangeChanged));
+
       handleTimeExtentChanged = topic.subscribe('layerInfos/layerInfo/timeExtentChanged',
         lang.hitch(this, this._onTimeExtentChanged));
 
@@ -936,6 +940,7 @@ define([
         handleRendererChanged.remove();
         handleBeforeMapUnload.remove();
         handleOpacityChanged.remove();
+        handleScaleRangeChanged.remove();
         handleTimeExtentChanged.remove();
         this._destroyLayerInfos();
       }));
@@ -949,10 +954,10 @@ define([
       }
     },
 
-    _emitEventForEveryLayerInfo: function(eventName, changedLayerInfos) {
+    _emitEventForEveryLayerInfo: function(eventName, changedLayerInfos, parameterObj) {
       try {
         array.forEach(changedLayerInfos, function(changedLayerInfo) {
-          changedLayerInfo.emitEvent(eventName);
+          changedLayerInfo.emitEvent(eventName, parameterObj);
         }, this);
       } catch (err) {
         console.warn(err);
@@ -1034,9 +1039,9 @@ define([
       this._emitEventForEveryLayerInfo('isVisibleChanged', changedLayerInfos);
     },
 
-    _onFilterChanged: function(changedLayerInfos) {
-      this._emitEvent('layerInfosFilterChanged', changedLayerInfos);
-      this._emitEventForEveryLayerInfo('filterChanged', changedLayerInfos);
+    _onFilterChanged: function(changedLayerInfos, parameterObj) {
+      this._emitEvent('layerInfosFilterChanged', changedLayerInfos, parameterObj);
+      this._emitEventForEveryLayerInfo('filterChanged', changedLayerInfos, parameterObj);
     },
 
     _onLayerReorder: function(beMovedLayerInfoIndex, steps,  moveUpOrDown) {
@@ -1053,6 +1058,11 @@ define([
     _onOpacityChanged: function(changedLayerInfos) {
       this._emitEvent('layerInfosOpacityChanged', changedLayerInfos);
       this._emitEventForEveryLayerInfo('opacityChanged', changedLayerInfos);
+    },
+
+    _onScaleRangeChanged: function(changedLayerInfos) {
+      this._emitEvent('layerInfosScaleRangeChanged', changedLayerInfos);
+      this._emitEventForEveryLayerInfo('scaleRangeChanged', changedLayerInfos);
     },
 
     _onTimeExtentChanged: function(changedLayerInfos) {

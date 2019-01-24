@@ -81,6 +81,8 @@ function(declare, html, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       this._fieldsCheckBox = [];
 
       this._setMessageNodeContent("");
+      this.own(on(this.panToRadio, 'click', lang.hitch(this, this._onRadioClicke)));
+      this.own(on(this.zoomToRadio, 'click', lang.hitch(this, this._onRadioClicke)));
     },
 
     setDefinition: function(definition) {
@@ -158,7 +160,7 @@ function(declare, html, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
         displayField: this.displayField.get('value'),// defaults to FeatureLayer.displayField
         exactMatch: this.exactMatch.getValue(),
         searchInCurrentMapExtent: this.searchInCurrentMapExtent.checked,
-        panToScale: this.panToRadio.checked ? true : false,
+        panToScale: this.panToRadio.get('checked') ? true : false,
         zoomScale: this.zoomScale.get('value') || this._defaultZoomScale,
         maxSuggestions: this.maxSuggestions.get('value') || 6,
         maxResults: this.maxResults.get('value') || 6,
@@ -221,9 +223,11 @@ function(declare, html, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       this.exactMatch.setValue(!!this.config.exactMatch);
       this.searchInCurrentMapExtent.setValue(!!this.config.searchInCurrentMapExtent);
       if(this.config.panToScale) {
-        html.setAttr(this.panToRadio, 'checked', '');
+        //html.setAttr(this.panToRadio, 'checked', '');
+        this.panToRadio.set('checked', true);
       } else {
-        html.setAttr(this.zoomToRadio, 'checked', '');
+        //html.setAttr(this.zoomToRadio, 'checked', '');
+        this.zoomToRadio.set('checked', true);
       }
       this.zoomScale.set('value', this.config.zoomScale || this._defaultZoomScale);
       this.maxSuggestions.set('value', this.config.maxSuggestions || 6);
@@ -540,9 +544,9 @@ function(declare, html, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
     },
 
     _controlZoomScaleTextBox: function() {
-      if(this.panToRadio.checked){
+      if(this.panToRadio.get('checked')){
         this.zoomScale.set("disabled", true);
-      } else if(this.zoomToRadio.checked){
+      } else if(this.zoomToRadio.get('checked')){
         this.zoomScale.set("disabled", false);
       }
     },

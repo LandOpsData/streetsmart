@@ -5,6 +5,7 @@ define({
   "labelLayer": "Jméno vrstvy",
   "itemZoomTo": "Přiblížit na",
   "itemTransparency": "Průhlednost",
+  "itemSetVisibilityRange": "Nastavit rozsah viditelnosti",
   "itemTransparent": "Průhledná",
   "itemOpaque": "Neprůhledná",
   "itemMoveUp": "Přesunout nahoru",

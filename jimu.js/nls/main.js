@@ -93,7 +93,8 @@ define({
       stay: "Stay",
       search: "Search",
       searchMore: "Search more",
-      tooltipText: "Tooltip text"
+      tooltipText: "Tooltip text",
+      findAddressOrPlace: "Find address or place"
     },
     errorCode: "Code",
     errorMessage: "Message",
@@ -714,7 +715,8 @@ define({
       addWidgetTip: "Add widgets here through the Widget tab",
       modifyLayout: "Modify layout",
       dragToAdd: "Drag to add",
-      mapArea: "MAP AREA"
+      mapArea: "MAP AREA",
+      sceneArea: "SCENE AREA"
     },
     coordinateControl: {
       notations: {
@@ -769,7 +771,9 @@ define({
     //we put these strings in here instead of in common because these strings are not translated.
     noEditPrivileges: "Your account does not have permission to create or modify data.",
     noEditableLayers: "Your account does not have permission to create or modify data. Or this web map does not contain any editable layers.",
-    invalidConfiguration: "Widget is either not configured or the layers in the configuration are no longer in the map.  Please open the app in the builder mode and reconfigure the widget."
+    invalidConfiguration: "Widget is either not configured or the layers in the configuration are no longer in the map.  Please open the app in the builder mode and reconfigure the widget.",
+    essentialAppsLicenseErrorForApp: "Your account is not licensed to use an app that is not public. Please ask your organization administrator to assign you a user type that includes Essential Apps or an add-on Essential Apps license.",
+    essentialAppsLicenseErrorForBuilder: "Your account is not licensed for Web AppBuilder. Please ask your organization administrator to assign you a user type that includes Essential Apps or an add-on Essential Apps license.",
   }),
   "ar": 1,
   "bs": 1,

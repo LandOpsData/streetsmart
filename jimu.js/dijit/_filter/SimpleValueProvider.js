@@ -17,17 +17,18 @@
 define([
   'dojo/_base/html',
   'dojo/_base/declare',
-  'dojo/on',
+  // 'dojo/on',
+  'dojo/keys',
   './ValueProvider',
   'dijit/form/ValidationTextBox',
   'dijit/form/NumberTextBox',
   './DateValueSelector'
 ],
-  function(html, declare, on, ValueProvider, ValidationTextBox, NumberTextBox, DateValueSelector) {
+  function(html, declare, keys, ValueProvider, ValidationTextBox, NumberTextBox, DateValueSelector) {
 
     return declare([ValueProvider], {
 
-      templateString: "<div></div>",
+      templateString: '<div tabindex="0"></div>',
 
       _dijit: null,
 
@@ -45,9 +46,10 @@ define([
           this._dijit.startup();
           this._dijit.on('keydown', (function(e){
             var code = e.keyCode || e.which;
-            if (code === 13) {
+            if (code === keys.ENTER) {
               this._dijit.textbox.blur();
               this._dijit.emit('enter');
+              this.domNode.focus();
             }
           }).bind(this));
         }else if(this.shortType === 'number'){
@@ -60,9 +62,10 @@ define([
           this._dijit.startup();
           this._dijit.on('keydown', (function(e){
             var code = e.keyCode || e.which;
-            if (code === 13) {
+            if (code === keys.ENTER) {
               this._dijit.textbox.blur();
               this._dijit.emit('enter');
+              this.domNode.focus();
             }
           }).bind(this));
         }else{

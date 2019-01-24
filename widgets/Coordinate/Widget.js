@@ -477,7 +477,7 @@ define([
         this._markerGraphic = null;
         if (this.canShowInClient(selectedWkid)) {
           this.enableRealtime = true;
-          this.coordinateInfo.innerHTML = this.nls.realtimeLabel;
+          this._getDefaultPlaceHolder();
           html.setAttr(this.locateButton, 'title', this.nls.enableClick);
         } else {
           this.enableRealtime = false;
@@ -519,7 +519,7 @@ define([
             this.disableWebMapPopup();
           } else {
             this.enableRealtime = true;
-            this.coordinateInfo.innerHTML = this.nls.realtimeLabel;
+            this._getDefaultPlaceHolder();
             html.setAttr(this.locateButton, 'title', this.nls.enableClick);
             this.enableWebMapPopup();
           }
@@ -899,14 +899,14 @@ define([
         y = y * options.unitRate;
 
         if ("DEGREE_MINUTE_SECONDS" === outUnit) {
-          lat_string = this.degToDMS(y, 'LAT');
           lon_string = this.degToDMS(x, 'LON');
-          this._displayCoordinatesByOrder(lat_string, lon_string);
+          lat_string = this.degToDMS(y, 'LAT');
+          this._displayCoordinatesByOrder(lon_string, lat_string);
         } else if ("DEGREES_DECIMAL_MINUTES" === outUnit){
           //for hack DEGREES_DECIMAL_MINUTES
-          lat_string = this.degToDDM(y);
           lon_string = this.degToDDM(x);
-          this._displayCoordinatesByOrder(lat_string, lon_string);
+          lat_string = this.degToDDM(y);
+          this._displayCoordinatesByOrder(lon_string, lat_string);
         } else {
           this._displayCoordinatesByOrder(this._toFormat(x), this._toFormat(y));
 
@@ -1123,6 +1123,13 @@ define([
             item.params.isDefault
           )
         });
+      },
+      _getDefaultPlaceHolder: function(){
+        if(utils.isMobileUa()){
+          this.coordinateInfo.innerHTML = "";
+        } else {
+          this.coordinateInfo.innerHTML = this.nls.realtimeLabel;
+        }
       }
     });
 

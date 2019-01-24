@@ -18,10 +18,8 @@ define([
     'dojo/_base/declare',
     'jimu/BaseWidgetSetting',
     'dijit/_WidgetsInTemplateMixin',
-    'dijit/registry',
     'dojo/_base/lang',
     'dojo/on',
-    'dojo/query',
     'jimu/dijit/CheckBox',
     'jimu/dijit/RadioBtn'
   ],
@@ -29,13 +27,10 @@ define([
     declare,
     BaseWidgetSetting,
     _WidgetsInTemplateMixin,
-    registry,
     lang,
     on,
-    query,
     CheckBox) {
     return declare([BaseWidgetSetting, _WidgetsInTemplateMixin], {
-
       baseClass: 'jimu-widget-overviewmap-setting',
 
       _selectedAttachTo: "",
@@ -94,18 +89,9 @@ define([
       },
 
       _selectItem: function(attachTo) {
-        var _selectedNode = null;
-        if (attachTo === 'top-left') {
-          _selectedNode = this.topLeftNode;
-        } else if (attachTo === 'top-right') {
-          _selectedNode = this.topRightNode;
-        } else if (attachTo === 'bottom-left') {
-          _selectedNode = this.bottomLeftNode;
-        } else if (attachTo === 'bottom-right') {
-          _selectedNode = this.bottomRightNode;
+        if(this[attachTo] && this[attachTo].setChecked){
+          this[attachTo].setChecked(true);
         }
-        var _radio = registry.byNode(query('.jimu-radio', _selectedNode)[0]);
-        _radio.check(true);
 
         this._selectedAttachTo = attachTo;
       },

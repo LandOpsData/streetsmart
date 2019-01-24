@@ -68,6 +68,10 @@ define(['dojo/_base/declare',
         'class': "launchpad-tooltip"
       });
 
+      if (window.isRTL && this.config.mirrorIconForRTL) {
+        domClass.add(this.imgNode, 'jimu-flipx');
+      }
+
       domClass.add(this.iconItemNode, 'icon-item-background' + this.getBackgroundColorIndex());
 
       this.own(on(this.iconItemNode, mouse.enter, lang.hitch(this, function(){

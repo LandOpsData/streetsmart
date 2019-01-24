@@ -5,6 +5,7 @@ define({
   "labelLayer": "Slāņa nosaukums",
   "itemZoomTo": "Pietuvināt",
   "itemTransparency": "Caurspīdīgums",
+  "itemSetVisibilityRange": "Iestatīt redzamības diapazonu",
   "itemTransparent": "Caurspīdīgs",
   "itemOpaque": "Necaurredzams",
   "itemMoveUp": "Pārvietot uz augšu",

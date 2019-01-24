@@ -18,12 +18,10 @@ define([
     'dojo/_base/declare',
     'dojo/_base/html',
     'dijit/_WidgetsInTemplateMixin',
-    'dijit/registry',
     'jimu/BaseWidgetSetting',
     'jimu/portalUtils',
     'dojo/_base/lang',
     'dojo/on',
-    'dojo/query',
     "dojo/Deferred",
     "jimu/dijit/RadioBtn"
   ],
@@ -31,12 +29,10 @@ define([
     declare,
     html,
     _WidgetsInTemplateMixin,
-    registry,
     BaseWidgetSetting,
     PortalUtils,
     lang,
     on,
-    query,
     Deferred) {
     return declare([BaseWidgetSetting, _WidgetsInTemplateMixin], {
       //these two properties is defined in the BaseWidget
@@ -51,22 +47,29 @@ define([
         }
         this.set('selectUnit', '');
         this.set('selectStyle', '');
+
         this.own(on(this.englishNode, 'click', lang.hitch(this, function() {
           this.set('selectUnit', 'english');
+          this._selectItem('english');
         })));
         this.own(on(this.metricNode, 'click', lang.hitch(this, function() {
           this.set('selectUnit', 'metric');
+          this._selectItem('metric');
         })));
         this.own(on(this.dualNode, 'click', lang.hitch(this, function() {
           this.set('selectUnit', 'dual');
+          this._selectItem('dual');
           this.set('selectStyle', 'line');
+          this._selectItem('line');
         })));
 
         this.own(on(this.lineNode, 'click', lang.hitch(this, function() {
           this.set('selectStyle', 'line');
+          this._selectItem('line');
         })));
         this.own(on(this.rulerNode, 'click', lang.hitch(this, function() {
           this.set('selectStyle', 'ruler');
+          this._selectItem('ruler');
         })));
 
         this.watch('selectUnit', this._updateUnit);
@@ -88,8 +91,9 @@ define([
           html.setStyle(this.rulerNode, 'display', 'inline-block');
         }
 
-        var _radio = registry.byNode(query('.jimu-radio', _selectedUnitNode)[0]);
-        _radio.check(true);
+        if(_selectedUnitNode && _selectedUnitNode.setChecked){
+          _selectedUnitNode.setChecked(true);
+        }
       },
 
       _updateStyle: function() {
@@ -101,8 +105,9 @@ define([
           _selectedStyleNode = this.lineNode;
         }
 
-        var _radio = registry.byNode(query('.jimu-radio', _selectedStyleNode)[0]);
-        _radio.check(true);
+        if(_selectedStyleNode && _selectedStyleNode.setChecked){
+          _selectedStyleNode.setChecked(true);
+        }
       },
 
       _processConfig: function(configJson) {
@@ -124,7 +129,11 @@ define([
 
         this._processConfig(config.scalebar).then(lang.hitch(this, function(scalebar) {
           this.set('selectUnit', scalebar.scalebarUnit);
-          this.set('selectStyle', scalebar.scalebarStyle || 'line');
+          this._selectItem(scalebar.scalebarUnit);
+
+          var lineStyle = scalebar.scalebarStyle || 'line';
+          this.set('selectStyle', lineStyle);
+          this._selectItem(lineStyle);
         }));
       },
 
@@ -132,7 +141,12 @@ define([
         this.config.scalebar.scalebarUnit = this.get('selectUnit');
         this.config.scalebar.scalebarStyle = this.get('selectStyle');
         return this.config;
-      }
+      },
 
+      _selectItem: function(name) {
+        if(this[name] && this[name].setChecked){
+          this[name].setChecked(true);
+        }
+      }
     });
   });

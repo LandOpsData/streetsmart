@@ -92,7 +92,8 @@ define({
     "stay": "Ostani",
     "search": "Išči",
     "searchMore": "Išči več",
-    "tooltipText": "Besedilo zaslonskega namiga"
+    "tooltipText": "Besedilo zaslonskega namiga",
+    "findAddressOrPlace": "Najdi naslov ali kraj"
   },
   "errorCode": "Koda",
   "errorMessage": "Sporočilo",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Iz zavihka Pripomočki dodajte pripomočke.",
     "modifyLayout": "Spremeni postavitev",
     "dragToAdd": "Povlecite za dodajanje",
-    "mapArea": "OBMOČJE KARTE"
+    "mapArea": "OBMOČJE KARTE",
+    "sceneArea": "OBMOČJE PRIZORA"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "Vaš račun nima dovoljenja za ustvarjanje ali spreminjanje podatkov.",
   "noEditableLayers": "Vaš račun nima dovoljenja ustvariti ali spremeniti podatke. Ali pa ta spletna karta ne vsebuje nobenih uredljivih slojev.",
-  "invalidConfiguration": "Pripomoček morda ni konfiguriran ali pa slojev v konfiguraciji ni več na karti. Odprite aplikacijo v graditeljskem načinu in ponovno konfigurirajte pripomoček."
+  "invalidConfiguration": "Pripomoček morda ni konfiguriran ali pa slojev v konfiguraciji ni več na karti. Odprite aplikacijo v graditeljskem načinu in ponovno konfigurirajte pripomoček.",
+  "essentialAppsLicenseErrorForApp": "Vaš račun ni licenciran za uporabo aplikacije, ki ni javna. Prosite administratorja v vaši organizaciji, da vam dodeli tip uporabnika, ki vsebuje aplikacije Essential Apps ali licenco za dodatne aplikacije Essential Apps.",
+  "essentialAppsLicenseErrorForBuilder": "Vaš račun ni licenciran za Web AppBuilder. Prosite administratorja v vaši organizaciji, da vam dodeli tip uporabnika, ki vsebuje aplikacije Essential Apps ali licenco za dodatne aplikacije Essential Apps."
 });

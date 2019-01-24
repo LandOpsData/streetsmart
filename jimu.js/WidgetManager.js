@@ -21,7 +21,8 @@ define(['dojo/_base/declare',
   'dojo/Deferred',
   'dojo/topic',
   'dojo/Evented',
-  'dojo/on',
+  // 'dojo/on',
+  'dijit/Tooltip',
   'dojo/aspect',
   'dojo/json',
   'dojo/query',
@@ -33,7 +34,7 @@ define(['dojo/_base/declare',
   './dijit/Message',
   './DataSourceManager'
 ],
-function(declare, lang, array, html, Deferred, topic, Evented, on, aspect,
+function(declare, lang, array, html, Deferred, topic, Evented, Tooltip, aspect,
   json, query, xhr, all, registry, utils, tokenUtils, Message, DataSourceManager) {
   var instance = null,
   clazz = declare(Evented, {
@@ -322,8 +323,10 @@ function(declare, lang, array, html, Deferred, topic, Evented, on, aspect,
       aspect.after(widget, 'startup', lang.hitch(this, this._postWidgetStartup, widget));
       aspect.before(widget, 'destroy', lang.hitch(this, this._onDestroyWidget, widget));
 
+
       // on(widget.domNode, 'click', lang.hitch(this, this._onClickWidget, widget));
-      widget.domNode.addEventListener('click', lang.hitch(this, this._onClickWidget, widget), {capture: true});
+      widget.domNode.addEventListener(this._getActiveEventName(),
+                                      lang.hitch(this, this._onClickWidget, widget), {capture: true});
 
       this.loaded.push(widget);
       return widget;
@@ -544,6 +547,16 @@ function(declare, lang, array, html, Deferred, topic, Evented, on, aspect,
           widget.onOpen();
         } catch (err) {
           console.error('fail to open widget ' + widget.name + '. ' + err.stack);
+        }
+      }else{
+        return;//Prevent repeated opening of the same widget.#14994
+      }
+
+      if(!utils.isCommonOnScreenWidget(widget)){
+        if(widget.openAtStart && !widget._isNotOpenAtStart){
+          widget._isNotOpenAtStart = true;
+        }else{
+          utils.focusFirstFocusNode(widget.domNode);
         }
       }
 
@@ -997,6 +1010,7 @@ function(declare, lang, array, html, Deferred, topic, Evented, on, aspect,
         html.setStyle(this.activeWidget.domNode, 'zIndex', 101);
       }
       this.activeWidget.onActive();
+      // utils.focusFirstFocusNode(widget.domNode);
       topic.publish('widgetActived', widget);
     },
 
@@ -1102,6 +1116,12 @@ function(declare, lang, array, html, Deferred, topic, Evented, on, aspect,
       utils.setVerticalCenter(widgetObject.domNode);
       aspect.after(widgetObject, 'resize', lang.hitch(this,
         utils.setVerticalCenter, widgetObject.domNode));
+
+      //init styles and event for first/last nodes
+      utils.initTabIndexAndOrder(widgetObject);
+      //init cancel event for widgetDom
+      utils.initWidgetCancelEvent(widgetObject);
+
       this.openWidget(widgetObject);
       // if(widgetObject.defaultState){
       //   this.changeWindowStateTo(widgetObject, widgetObject.defaultState);
@@ -1115,6 +1135,9 @@ function(declare, lang, array, html, Deferred, topic, Evented, on, aspect,
         widgetObject.onSignOut();
       }
       this._triggerMissedAction(widgetObject);
+
+      //add tooltips
+      utils.addTooltipByDomNode(Tooltip, widgetObject.domNode, widgetObject.label);
     },
 
     _triggerMissedAction: function(widget) {
@@ -1253,6 +1276,14 @@ function(declare, lang, array, html, Deferred, topic, Evented, on, aspect,
       if(this.getWidgetsByName(widget.name).length === 0){
         this.removeWidgetStyle(widget);
       }
+    },
+
+    _getActiveEventName: function() {
+      var hasPointer = "PointerEvent" in window ? "pointer" :
+                          "MSPointerEvent" in window? "MSPointer" : false;
+      var hasMSPointer = hasPointer && hasPointer.slice(0, 2) === "MS";
+      var activeEventName = hasPointer ? hasPointer + (hasMSPointer ? "Down" : "down") : "mousedown";
+      return activeEventName;
     }
   });
 

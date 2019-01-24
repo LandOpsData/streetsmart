@@ -24,7 +24,7 @@ define([
   'dijit/_TemplatedMixin',
   'dijit/_WidgetsInTemplateMixin',
   'dojo/text!./templates/QueryableLayerSource.html',
-  'jimu/dijit/RadioBtn',
+  'dijit/form/RadioButton',
   'jimu/dijit/_QueryableLayerChooserWithButtons',
   'jimu/dijit/QueryableServiceChooserFromPortal',
   'jimu/dijit/_QueryableServiceChooserContent',
@@ -211,36 +211,39 @@ function(on, Evented, lang, html, declare, _WidgetBase, _TemplatedMixin, _Widget
       var radioChangeHandler = lang.hitch(this, this._onRadioClicked);
 
       this.mapRadio = new RadioBtn({
-        group: group,
-        onStateChange: radioChangeHandler,
+        name: group,
+        style:"margin-bottom: 1px;",
         checked: true
       });
+      this.own(on(this.mapRadio, 'change', radioChangeHandler));
       this.mapRadio.placeAt(this.mapTd, 'first');
 
       this.portalRadio = new RadioBtn({
-        group: group,
-        onStateChange: radioChangeHandler,
+        name: group,
+        style:"margin-bottom: 1px;",
         checked: false
       });
+      this.own(on(this.portalRadio, 'change', radioChangeHandler));
       this.portalRadio.placeAt(this.portalTd, 'first');
 
       this.urlRadio = new RadioBtn({
-        group: group,
-        onStateChange: radioChangeHandler,
+        name: group,
+        style:"margin-bottom: 1px;",
         checked: false
       });
+      this.own(on(this.urlRadio, 'change', radioChangeHandler));
       this.urlRadio.placeAt(this.urlTd, 'first');
 
       this.own(on(this.mapLabel, 'click', lang.hitch(this, function(){
-        this.mapRadio.check();
+        this.mapRadio.set('checked', true);
       })));
 
       this.own(on(this.portalLabel, 'click', lang.hitch(this, function(){
-        this.portalRadio.check();
+        this.portalRadio.set('checked', true);
       })));
 
       this.own(on(this.urlLabel, 'click', lang.hitch(this, function(){
-        this.urlRadio.check();
+        this.urlRadio.set('checked', true);
       })));
     },
 

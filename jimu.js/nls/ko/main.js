@@ -92,7 +92,8 @@ define({
     "stay": "남아 있기",
     "search": "검색",
     "searchMore": "추가 검색",
-    "tooltipText": "도구 설명 텍스트"
+    "tooltipText": "도구 설명 텍스트",
+    "findAddressOrPlace": "주소 또는 위치 찾기"
   },
   "errorCode": "코드",
   "errorMessage": "메시지",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "위젯 탭을 통해 여기에 위젯 추가",
     "modifyLayout": "레이아웃 수정",
     "dragToAdd": "드래그하여 추가",
-    "mapArea": "맵 영역"
+    "mapArea": "맵 영역",
+    "sceneArea": "씬 영역"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "내 계정에 데이터를 만들거나 수정할 권한이 없습니다.",
   "noEditableLayers": "해당 계정에는 데이터를 만들거나 수정할 수 있는 권한이 없습니다. 또는 이 웹 맵에는 편집 가능한 레이어가 없습니다.",
-  "invalidConfiguration": "위젯이 구성되지 않았거나 구성의 레이어가 더 이상 맵에 없습니다. 빌더 모드에서 앱을 열고 위젯을 다시 구성하세요."
+  "invalidConfiguration": "위젯이 구성되지 않았거나 구성의 레이어가 더 이상 맵에 없습니다. 빌더 모드에서 앱을 열고 위젯을 다시 구성하세요.",
+  "essentialAppsLicenseErrorForApp": "귀하의 계정에는 공개 상태가 아닌 앱을 사용할 수 있는 라이선스가 없습니다. 필수 앱 또는 애드온 필수 앱 라이선스가 포함된 사용자 유형을 업무 지시하려면 기관 관리자에게 문의하세요.",
+  "essentialAppsLicenseErrorForBuilder": "귀하의 계정에는 웹 앱 빌더의 라이선스가 없습니다. 필수 앱 또는 애드온 필수 앱 라이선스가 포함된 사용자 유형을 업무 지시하려면 기관 관리자에게 문의하세요."
 });

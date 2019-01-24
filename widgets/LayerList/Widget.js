@@ -214,6 +214,10 @@ define([
         this.own(on(this.operLayerInfos,
           'layerInfosOpacityChanged',
           lang.hitch(this, this._onLayerInfosOpacityChanged)));
+
+        this.own(on(this.operLayerInfos,
+          'layerInfosScaleRangeChanged',
+          lang.hitch(this, this._onLayerInfosScaleRangeChanged)));
       },
 
       _onLayerInfosChanged: function(/*layerInfo, changedType*/) {
@@ -301,6 +305,41 @@ define([
           var opacity = layerInfo.layerObject.opacity === undefined ? 1 : layerInfo.layerObject.opacity;
           var contentDomNode = query("[layercontenttrnodeid='" + layerInfo.id + "']", this.domNode)[0];
           query(".legends-div.jimu-legends-div-flag img", contentDomNode).style("opacity", opacity);
+        }, this);
+      },
+
+      _onLayerInfosScaleRangeChanged: function(changedLayerInfos) {
+        array.forEach(changedLayerInfos, function(layerInfo) {
+          var layerInfoArray = [];
+          layerInfo.traversal(lang.hitch(this, function(subLayerInfo) {
+            layerInfoArray.push(subLayerInfo);
+          }));
+
+          var that = this;
+          var currentIndex = 0;
+          var steps = 10;
+          setTimeout(function() {
+            var batchLayerInfos = layerInfoArray.slice(currentIndex, currentIndex + steps);
+            currentIndex += steps;
+            array.forEach(batchLayerInfos, function(layerInfo) {
+              query("[class~='layer-title-div-" + layerInfo.id + "']", this.domNode)
+              .forEach(function(layerTitleDivIdDomNode) {
+                try {
+                  if (layerInfo.isInScale()) {
+                    html.removeClass(layerTitleDivIdDomNode, 'grayed-title');
+                  } else {
+                    html.addClass(layerTitleDivIdDomNode, 'grayed-title');
+                  }
+                } catch (err) {
+                  console.warn(err.message);
+                }
+              }, that);
+            });
+
+            if(layerInfoArray.length > currentIndex) {
+              setTimeout(arguments.callee, 30); // jshint ignore:line
+            }
+          }, 30);
         }, this);
       },
 

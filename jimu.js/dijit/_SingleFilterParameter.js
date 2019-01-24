@@ -83,7 +83,7 @@ define([
           resultDef = def;
         }else{
           resultDef = new Deferred();
-          resultDef.resolve();
+          resultDef.resolve(this.valueProvider);
         }
 
         return resultDef;

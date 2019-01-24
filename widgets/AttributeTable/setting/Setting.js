@@ -24,6 +24,7 @@ define([
     'dojo/_base/array',
     'dojo/on',
     'dojo/Deferred',
+    'dojo/promise/all',
     "dojo/query",
     "dijit/registry",
     "jimu/dijit/Popup",
@@ -42,6 +43,7 @@ define([
     array,
     on,
     Deferred,
+    promiseAll,
     query,
     registry,
     Popup,
@@ -434,23 +436,30 @@ define([
       // must be invoke after initialize this._layerInfos
       _processDelayedLayerInfosAfterInit: function(layerInfos) {
         var count = this._layerInfos.length;
+        var sortFieldRequests = [];
+
         for (var i = 0; i < layerInfos.length; i++) {
           var _configLayerInfo = utils.getConfigInfoFromLayerInfo(layerInfos[i]);
           var show = _configLayerInfo.show,
               sortField = _configLayerInfo.sortField;
-          this._addRowToDisplayFieldsTable({
+          var rowData = {
             label: _configLayerInfo.name || _configLayerInfo.title,
             url: _configLayerInfo.layer.url,
             index: "" + (count + i),
             isDescending: true,
             show: show
-          }).then(lang.hitch(this, function() {
-            this._allLayerFields.push(_configLayerInfo.layer.fields);
-            this._layerInfos.push(layerInfos[i]); // this case un get tableInfo
-          }), function(err) {
-            console.error(err);
-          });
+          };
+          this._allLayerFields.push(_configLayerInfo.layer.fields);
+          this._layerInfos.push(layerInfos[i]);
+          sortFieldRequests.push(this._prepareSortField(rowData, i));
         }
+        promiseAll(sortFieldRequests).then(lang.hitch(this, function(results) {
+          for(var i = 0; i < results.length; i++) {
+            this._addRowToDisplayFieldsTable(results[i]);
+          }
+        }), lang.hitch(this, function(err) {
+          console.error(err);
+        }));
       },
 
       _processDelayedLayerInfos: function() { // must be invoke after initialize this._layerInfos
@@ -572,6 +581,7 @@ define([
 
       _init: function(layerInfos) {
         var unSupportQueryLayerNames = [];
+        var sortFieldRequests = [];
 
         for (var i = 0; i < layerInfos.length; i++) {
           var show = layerInfos[i].show && this._getSupportTableInfoById(layerInfos[i].id).isSupportQuery;
@@ -587,11 +597,8 @@ define([
             isDescending: layerInfos[i].isDescending,
             showAttachments: !!layerInfos[i].showAttachments
           };
-          this._addRowToDisplayFieldsTable(rowData, i).then(lang.hitch(this, function() {
-            this._allLayerFields.push(layerInfos[i].layer.fields);
-          }), lang.hitch(this, function(err) {
-            console.error(err);
-          }));
+          this._allLayerFields.push(layerInfos[i].layer.fields);
+          sortFieldRequests.push(this._prepareSortField(rowData, i));
 
           if (this._unSpportQueryCampsite.fromConfig) {
             var _layerNames = this._unSpportQueryCampsite.layerNames;
@@ -602,6 +609,13 @@ define([
             }
           }
         }
+        promiseAll(sortFieldRequests).then(lang.hitch(this, function(results) {
+          for(var i = 0; i < results.length; i++) {
+            this._addRowToDisplayFieldsTable(results[i]);
+          }
+        }), lang.hitch(this, function(err) {
+          console.error(err);
+        }));
 
         if (this._unSpportQueryCampsite.fromConfig && unSupportQueryLayerNames.length > 0) {
           new Message({
@@ -654,13 +668,16 @@ define([
         }
       },
 
-      _addRowToDisplayFieldsTable: function(rowData, layerIndex) {
+      _addRowToDisplayFieldsTable: function(rowData) {
+        this.displayFieldsTable.addRow(rowData);
+      },
+
+      _prepareSortField: function(rowData, layerIndex) {
         var def= new Deferred();
 
         if(rowData.sorting && rowData.sorting.fields) {
           rowData.sortField = this._prepareSortFieldOptions(rowData.sorting);
-          this.displayFieldsTable.addRow(rowData);
-          def.resolve();
+          def.resolve(rowData);
         } else {
           this._getLayerFields(layerIndex).then(lang.hitch(this, function(fields) {
             if(rowData.sorting) {
@@ -669,8 +686,7 @@ define([
               rowData.sorting = { 'fields': fields };
             }
             rowData.sortField = this._prepareSortFieldOptions(rowData.sorting);
-            this.displayFieldsTable.addRow(rowData);
-            def.resolve();
+            def.resolve(rowData);
           }), lang.hitch(this, function(err) {
             console.error(err);
             def.reject(err);

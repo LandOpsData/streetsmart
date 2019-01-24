@@ -5,6 +5,7 @@ define({
   "labelLayer": "Layer-Name",
   "itemZoomTo": "Zoomen auf",
   "itemTransparency": "Transparenz",
+  "itemSetVisibilityRange": "Sichtbarkeitsbereich festlegen",
   "itemTransparent": "Transparent",
   "itemOpaque": "Nicht transparent",
   "itemMoveUp": "Nach oben verschieben",

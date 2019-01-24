@@ -5,6 +5,7 @@ define({
   "labelLayer": "Nombre de capa",
   "itemZoomTo": "Acercar a",
   "itemTransparency": "Transparencia",
+  "itemSetVisibilityRange": "Definir el rango de visibilidad",
   "itemTransparent": "Transparente",
   "itemOpaque": "Opaco",
   "itemMoveUp": "Mover hacia arriba",

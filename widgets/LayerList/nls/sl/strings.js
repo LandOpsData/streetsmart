@@ -5,6 +5,7 @@ define({
   "labelLayer": "Ime sloja",
   "itemZoomTo": "Približaj na",
   "itemTransparency": "Prosojnost",
+  "itemSetVisibilityRange": "Nastavi razpon vidljivosti",
   "itemTransparent": "Prozorno",
   "itemOpaque": "Neprosojno",
   "itemMoveUp": "Premakni gor",

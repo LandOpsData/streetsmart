@@ -65,21 +65,37 @@ define(['dojo/_base/declare',
       },
 
       /**
-       * apply Filter expression to a layer
-       * @param  {[type]} layerId         [description]
+       * apply Filter expression to a layer.
+       * This method can be invoked with these 2 format:
+       * 1)
+       * @param  {[string]} layerId         [the layer id]
        * @param  {[type]} widgetId        [description]
        * @param  {[type]} expression      [description]
        * @param  {[type]} enableMapFilter [true/false or null or undefined]
        * @param  {[type]} useAND [true/false or null or undefined]
+       * @param  {[type]} zoomAfterFilter [true/false or null or undefined]
+       * 2)
+       * @param options: an object with all of the above properties.
        */
-      applyWidgetFilter: function(layerId, widgetId, expression, enableMapFilter, useAND) {
+      applyWidgetFilter: function(layerId, widgetId, expression, enableMapFilter, useAND, zoomAfterFilter) {
+        var options = typeof layerId === 'object'? layerId: null;
+
+        if(options){
+          layerId = options.layerId;
+          widgetId = options.widgetId;
+          expression = options.expression;
+          enableMapFilter = options.enableMapFilter;
+          useAND = options.useAND;
+          zoomAfterFilter = options.zoomAfterFilter;
+        }
+
         this._setFilterExp(layerId, widgetId, expression, enableMapFilter, useAND);
 
         var layerInfo = this.layerInfos.getLayerInfoById(layerId) ||
           this.layerInfos.getTableInfoById(layerId);
         var filterExp = this._getFilterExp(layerId);
         if (filterExp !== null && layerInfo) {
-          layerInfo.setFilter(filterExp);
+          layerInfo.setFilter(filterExp, {'zoomAfterFilter': zoomAfterFilter});
         }
       },
 

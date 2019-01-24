@@ -46,6 +46,8 @@ define(['dojo/_base/declare',
 
       postMixInProperties: function() {
         this.content = this.message;
+        //register msg popup when app starts because cursor needs to focus it from other widget's first node.
+        window.currentMsgPopup = this;
       },
 
       _createTitleNode: function(){
@@ -58,9 +60,16 @@ define(['dojo/_base/declare',
             innerHTML: this.titleLabel || '&nbsp'
           }, this.titleNode);
           this.closeBtnNode = html.create('div', {
-            'class': 'close-btn jimu-float-trailing'
+            'class': 'close-btn jimu-icon jimu-icon-close jimu-float-trailing',
+            'tabindex': 0
           }, this.titleNode);
           this.own(on(this.closeBtnNode, 'click', lang.hitch(this, this.close)));
+          this.own(on(this.closeBtnNode, 'keydown', lang.hitch(this, function(evt){
+            if(evt.keyCode === keys.ENTER){
+              this.close();
+              this.focusLastActiveNode();
+            }
+          })));
         }
       },
 

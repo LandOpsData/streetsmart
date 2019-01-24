@@ -5,6 +5,7 @@ define({
   "labelLayer": "Katman adı",
   "itemZoomTo": "Şuna Yakınlaştır",
   "itemTransparency": "Saydamlık",
+  "itemSetVisibilityRange": "Görünürlük aralığını ayarla",
   "itemTransparent": "Saydam",
   "itemOpaque": "Opak",
   "itemMoveUp": "Yukarı taşı",

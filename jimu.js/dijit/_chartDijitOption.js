@@ -30,11 +30,12 @@ define([
       });
     },
 
-    init: function(featureLayer, symbolLayer, popupInfo, map) {
+    init: function(featureLayer, symbolLayer, popupInfo, map, layerObject) {
       this.chartHelpUtils.setLayerFeatureLayer(featureLayer);
       this.chartHelpUtils.setSymbolLayer(symbolLayer);
       this.chartHelpUtils.setPopupInfo(popupInfo);
       this.chartHelpUtils.setMap(map);
+      this.chartHelpUtils.setLayerObject(layerObject);
     },
 
     // return {label:'', values:[2000], unit /*optional*/}

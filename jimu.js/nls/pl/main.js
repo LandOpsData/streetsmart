@@ -92,7 +92,8 @@ define({
     "stay": "Pozostań",
     "search": "Wyszukaj",
     "searchMore": "Wyszukaj więcej",
-    "tooltipText": "Treść etykiety narzędzia"
+    "tooltipText": "Treść etykiety narzędzia",
+    "findAddressOrPlace": "Znajdź adres lub miejsce"
   },
   "errorCode": "Kod",
   "errorMessage": "Komunikat",
@@ -464,7 +465,7 @@ define({
     "ShowPopup": "Wyświetl okno podręczne",
     "CreateLayer": "Utwórz warstwę",
     "ShowStatistics": "Statystyka...",
-    "ClearSelection": "Clear selection",
+    "ClearSelection": "Wyczyść",
     "ExportToCSV": "Eksport do pliku CSV",
     "ShowSelectedFeature": "Pokaż wybrane obiekty",
     "ExportToFeatureCollection": "Eksportuj do zbioru obiektów",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Dodaj widżety w tym miejscu z poziomu karty Widżet",
     "modifyLayout": "Modyfikuj kompozycję",
     "dragToAdd": "Przeciągnij, aby dodać",
-    "mapArea": "OBSZAR MAPY"
+    "mapArea": "OBSZAR MAPY",
+    "sceneArea": "OBSZAR SCENY"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "Twoje konto nie ma uprawnień do tworzenia ani modyfikowania danych.",
   "noEditableLayers": "Twoje konto nie ma uprawnień do tworzenia lub modyfikowania danych. Możliwe też, że ta mapa internetowa nie zawiera żadnych warstw edytowalnych.",
-  "invalidConfiguration": "Widżet nie został skonfigurowany lub warstwy w tej konfiguracji nie znajdują się już na mapie. Otwórz aplikację w trybie kreatora i ponownie skonfiguruj widżet."
+  "invalidConfiguration": "Widżet nie został skonfigurowany lub warstwy w tej konfiguracji nie znajdują się już na mapie. Otwórz aplikację w trybie kreatora i ponownie skonfiguruj widżet.",
+  "essentialAppsLicenseErrorForApp": "Twoje konto nie jest licencjonowane do korzystania z aplikacji, która nie jest publiczna. Poproś administratora instytucji o przypisanie typu użytkownika, który obejmuje licencję na kluczowe aplikacje lub licencję na kluczowe aplikacje dodatkowe.",
+  "essentialAppsLicenseErrorForBuilder": "Twoje konto nie obejmuje licencji na aplikację Web AppBuilder. Poproś administratora instytucji o przypisanie typu użytkownika, który obejmuje licencję na kluczowe aplikacje lub licencję na kluczowe aplikacje dodatkowe."
 });

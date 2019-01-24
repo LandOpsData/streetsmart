@@ -157,6 +157,8 @@ function (declare, lang, array, html, topic, Deferred, on, jimuUtils, WidgetMana
         'class': 'app-error',
         innerHTML: jimuUtils.sanitizeHTML(msg)
       }, document.body);
+      /*globals jimuConfig*/
+      html.setStyle(jimuConfig.loadingId, 'display', 'none');
     },
 
     getAppConfig: function () {

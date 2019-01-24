@@ -5,6 +5,7 @@ define({
   "labelLayer": "Nume strat tematic",
   "itemZoomTo": "Transfocare la",
   "itemTransparency": "Transparenţă",
+  "itemSetVisibilityRange": "Setare nivel de vizibilitate",
   "itemTransparent": "Transparent",
   "itemOpaque": "Opac",
   "itemMoveUp": "Deplasare în sus",

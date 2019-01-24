@@ -515,8 +515,10 @@ function(on, Evented, declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateM
         return;
       }
 
-      var copyLayerInfo = lang.clone(this._layerDefinition);
-      var layerInfoFields = copyLayerInfo.fields;
+      // var copyLayerInfo = lang.clone(this._layerDefinition);
+      // var layerInfoFields = copyLayerInfo.fields;
+      var layerInfoFields = lang.clone(this._layerDefinition.fields);
+
       // layerInfoFields = layerInfoFields.sort(function(a, b){
       //   a.label = a.alias || a.name;
       //   b.label = b.alias || b.name;

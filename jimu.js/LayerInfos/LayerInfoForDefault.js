@@ -19,6 +19,7 @@ define([
   'dojo/_base/array',
   'dojo/_base/lang',
   'dojo/Deferred',
+  'dojo/promise/all',
   './LayerInfo',
   'dojox/gfx',
   'dojo/dom-construct',
@@ -36,10 +37,11 @@ define([
   'esri/graphic',
   'esri/geometry/Point',
   'esri/tasks/query',
+  'esri/tasks/RelationshipQuery',
   'esri/tasks/QueryTask'
-], function(declare, array, lang, Deferred, LayerInfo, gfx, domConstruct,
+], function(declare, array, lang, Deferred, all, LayerInfo, gfx, domConstruct,
 domAttr, domClass, aspect, portalUrlUtils, portalUtils, jimuUtils, jsonUtils, LabelLayer,
-LabelClass, PopupTemplate, Legend, Graphic, Point, Query, QueryTask) {
+LabelClass, PopupTemplate, Legend, Graphic, Point, Query, RelationshipQuery, QueryTask) {
   var clazz = declare(LayerInfo, {
     _legendsNode: null,
     controlPopupInfo: null,
@@ -82,6 +84,11 @@ LabelClass, PopupTemplate, Legend, Graphic, Point, Query, QueryTask) {
                        this.layerObject.name,
                        this.layerObject);
         this.layerObject.name = this.title;
+        // "arcgisProps.title" will be clear out if overwrites the "name".
+        // reset the "arcgisProps.title" for print task to display the legend title.
+        lang.setObject('arcgisProps.title',
+                       this.title,
+                       this.layerObject);
       }
     },
 
@@ -754,6 +761,76 @@ LabelClass, PopupTemplate, Legend, Graphic, Point, Query, QueryTask) {
       return def;
     },
 
+    _getOrderByFields: function(relationshipId) {
+      var orderByFields = null;
+      if(relationshipId === undefined || relationshipId === null ) {
+        return orderByFields;
+      }
+
+      var popupInfo = this.getPopupInfo();
+      if(popupInfo && popupInfo.relatedRecordsInfo && popupInfo.relatedRecordsInfo.orderByFields) {
+        array.some(popupInfo.relatedRecordsInfo.orderByFields, function(orderByField) {
+          var orderByFieldArray = orderByField.field.split('/');
+          if(orderByFieldArray[1] === relationshipId.toString()) {
+            orderByFields = [orderByFieldArray[2] + ' ' + orderByField.order];
+            return true;
+          }
+        }, this);
+      }
+      return orderByFields;
+    },
+
+    _getOriRelationshipByDestLayer: function(originalLayerObject, relatedLayerObject) {
+      var queryRelationship = null;
+      // compatible with arcgis service 10.0.
+      array.some(originalLayerObject.relationships, function(relationship) {
+        if (relationship.relatedTableId === relatedLayerObject.layerId) {//************
+          queryRelationship = relationship;
+          return true;
+        }
+      }, this);
+      return queryRelationship;
+    },
+
+    getRelatedRecords: function(feature, relatedLayerInfo) {
+      var def = new Deferred();
+      var relatedQuery = new RelationshipQuery();
+      // todo...
+      var originalLayerObjectDef = this.getLayerObject();
+      var relatedLayerObjectDef = relatedLayerInfo.getLayerObject();
+      all({
+        originalLayerObject: originalLayerObjectDef,
+        relatedLayerObject: relatedLayerObjectDef
+      }).then(lang.hitch(this, function(result) {
+        if(!result.originalLayerObject || !result.relatedLayerObject) {
+          def.resolve([]);
+        }
+        var queryRelationship = this._getOriRelationshipByDestLayer(this.layerObject, result.relatedLayerObject);
+        relatedQuery.outFields = ["*"];
+        relatedQuery.relationshipId = queryRelationship && queryRelationship.id;
+        var objectId =
+          feature.attributes[this.layerObject.objectIdField];
+        relatedQuery.objectIds = [objectId];
+        relatedQuery.definitionExpression = relatedLayerInfo.getFilter();
+        relatedQuery.orderByFields = this._getOrderByFields(queryRelationship && queryRelationship.id);
+
+        this.layerObject.queryRelatedFeatures(
+          relatedQuery,
+          lang.hitch(this, function(relatedRecords) {
+            var features = relatedRecords[objectId] && relatedRecords[objectId].features;
+            if(features) {
+              def.resolve(features);
+            } else {
+              def.resolve([]);
+            }
+          }), lang.hitch(this, function() {
+            def.resolve([]);
+          })
+        );
+      }));
+      return def;
+    },
+
     getFilter: function() {
       // summary:
       //   get filter from layerObject.
@@ -770,7 +847,7 @@ LabelClass, PopupTemplate, Legend, Graphic, Point, Query, QueryTask) {
       return filter;
     },
 
-    setFilter: function(layerDefinitionExpression) {
+    setFilter: function(layerDefinitionExpression, objectPassWithFilterChangeEvent) {
       // summary:
       //   set layer definition expression to layerObject.
       // paramtter
@@ -781,6 +858,10 @@ LabelClass, PopupTemplate, Legend, Graphic, Point, Query, QueryTask) {
       if(this.layerObject &&
          !this.layerObject.empty &&
          this.layerObject.setDefinitionExpression) {
+        var parameterObject = lang.mixin({}, objectPassWithFilterChangeEvent);
+        lang.setObject('_wabProperties.objectPassWithFilterChangeEvent',
+                       parameterObject,
+                       this.layerObject);
         this.layerObject.setDefinitionExpression(layerDefinitionExpression);
       }
     },

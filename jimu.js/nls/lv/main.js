@@ -92,7 +92,8 @@ define({
     "stay": "Palikt",
     "search": "Meklēt",
     "searchMore": "Meklēt vairāk",
-    "tooltipText": "Rīka padoma teksts"
+    "tooltipText": "Rīka padoma teksts",
+    "findAddressOrPlace": "Atrast adresi vai vietu"
   },
   "errorCode": "Kods",
   "errorMessage": "Ziņojums",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Pievienojiet šeit logrīkus, izmantojot cilni Logrīki",
     "modifyLayout": "Modificēt izkārtojumu",
     "dragToAdd": "Velciet, lai pievienotu",
-    "mapArea": "KARTES LAUKUMS"
+    "mapArea": "KARTES LAUKUMS",
+    "sceneArea": "SCĒNAS TERITORIJA"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "Jūsu kontam nav piešķirta atļauja izveidot vai modificēt datus.",
   "noEditableLayers": "Jūsu kontam nav atļaujas veidot vai mainīt datus. Vai arī šajā tīmekļa kartē nav neviena rediģējama slāņa.",
-  "invalidConfiguration": "Logrīks nav konfigurēts vai konfigurētie slāņi vairs nav kartē. Lūdzu, atveriet programmu veidotāja režīmā un konfigurējiet logrīku atkārtoti."
+  "invalidConfiguration": "Logrīks nav konfigurēts vai konfigurētie slāņi vairs nav kartē. Lūdzu, atveriet programmu veidotāja režīmā un konfigurējiet logrīku atkārtoti.",
+  "essentialAppsLicenseErrorForApp": "Jūsu kontam nav licences, lai izmantotu lietotni, kas nav publiska. Pieprasiet savas organizācijas administratoram piešķirt jums lietotāja veidu, kurā iekļauts lietotņu komplekts Essential Apps vai papildinājumlietotņu Essential Apps licence.",
+  "essentialAppsLicenseErrorForBuilder": "Jūsu kontam nav licences, lai lietotu Web AppBuilder. Pieprasiet savas organizācijas administratoram piešķirt jums lietotāja veidu, kurā iekļauts lietotņu komplekts Essential Apps vai papildinājumlietotņu Essential Apps licence."
 });

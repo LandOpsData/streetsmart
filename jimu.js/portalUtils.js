@@ -1120,14 +1120,16 @@ define([
             "baseMap": {
               "id": "basemap",
               "title": "Topographic",
-              "baseMapLayers": [{
-                "url": "https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer",
-                "id": "worldTopoBase",
-                "layerType": "ArcGISTiledMapServiceLayer",
-                "title": "Topo"
-              }
-            ],
-              "elevationLayers": [{
+              "baseMapLayers": [
+                {
+                  "url": "https://services.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer",
+                  "id": "worldTopoBase",
+                  "layerType": "ArcGISTiledMapServiceLayer",
+                  "title": "Topo"
+                }
+              ],
+              "elevationLayers": [
+                {
                   "url": "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer",
                   "id": "globalElevation",
                   "listMode": "hide",
@@ -1137,7 +1139,8 @@ define([
               ]
             },
             "ground": {
-              "layers": [{
+              "layers": [
+                {
                   "url": "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer",
                   "id": "globalElevation",
                   "listMode": "hide",
@@ -1151,9 +1154,9 @@ define([
               "latestWkid": 3857,
               "wkid": 102100
             },
-            "version": "1.12",
+            "version": "1.13",
             "authoringApp": "WebAppBuilder",
-            "authoringAppVersion": "2.10"
+            "authoringAppVersion": "2.11"
           };
           var text = dojoJson.stringify(data);
           var args = {

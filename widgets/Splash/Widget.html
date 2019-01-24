@@ -1,4 +1,4 @@
-<div class="jimu-widget-splash-desktop">
+<div class="jimu-widget-splash-desktop" data-dojo-attach-point="splashDesktop">
   <div class="overlay" data-dojo-attach-point="overlayNode"></div>
   <div class="envelope buried" data-dojo-attach-point="envelopeNode">
     <div class="splash-container splash-bg" data-dojo-attach-point="splashContainerBackground"></div>
@@ -8,7 +8,7 @@
         <div class="confirmcheck-container" data-dojo-attach-point="confirmCheckContainer">
           <div data-dojo-attach-point="confirmCheck"></div>
         </div>
-        <button class="jimu-btn jimu-float-trailing" data-dojo-attach-point="okNode" data-dojo-attach-event="onclick:onOkClick" tabindex="0"></button>
+        <button class="jimu-btn jimu-float-trailing" data-dojo-attach-point="okNode" data-dojo-attach-event="onclick:onOkClick, onkeydown:onOkKeydown" tabindex="0"></button>
       </div>
     </div>
   </div>

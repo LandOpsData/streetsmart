@@ -311,6 +311,7 @@ define([
             contentHasNoMargin: true,
             moveToCenter: false,
             customPosition: {left: popupPosition.left, top: popupPosition.top},
+            useFocusLogic: false,
             buttons: []
           });
           //update popup UI for this dijit
@@ -496,6 +497,7 @@ define([
             content: this.listSelect.domNode, //need a dom, not html string
             titleLabel: popupName,
             isResize: false,
+            useFocusLogic: false,
             // onClose: function(){return false},
             onClose: lang.hitch(this, function () {
               //save dom

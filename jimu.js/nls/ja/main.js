@@ -92,7 +92,8 @@ define({
     "stay": "留まる",
     "search": "検索",
     "searchMore": "さらに検索",
-    "tooltipText": "ツールチップ テキスト"
+    "tooltipText": "ツールチップ テキスト",
+    "findAddressOrPlace": "住所または場所の検索"
   },
   "errorCode": "コード",
   "errorMessage": "メッセージ",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "[ウィジェット] タブからここにウィジェットを追加",
     "modifyLayout": "レイアウトの変更",
     "dragToAdd": "ドラッグして追加",
-    "mapArea": "マップ エリア"
+    "mapArea": "マップ エリア",
+    "sceneArea": "シーン エリア"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "ご使用のアカウントには、データを作成/変更する権限がありません。",
   "noEditableLayers": "ご使用のアカウントには、データを作成/変更する権限がありません。または、この Web マップに編集可能なレイヤーが含まれていません。",
-  "invalidConfiguration": "ウィジェットが構成されていないか、構成で指定されたレイヤーがマップ内に存在しません。アプリをビルダー モードで開き、ウィジェットを再構成してください。"
+  "invalidConfiguration": "ウィジェットが構成されていないか、構成で指定されたレイヤーがマップ内に存在しません。アプリをビルダー モードで開き、ウィジェットを再構成してください。",
+  "essentialAppsLicenseErrorForApp": "パブリックでないアプリを使用するためのライセンスがアカウントに付与されていません。 組織の管理者に Essential Apps またはアドオン Essential Apps ライセンスを含むユーザー タイプを割り当てるよう依頼してください。",
+  "essentialAppsLicenseErrorForBuilder": "Web AppBuilder のライセンスがアカウントに付与されていません。 組織の管理者に Essential Apps またはアドオン Essential Apps ライセンスを含むユーザー タイプを割り当てるよう依頼してください。"
 });

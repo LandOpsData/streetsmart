@@ -6,6 +6,7 @@ define({
     labelLayer: "Layer name",
     itemZoomTo: "Zoom to",
     itemTransparency: "Transparency",
+    itemSetVisibilityRange: "Set visibility range",
     itemTransparent: "Transparent",
     itemOpaque: "Opaque",
     itemMoveUp: "Move up",

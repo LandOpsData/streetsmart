@@ -92,7 +92,8 @@ define({
     "stay": "Tinggal",
     "search": "Cari",
     "searchMore": "Cari lebih banyak",
-    "tooltipText": "Teks tooltip"
+    "tooltipText": "Teks tooltip",
+    "findAddressOrPlace": "Temukan alamat atau tempat"
   },
   "errorCode": "Kode",
   "errorMessage": "Pesan",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Tambahkan widget di sini melalui tab Widget",
     "modifyLayout": "Ubah tata letak",
     "dragToAdd": "Seret untuk menambahkan",
-    "mapArea": "AREA PETA"
+    "mapArea": "AREA PETA",
+    "sceneArea": "AREA SCENE"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "Akun Anda tidak memiliki izin untuk membuat atau mengubah data.",
   "noEditableLayers": "Akun Anda tidak memiliki izin untuk membuat atau mengubah data. Atau web map ini tidak berisi layer yang dapat diedit.",
-  "invalidConfiguration": "Widget tidak dikonfigurasi atau layer dalam konfigurasi tidak ada lagi dalam peta. Harap buka aplikasi dalam mode builder dan konfigurasi ulang widget."
+  "invalidConfiguration": "Widget tidak dikonfigurasi atau layer dalam konfigurasi tidak ada lagi dalam peta. Harap buka aplikasi dalam mode builder dan konfigurasi ulang widget.",
+  "essentialAppsLicenseErrorForApp": "Akun Anda tidak dilisensikan untuk menggunakan aplikasi yang bukan bersifat publik. Harap minta administrator organisasi Anda untuk menetapkan Anda jenis pengguna yang menyertakan lisensi Essential App atau add-on Essential App.",
+  "essentialAppsLicenseErrorForBuilder": "Akun Anda tidak dilisensikan untuk Web AppBuilder. Harap minta administrator organisasi Anda untuk menetapkan Anda jenis pengguna yang menyertakan lisensi Essential App atau add-on Essential App."
 });

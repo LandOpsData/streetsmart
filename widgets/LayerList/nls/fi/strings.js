@@ -5,6 +5,7 @@ define({
   "labelLayer": "Karttatason nimi",
   "itemZoomTo": "Tarkenna kohteeseen",
   "itemTransparency": "Läpinäkyvyys",
+  "itemSetVisibilityRange": "Määritä näkyvyysalue",
   "itemTransparent": "Läpinäkyvä",
   "itemOpaque": "Läpinäkymätön",
   "itemMoveUp": "Siirrä ylös",

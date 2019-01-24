@@ -5,6 +5,7 @@ define({
   "labelLayer": "Όνομα θεματικού επιπέδου",
   "itemZoomTo": "Εστίαση",
   "itemTransparency": "Διαφάνεια",
+  "itemSetVisibilityRange": "Καθορισμός εύρους τιμών ορατότητας",
   "itemTransparent": "Διαφανές",
   "itemOpaque": "Αδιαφανές",
   "itemMoveUp": "Μετακίνηση προς τα επάνω",

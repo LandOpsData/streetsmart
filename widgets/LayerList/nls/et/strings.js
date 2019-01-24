@@ -5,6 +5,7 @@ define({
   "labelLayer": "Kihi nimi",
   "itemZoomTo": "Suumi",
   "itemTransparency": "Läbipaistvus",
+  "itemSetVisibilityRange": "Määra nähtavusvahemik",
   "itemTransparent": "Läbipaistev",
   "itemOpaque": "Läbipaistmatu",
   "itemMoveUp": "Liiguta ülespoole",

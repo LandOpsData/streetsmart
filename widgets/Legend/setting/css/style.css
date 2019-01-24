@@ -14,20 +14,52 @@
 .jimu-widget-legend-setting .setting-table > thead > tr > th,
 .jimu-widget-legend-setting .setting-table > tbody > tr > td{
   height:40px;
+  /*
   line-height:40px;
   vertical-align:middle;
+  */
 }
 
 .jimu-widget-legend-setting .input-table > tbody > tr > .first{
   width:auto;
-  text-align: right;
-  padding-right:15px;
+  /*text-align: right;*/
+}
+
+.jimu-widget-legend-setting .input-table > tbody > tr > .second{
+  width:200px;
+  padding: 0 10px 0 10px;
+}
+
+.jimu-widget-legend-setting .input-table > tbody > tr > .third{
+  width:35px;
+}
+
+.jimu-widget-legend-setting .checkbox-table > tbody > tr > .first{
+  padding-top: 5px;
+}
+.jimu-widget-legend-setting .checkbox-table > tbody > tr > .second{
+  padding: 0 10px 0 10px;
+}
+
+.jimu-widget-legend-setting .layer-chooser-section{
+  position: relative;
+  margin-top: 20px; 
+}
+
+.jimu-widget-legend-setting .layer-chooser-section .layer-chooser-title-div {
+  overflow: hidden;
+}
+
+.jimu-widget-legend-setting .layer-chooser-section .layer-chooser-title-div .title{
+  float: left;
+}
+
 }
 
 .jimu-rtl .jimu-widget-legend-setting .input-table > tbody > tr > .first{
-  text-align: left;
+  /*text-align: left;
   padding-left:15px;
-  padding-right:15px;
+  padding-right:15px;*/
 }
 
 .jimu-widget-legend-setting .input-table > tbody > tr > .second{
@@ -36,6 +68,13 @@
 
 .jimu-widget-legend-setting .input-table > tbody > tr > .third{
   width:35px;
+}
+
+.jimu-widget-legend-setting .checkbox-table > tbody > tr > .first{
+  padding-top: 5px;
+}
+.jimu-widget-legend-setting .checkbox-table > tbody > tr > .second{
+  padding: 0 10px 0 10px;
 }
 
 .jimu-widget-legend-setting .layer-chooser-section{

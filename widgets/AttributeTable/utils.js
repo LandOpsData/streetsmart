@@ -89,7 +89,7 @@ define(['dojo/_base/lang',
   //
   //pInfos: PopupInfo
   exports.generateColumnsFromFields = function(gridColumns, layerInfo, fields, typeIdField, types,
-    supportsOrder, supportsStatistics, layerDefinition) {
+    supportsOrder, supportsStatistics, layerObject) {
     function getFormatInfo(fieldName) {
       if (pInfos && esriLang.isDefined(pInfos.fieldInfos)) {
         for (var i = 0, len = pInfos.fieldInfos.length; i < len; i++) {
@@ -174,15 +174,16 @@ define(['dojo/_base/lang',
       // obj is feature.attributes in the store.
       if (isDomain) {
         // coded value
-        columns[techFieldName].get = lang.hitch(exports, function(layerDefinition, field, obj) {
-          return this.getCodeValue(layerDefinition, field.name, obj);
-        }, layerDefinition, _field);
+        columns[techFieldName].get = lang.hitch(exports, function(layerObject, field, obj) {
+          return this.getCodeValue(layerObject, field.name, obj);
+        }, layerObject, _field);
       } else if(isTypeIdField) {
         columns[techFieldName].get = lang.hitch(exports, function(field, types, obj) {
           return this.getTypeName(obj[field.name], types);
         }, _field, types);
       } else if(isArcadeExpression) {
         var expressionInfos = this.arcade.getExpressionInfosFromLayerInfo(layerInfo);
+        var layerDefinition = utils.getFeatureLayerDefinition(layerObject);
         // expression columns are not sotable
         columns[techFieldName]._cache.sortable = false;
         columns[techFieldName].get = lang.hitch(exports, 
@@ -194,7 +195,7 @@ define(['dojo/_base/lang',
         // Not A Date, Domain or Type Field
         // Still need to check for subclass value
         columns[techFieldName].get = lang.hitch(exports,
-          function(layerDefinition, field, typeIdField, types, obj) {
+          function(layerObject, field, typeIdField, types, obj) {
             var codeValue = null;
             if (typeIdField && types && types.length > 0) {
               var typeChecks = array.filter(types, lang.hitch(exports, function(item) {
@@ -206,7 +207,7 @@ define(['dojo/_base/lang',
               if (typeCheck && typeCheck.domains &&
                 typeCheck.domains[field.name] && typeCheck.domains[field.name].codedValues) {
                 codeValue = this.getCodeValue(
-                  layerDefinition,
+                  layerObject,
                   field.name,
                   obj
                 );
@@ -214,7 +215,7 @@ define(['dojo/_base/lang',
             }
             var _value = codeValue !== null ? codeValue : obj[field.name];
             return _value || isFinite(_value) ? _value : "";
-          }, layerDefinition, _field, typeIdField, types);
+          }, layerObject, _field, typeIdField, types);
       }
     }));
 
@@ -225,8 +226,8 @@ define(['dojo/_base/lang',
     return utils.fieldFormatter.getTypeName(value, types);
   };
 
-  exports.getCodeValue = function(layerDefinition, fieldName, attributes) {
-    var result = utils.getDisplayValueForCodedValueOrSubtype(layerDefinition, fieldName, attributes);
+  exports.getCodeValue = function(layerObject, fieldName, attributes) {
+    var result = utils.getDisplayValueForCodedValueOrSubtype(layerObject, fieldName, attributes);
     if (result && result.isCodedValueOrSubtype) {
       return result.displayValue || '';
     }

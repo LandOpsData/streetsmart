@@ -159,9 +159,8 @@ define([
         }
       },
       _selectItem: function(name) {
-        var _radio = this[name];//registry.byNode(query('.jimu-radio', this[name])[0]);
-        if (_radio && _radio.check) {
-          _radio.check(true);
+        if(this[name] && this[name].setChecked){
+          this[name].setChecked(true);
         }
       },
       _clickColorFillBtn: function() {

@@ -5,6 +5,7 @@ define({
   "labelLayer": "Sluoksnio pavadinimas",
   "itemZoomTo": "Parodyti visą",
   "itemTransparency": "Permatomumas",
+  "itemSetVisibilityRange": "Nustatyti rodymo intervalą",
   "itemTransparent": "Permatomas",
   "itemOpaque": "Nepermatomas",
   "itemMoveUp": "Pakelti aukštyn",

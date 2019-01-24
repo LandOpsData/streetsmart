@@ -92,7 +92,8 @@ define({
     "stay": "Blijven",
     "search": "Zoeken",
     "searchMore": "Meer zoeken",
-    "tooltipText": "Tekst knopinfo"
+    "tooltipText": "Tekst knopinfo",
+    "findAddressOrPlace": "Adres of plaats zoeken"
   },
   "errorCode": "Code",
   "errorMessage": "Bericht",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Voeg hier widgets toe via het tabblad Widget",
     "modifyLayout": "Lay-out aanpassen",
     "dragToAdd": "Sleep om toe te voegen",
-    "mapArea": "KAARTGEBIED"
+    "mapArea": "KAARTGEBIED",
+    "sceneArea": "SCENEGEBIED"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "Uw account heeft geen machtigingen om gegevens te maken of te wijzigen.",
   "noEditableLayers": "Uw account is niet gemachtigd om data te maken of wijzigen. Of deze webmap bevat geen bewerkbare lagen.",
-  "invalidConfiguration": "Widget is niet geconfigureerd of de lagen in de configuratie zijn niet langer in de kaart. Open de app in de bouwmodus en configureer de widget opnieuw."
+  "invalidConfiguration": "Widget is niet geconfigureerd of de lagen in de configuratie zijn niet langer in de kaart. Open de app in de bouwmodus en configureer de widget opnieuw.",
+  "essentialAppsLicenseErrorForApp": "Uw account heeft geen licentie om een app te gebruiken die niet openbaar is. Vraag uw organisatiebeheerder om u een gebruikerstype toe te wijzen dat Essential Apps of een add-on Essential Apps-licentie bevat.",
+  "essentialAppsLicenseErrorForBuilder": "Uw account is niet gelicentieerd voor Web AppBuilder. Vraag uw organisatiebeheerder om u een gebruikerstype toe te wijzen dat Essential Apps of een add-on Essential Apps-licentie bevat."
 });

@@ -20,6 +20,7 @@ define([
     'dojo/_base/html',
     'dojo/_base/array',
     'dojo/on',
+    'dojo/keys',
     'dojo/aspect',
     'jimu/BaseWidget',
     'esri/dijit/OverviewMap',
@@ -32,6 +33,7 @@ define([
     html,
     array,
     on,
+    keys,
     aspect,
     BaseWidget,
     OverviewMap,
@@ -160,6 +162,64 @@ define([
 
         this._updateDomPosition(json.attachTo);
         this.domNode.appendChild(this.overviewMapDijit.domNode);
+
+        this.focusToDisplay = true;
+        this.own(on(this.domNode, 'keydown', lang.hitch(this, function(evt){
+          var target = evt.target;
+          if(evt.keyCode === keys.ENTER && html.hasClass(target, this.baseClass)){
+            this.focusToDisplay = false;
+          }
+
+          //remove these events when esri/overviewMap dijit supports 508
+          //dijit's first node and last node are not in normal order by dom-structure
+          if(evt.keyCode === keys.TAB && !html.hasClass(target, this.baseClass)){
+            evt.preventDefault();
+            if(html.hasClass(target, 'ovwController')){
+              this.overviewMapDijit._maximizerDiv.focus();
+            }else if(html.hasClass(target, 'ovwMaximizer')){
+              this.overviewMapDijit._controllerDiv.focus();
+            }
+          }
+        })));
+
+        this.own(on(this.domNode, 'focus', lang.hitch(this, function () {
+          if(utils.isInNavMode() && this.focusToDisplay &&
+            html.getStyle(this.domNode, 'height') < 10) {
+            this.overviewMapDijit.show(); //show widget temporarily
+          }
+        })));
+        this.own(on(this.domNode, 'blur', lang.hitch(this, function () {
+          if(utils.isInNavMode() && this.focusToDisplay) {
+            this.overviewMapDijit.hide(); //hide widget
+          }
+        })));
+
+        //remove these events when esri/overviewMap dijit supports 508
+        this.own(on(this.overviewMapDijit._controllerDiv, 'keydown', lang.hitch(this, function(evt){
+          if(evt.keyCode === keys.ENTER){
+            if(this.overviewMapDijit.visible){
+              this.overviewMapDijit.hide();
+              //back to focus and display widgetDom temperly when set it closed.
+              this.focusToDisplay = true;
+            }else{
+              this.overviewMapDijit.show();
+              this.focusToDisplay = false;
+            }
+          }
+        })));
+        this.own(on(this.overviewMapDijit._maximizerDiv, 'keydown', lang.hitch(this, function(evt){
+          if(evt.keyCode === keys.ENTER){
+            this.overviewMapDijit._maximizeHandler();
+          }
+        })));
+
+        //_controllerDiv must be the first focusable node, so keyboard will trigger it when enter widgetDom
+        // html.setAttr(this.overviewMapDijit._focusDiv, "tabindex", 0);
+        html.setAttr(this.overviewMapDijit._controllerDiv, "tabindex", 0);
+        html.setAttr(this.overviewMapDijit._maximizerDiv, "tabindex", 0);
+        utils.initFirstFocusNode(this.domNode, this.overviewMapDijit._controllerDiv);
+        utils.initLastFocusNode(this.domNode, this.overviewMapDijit._maximizerDiv);
+
         if (_isShow) {
           this.overviewMapDijit.show();
         }

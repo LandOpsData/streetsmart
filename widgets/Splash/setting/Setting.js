@@ -27,7 +27,6 @@ define([
     './BackgroundSelector',
     './SizeSelector',
     './AlignSelector',
-    'dijit/registry',
     'dijit/_WidgetsInTemplateMixin',
     'dijit/Editor',
     'jimu/utils',
@@ -56,7 +55,7 @@ define([
   ],
   function(declare, lang, html, on, aspect, cookie, has, query,
            ColorPickerEditor, BackgroundSelector, SizeSelector, AlignSelector,
-           registry, _WidgetsInTemplateMixin,
+           _WidgetsInTemplateMixin,
            Editor, utils, BaseWidgetSetting, CheckBox, TabContainer, LoadingShelter, Deferred) {
     return declare([BaseWidgetSetting, _WidgetsInTemplateMixin], {
       baseClass: 'jimu-widget-splash-setting',
@@ -322,19 +321,19 @@ define([
 
       _changeRequireConfirm: function() {
         var _selectedNode = null;
-
         if (this.get('requireConfirm')) {
-          _selectedNode = this.requireConfirmSplash;
+          _selectedNode = this.requireConfirmRadio;
           html.setStyle(this.confirmContainer, 'display', 'block');
           html.setStyle(this.showOption.domNode, 'display', 'none');
         } else {
-          _selectedNode = this.noRequireConfirmSplash;
+          _selectedNode = this.noRequireRadio;
           html.setStyle(this.showOption.domNode, 'display', 'block');
           html.setStyle(this.confirmContainer, 'display', 'none');
         }
 
-        var _radio = registry.byNode(query('.jimu-radio', _selectedNode)[0]);
-        _radio.check(true);
+        if(_selectedNode && _selectedNode.setChecked){
+          _selectedNode.setChecked(true);
+        }
       },
 
       destroy: function() {
@@ -374,12 +373,6 @@ define([
         } else {
           def.resolve();
           return def;
-        }
-      },
-      _selectItem: function(name) {
-        var _radio = this[name];
-        if (_radio && _radio.check) {
-          _radio.check(true);
         }
       },
 

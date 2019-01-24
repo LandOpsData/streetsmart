@@ -5,6 +5,7 @@ define({
   "labelLayer": "Navn på lag",
   "itemZoomTo": "Zoom til",
   "itemTransparency": "Gennemsigtighed",
+  "itemSetVisibilityRange": "Indstil synlighedsinterval",
   "itemTransparent": "Gennemsigtig",
   "itemOpaque": "Uigennemsigtig",
   "itemMoveUp": "Flyt op",

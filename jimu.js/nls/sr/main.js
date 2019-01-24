@@ -92,7 +92,8 @@ define({
     "stay": "Ostani",
     "search": "Pretraži",
     "searchMore": "Pretraži više",
-    "tooltipText": "Tekst opisa alatke"
+    "tooltipText": "Tekst opisa alatke",
+    "findAddressOrPlace": "Pronađi adresu ili mesto"
   },
   "errorCode": "Kôd",
   "errorMessage": "Poruka",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Dodajte vidžet ovde pomoću vidžet kartice",
     "modifyLayout": "Izmenite raspored",
     "dragToAdd": "Prevucite za dodavanje",
-    "mapArea": "OBLAST MAPE"
+    "mapArea": "OBLAST MAPE",
+    "sceneArea": "OBLAST SCENE"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "Vaš nalog nema dozvolu za kreiranje ili izmenu podataka.",
   "noEditableLayers": "Vaš nalog nema dozvolu za kreiranje ili izmenu podataka. Ili ova veb mapa ne sadrži slojeve koji mogu da se uređuju.",
-  "invalidConfiguration": "Vidžet nije konfigurisan ili slojevi u konfiguraciji više nisu na mapi. Otvorite aplikaciju u režimu za izradu i ponovo konfigurišite vidžet."
+  "invalidConfiguration": "Vidžet nije konfigurisan ili slojevi u konfiguraciji više nisu na mapi. Otvorite aplikaciju u režimu za izradu i ponovo konfigurišite vidžet.",
+  "essentialAppsLicenseErrorForApp": "Vaš nalog nema licencu za korišćenje aplikacija koje nisu javne. Zatražite od administratora organizacije da vam dodeli onaj tip korisnika koji uključuje osnovne aplikacije ili licencu za dodatne osnovne aplikacije.",
+  "essentialAppsLicenseErrorForBuilder": "Vaš nalog nema licencu za Web AppBuilder. Zatražite od administratora organizacije da vam dodeli onaj tip korisnika koji uključuje osnovne aplikacije ili licencu za dodatne osnovne aplikacije."
 });

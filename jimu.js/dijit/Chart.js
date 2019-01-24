@@ -48,7 +48,16 @@ define([
       // "title":"string",
       // "legend":{show:true,textStyle:{}},
       // "xAxis":{name:'',show:true,textStyle:{},nameTextStyle:{}},
-      // "yAxis":{name:'',show:true,nameTextStyle:{}},
+      // yAxis: {
+      //   name: '',
+      //   show: true,
+      //   nameTextStyle: {},
+      //   format: {
+      //     type: 'int' | 'float',
+      //     places: number,
+      //     separator: boolean
+      //   }
+      // }
       // "dataLabel":{show:true,textStyle:{}},
       // "confine":boolean,//Whether the tooltip is limited to canvas tag
       // "theme":"",//A registered theme name, light or dark

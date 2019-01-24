@@ -645,13 +645,13 @@ define(function() {
     };
 
     //locale is optional, default value is 'en'
-    //http://www.arcgis.com,en => http://www.arcgis.com/portalhelp/en/website/help/
+    //http://www.arcgis.com,en => http://www.arcgis.com/portalhelp/en/portal/
     mo.getPortalHelpUrl = function(_portalUrl, locale){
       var url = '';
       var thePortalUrl = mo.getStandardPortalUrl(_portalUrl);
       if(thePortalUrl){
         var l = locale || "en";
-        url = thePortalUrl + "/portalhelp/" + l + "/website/help/";
+        url = thePortalUrl + "/portalhelp/" + l + "/portal/";
       }
       return url;
     };

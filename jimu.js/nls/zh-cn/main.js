@@ -92,7 +92,8 @@ define({
     "stay": "保持",
     "search": "搜索",
     "searchMore": "搜索更多",
-    "tooltipText": "工具提示文本"
+    "tooltipText": "工具提示文本",
+    "findAddressOrPlace": "查找地址或地点"
   },
   "errorCode": "代码",
   "errorMessage": "消息",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "通过“微件”选项卡在此处添加微件",
     "modifyLayout": "修改布局",
     "dragToAdd": "拖动以添加",
-    "mapArea": "地图区域"
+    "mapArea": "地图区域",
+    "sceneArea": "场景区域"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "您的帐户不具备创建或修改数据的权限。",
   "noEditableLayers": "您的帐户无权创建或修改数据。或者此 web 地图不包含任何可编辑图层。",
-  "invalidConfiguration": "微件尚未配置或配置中的图层已不在地图中。请在构建器模式下打开应用程序，然后重新配置微件。"
+  "invalidConfiguration": "微件尚未配置或配置中的图层已不在地图中。请在构建器模式下打开应用程序，然后重新配置微件。",
+  "essentialAppsLicenseErrorForApp": "您的帐户无权使用非公共的应用程序。 请联系您的组织管理员为您分配包含基本应用程序或附加基本应用程序许可的用户类型。",
+  "essentialAppsLicenseErrorForBuilder": "您的帐户未获得 Web AppBuilder 许可。 请联系您的组织管理员为您分配包含基本应用程序或附加基本应用程序许可的用户类型。"
 });

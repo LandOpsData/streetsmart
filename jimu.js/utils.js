@@ -51,16 +51,19 @@ define([
     'esri/tasks/query',
     'esri/tasks/QueryTask',
     'esri/graphicsUtils',
+    'esri/IdentityManager',
+    'esri/arcgis/OAuthInfo',
     'jimu/portalUrlUtils',
     './shared/utils',
+    './accessibleUtils',
     './zoomToUtils'
   ],
 
 function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on, json, cookie,
   dojoNumber, dateLocale, nlsBundle, base64, esriLang, arcgisUtils, PopupTemplate, SpatialReference,
   Extent, geometryEngine, Multipoint, Polyline, Polygon, webMercatorUtils, GeometryService, ProjectParameters,
-  FeatureSet, PictureMarkerSymbol, esriUrlUtils, esriRequest, EsriQuery, QueryTask, graphicsUtils, portalUrlUtils,
-  sharedUtils, zoomToUtils
+  FeatureSet, PictureMarkerSymbol, esriUrlUtils, esriRequest, EsriQuery, QueryTask, graphicsUtils, IdentityManager,
+  OAuthInfo, portalUrlUtils, sharedUtils, accessibleUtils, zoomToUtils
 ) {
   /* global esriConfig, dojoConfig, ActiveXObject, testLoad */
   var mo = {};
@@ -72,6 +75,7 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
   };
 
   lang.mixin(mo, sharedUtils);
+  lang.mixin(mo, accessibleUtils);
   lang.mixin(mo, zoomToUtils);
 
   if (!window.atob) {
@@ -1709,9 +1713,12 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
     return def;
   };
 
+  //Compatible with layerObject
   mo.isCodedValuesSupportFilter = function(layerDefinition, codedValueLength){
-    var version = parseFloat(layerDefinition.currentVersion);
-    return codedValueLength <= parseFloat(layerDefinition.maxRecordCount) && version > 10.1;
+    var _layerDef = layerDefinition.currentVersion ? layerDefinition :
+      layerDefinition.toJson().layerDefinition;
+    var version = parseFloat(_layerDef.currentVersion);
+    return codedValueLength <= parseFloat(_layerDef.maxRecordCount) && version > 10.1;
   };
 
   mo.combineRadioCheckBoxWithLabel = function(inputDom, labelDom){
@@ -3352,7 +3359,8 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
     var codedValuesArray = [];
     var isNumberField = mo.isNumberField(fieldInfo.type);
     for(var key in codedValsHash){
-      var newKey = isNumberField ? parseInt(key, 10) : key;
+      //var newKey = isNumberField ? parseInt(key, 10) : key;
+      var newKey = isNumberField ? parseFloat(key) : key;//codedvalue could be float type
       codedValuesArray.push({
         value: newKey,
         label: codedValsHash[key]
@@ -3407,7 +3415,8 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
     var codedValuesArray = [];
     var isNumberField = mo.isNumberField(fieldInfo.type);
     for(var key in codedValsHash){
-      var newKey = isNumberField ? parseInt(key, 10) : key;
+      //var newKey = isNumberField ? parseInt(key, 10) : key;
+      var newKey = isNumberField ? parseFloat(key) : key;//codedvalue could be float type
       codedValuesArray.push({
         value: newKey,
         label: codedValsHash[key]
@@ -3580,13 +3589,39 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
     return isRenderBySubtype;
   };
 
-  //no render https://sampleserver6.arcgisonline.com/arcgis/rest/services/911CallsHotspot/MapServer/2?f=json
-  mo._getRenderValueLabelsForUnique = function(layerDefinition){
-    var valueLabels = null;
+  //get renderer from layerDef.drawingInfo
+  mo._getRendererFromLayerDef = function(layerDefinition){
+    var render = null;
     if(layerDefinition.drawingInfo && layerDefinition.drawingInfo.renderer &&
       layerDefinition.drawingInfo.renderer.type === 'uniqueValue'){
+      render = layerDefinition.drawingInfo.renderer;
+    }
+    return render;
+  };
+
+  //get renderer from layerObj which is configurated in webmap if it exists,
+  //otherwise use drawingInfo from layerDef.
+  mo._getRenderValueLabelsForUnique = function(layerDefinition){
+    var valueLabels = null, uniqueValueInfos = null;
+    var layerDefRender = mo._getRendererFromLayerDef(layerDefinition);
+    if(layerDefRender){//layerDefinition
       valueLabels = {};
-      var uniqueValueInfos = layerDefinition.drawingInfo.renderer.uniqueValueInfos;
+      uniqueValueInfos = layerDefRender.uniqueValueInfos;
+    }else if(layerDefinition.renderer){//layerObject
+      var _layerDef = layerDefinition.toJson().layerDefinition; //get serviceLayerDef from layerObj
+      var _layerDefRender = mo._getRendererFromLayerDef(_layerDef);
+      var renderInfo = layerDefinition.renderer.toJson();
+      //only support uniqueRender and same field as layerDef
+      if(renderInfo.type === 'uniqueValue' && (_layerDefRender && _layerDefRender.field1 === renderInfo.field1)){
+        valueLabels = {};
+        uniqueValueInfos = renderInfo.uniqueValueInfos;
+      }else if(_layerDefRender){
+        valueLabels = {};
+        uniqueValueInfos = _layerDefRender.uniqueValueInfos;
+      }
+    }
+
+    if(uniqueValueInfos){
       for(var key = 0; key < uniqueValueInfos.length; key ++){
         var info = uniqueValueInfos[key];
         valueLabels[info.value] = info.label;
@@ -4610,15 +4645,27 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
   };
 
   //0.1234 --> 12.34% or %12.34(locale=ar or tr)
-  mo.convertNumberToPercentage = function(number, /*optional*/ decimalDigits) {
+  mo.convertNumberToPercentage = function(number, /*optional*/ decimalDigits, digitSeparator) {
     if (!mo.isNumberOrNumberString(number)) {
       return number;
+    }
+    //format
+    if (typeof digitSeparator === 'undefined') {
+      digitSeparator = true;
     }
     if (typeof decimalDigits === 'undefined') {
       decimalDigits = 2;
     }
+    var fieldInfo = {
+      format: {
+        places: decimalDigits,
+        digitSeparator: digitSeparator
+      }
+    };
+
     var locale = config.locale;
-    var shouldPercentSignLeft = locale === 'ar' || locale === 'tr';
+    var percentLeft = locale === 'ar' || locale === 'tr';
+    var isRTL = locale === 'ar' || locale === 'he';
     number = Number(number);
     var isNegative = false;
     if (number < 0) {
@@ -4626,17 +4673,16 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
       number = Math.abs(number);
     }
     number = number * 100;
-    number = number.toFixed(decimalDigits);
-    number = mo.localizeNumber(number);
+    number = mo.localizeNumberByFieldInfo(number, fieldInfo);
 
-    if (!shouldPercentSignLeft) {
+    if (!percentLeft) {
       number += '%';
     } else {
       number = '%' + number;
     }
 
     if (isNegative) {
-      number = '-' + number;
+      number = isRTL ? number + '-' : '-' + number;
     }
 
     return number;
@@ -4734,6 +4780,31 @@ function(lang, array, html, has, config, ioQuery, query, nlt, Deferred, all, on,
       return temp.toLowerCase();
     }
     return temp;
+  };
+
+  mo.checkEssentialAppsLicense = function(appId, portal, isInBuilder) {
+    var portalUrl = portalUrlUtils.getStandardPortalUrl(window.portalUrl);
+    var sharingUrl = portalUrlUtils.getSharingUrl(portalUrl);
+    var oauthappid = "arcgisWebApps";
+    // register OAuthInfo with client ID 'arcgisWebApps'
+    var oAuthInfo = new OAuthInfo({
+      appId: "arcgisWebApps",
+      portalUrl: portalUrl
+    });
+    IdentityManager.registerOAuthInfos([oAuthInfo]);
+
+    //Determine if app is public or private
+    if(isInBuilder) {
+      return IdentityManager.checkAppAccess(sharingUrl, oauthappid);
+    } else {
+      return portal.getItemById(appId).then(function(appItem) {
+        if(appItem.access === "public") {
+          return;
+        } else {
+          return IdentityManager.checkAppAccess(sharingUrl, oauthappid);
+        }
+      });
+    }
   };
 
   return mo;

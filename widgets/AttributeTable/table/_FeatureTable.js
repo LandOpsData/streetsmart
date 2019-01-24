@@ -695,11 +695,13 @@ define([
           filter.startup();
           html.addClass(this._filterPopup.domNode, 'widget-at-filter-popup');
           var filterObj = this.getFilterObj();
-          if (filterObj) {
-            filter.buildByFilterObj(this.layer.url, filterObj, definition);
-          } else {
-            filter.buildByExpr(this.layer.url, null, definition);
-          }
+          var filterOptions = {
+            url: this.layer.url,
+            partsObj: filterObj,
+            layerDefinition: this.layer || definition,
+            featureLayerId: this.layer.id
+          };
+          filter.build(filterOptions);
         }), lang.hitch(this, function(err) {
           if (!this.domNode) {
             return;
@@ -1761,7 +1763,6 @@ define([
         false, this.layer);
       var supportStatistics = lang.getObject('advancedQueryCapabilities.supportsStatistics',
         false, this.layer);
-      var layerDefinition = jimuUtils.getFeatureLayerDefinition(this.layer);
 
       // AttributeTable does not work
       //when column name contains special character such as "." and "()"
@@ -1769,7 +1770,7 @@ define([
         this.grid && this.grid.columns,
         this.layerInfo,
         results.fields, _typeIdFild, _types, (supportOrder && supportPage) || !exceededLimit,
-        supportStatistics, layerDefinition
+        supportStatistics, this.layer
       );
 
       // remove attachments temporary

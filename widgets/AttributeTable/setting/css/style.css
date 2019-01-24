@@ -64,6 +64,10 @@
 .jimu-widget-attributetable-setting td.isDescending .jimu-checkbox .checkbox.jimu-icon-checked {
   background-image: url('images/order_down.svg');
 }
+.jimu-rtl .jimu-widget-attributetable-setting td.isDescending .jimu-checkbox .checkbox {
+  -webkit-transform: rotateY(180deg);
+          transform: rotateY(180deg);
+}
 .jimu-widget-attributetable-setting .sortField .dijitSelect{
   height: 20px;
   background: #fff;

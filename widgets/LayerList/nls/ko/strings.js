@@ -5,6 +5,7 @@ define({
   "labelLayer": "레이어 이름",
   "itemZoomTo": "확대",
   "itemTransparency": "투명도",
+  "itemSetVisibilityRange": "가시 범위 설정",
   "itemTransparent": "투명",
   "itemOpaque": "불투명",
   "itemMoveUp": "위로 이동",

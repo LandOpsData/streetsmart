@@ -120,7 +120,9 @@ define([
         var item = this.valuesSelect.get('item');
         if(item){
           if(item.value !== undefined){ //if(item.label !== ''){
-            if(this.isNumberField && !jimuUtils.isValidNumber(item.value)){
+            //Its value must be a string when valueType is 'field', not need to check validation
+            if(this.isNumberField && !jimuUtils.isValidNumber(item.value) &&
+             this.partObj.valueObj.type === 'value'){
               var newVal = parseFloat(item.value);
               if(jimuUtils.isValidNumber(newVal)){
                 item.value = newVal;

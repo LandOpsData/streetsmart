@@ -92,7 +92,8 @@ define({
     "stay": "Likti",
     "search": "Ieškoti",
     "searchMore": "Ieškoti daugiau",
-    "tooltipText": "Įrankio informacijos tekstas"
+    "tooltipText": "Įrankio informacijos tekstas",
+    "findAddressOrPlace": "Surasti adresą arba vietą"
   },
   "errorCode": "Kodas",
   "errorMessage": "Pranešimas",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Įtraukite valdiklius čia naudodami skirtuką Valdiklis",
     "modifyLayout": "Modifikuoti maketą",
     "dragToAdd": "Nuvilkite norėdami pridėti",
-    "mapArea": "ŽEMĖLAPIO PLOTAS"
+    "mapArea": "ŽEMĖLAPIO PLOTAS",
+    "sceneArea": "SCENOS SRITIS"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "Jūsų paskyra neturi teisės kurti arba modifikuoti duomenų.",
   "noEditableLayers": "Jūsų paskyra neturi teisės kurti arba modifikuoti duomenis. Arba šiame žiniatinklio žemėlapyje nėra redaguojamų sluoksnių.",
-  "invalidConfiguration": "Valdiklis nesukonfigūruotas arba konfigūracijos sluoksnių žemėlapyje nebėra. Atidarykite aplikaciją kūrimo režime ir iš naujo sukonfigūruokite valdiklį."
+  "invalidConfiguration": "Valdiklis nesukonfigūruotas arba konfigūracijos sluoksnių žemėlapyje nebėra. Atidarykite aplikaciją kūrimo režime ir iš naujo sukonfigūruokite valdiklį.",
+  "essentialAppsLicenseErrorForApp": "Jūsų paskyra nelicencijuota naudoti ne viešą aplikaciją. Kreipkitės į organizacijos administratorių, kad paskirtų jums vartotojo tipą, kuris turi svarbiausias aplikacijas, arba suteiktų jums papildomą svarbiausių aplikacijų licenciją.",
+  "essentialAppsLicenseErrorForBuilder": "Jūsų paskyra nelicencijuota naudoti Web AppBuilder. Kreipkitės į organizacijos administratorių, kad paskirtų jums vartotojo tipą, kuris turi svarbiausias aplikacijas, arba suteiktų jums papildomą svarbiausių aplikacijų licenciją."
 });

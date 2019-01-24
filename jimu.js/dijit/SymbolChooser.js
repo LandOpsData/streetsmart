@@ -544,12 +544,18 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
         this._initPortal()
         .then(lang.hitch(this, this._fetchSymbolTypes))
         .then(lang.hitch(this, function(types){
+          if(!this.domNode){
+            return;
+          }
           // create options
           this._clearOptions();
           this._createOptions(types);
           // fetch symbols from portal
           this._handleGetPointSymbols(lang.hitch(this, this._getPortalSymbolsByType), fileName);
         }), lang.hitch(this, function(err){
+          if(!this.domNode){
+            return;
+          }
           if(window.isXT){
             this._offLineGetSymbols(fileName);
           }else{
@@ -661,9 +667,15 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
       this.pointSymClassSelect[defName] = def;
 
       def.then(lang.hitch(this, function(jsonSyms) {
+        if(!this.domNode){
+          return;
+        }
         this.loadingShelter.hide();
         this._getPointSymbolsSucess(fileName, jsonSyms);
       }), lang.hitch(this, function(error) {
+        if(!this.domNode){
+          return;
+        }
         this.loadingShelter.hide();
         console.error('Fetching symbols failed', error);
       }));

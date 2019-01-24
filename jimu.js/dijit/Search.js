@@ -17,10 +17,11 @@
 define(['dojo/_base/declare',
   'dojo/_base/html',
   'dojo/string',
+  'dojo/keys',
   'dijit/_WidgetBase',
   'dijit/_TemplatedMixin'
 ],
-function(declare, html, string, _WidgetBase, _TemplatedMixin) {
+function(declare, html, string, keys, _WidgetBase, _TemplatedMixin) {
   return declare([_WidgetBase, _TemplatedMixin], {
     baseClass: 'jimu-search',
     declaredClass: 'jimu.dijit.Search',
@@ -65,7 +66,7 @@ function(declare, html, string, _WidgetBase, _TemplatedMixin) {
     _onKeyDown: function(evt){
       this.doChange();
       var keyNum = evt.keyCode !== undefined ? evt.keyCode : evt.which;
-      if (keyNum === 13) {
+      if (keyNum === keys.ENTER) {
         this.doSearch();
       }
       evt.stopPropagation();

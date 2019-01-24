@@ -92,7 +92,8 @@ define({
     "stay": "Rimanere",
     "search": "Cercare",
     "searchMore": "Cerca altro",
-    "tooltipText": "Testo descrizione comandi"
+    "tooltipText": "Testo descrizione comandi",
+    "findAddressOrPlace": "Trova indirizzo o posizione"
   },
   "errorCode": "Codice",
   "errorMessage": "Messaggio",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Aggiungi widget qui dalla scheda Widget",
     "modifyLayout": "Modifica layout",
     "dragToAdd": "Trascina per aggiungere",
-    "mapArea": "AREA MAPPA"
+    "mapArea": "AREA MAPPA",
+    "sceneArea": "AREA SCENE"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "L'account non dispone dell'autorizzazione per creare o modificare dati.",
   "noEditableLayers": "L'account non dispone dell'autorizzazione per creare o modificare dati oppure la Web Map non contiene layer modificabili.",
-  "invalidConfiguration": "Il widget non è configurato o i layer nella configurazione non sono più presenti nella mappa. Aprire l'app nella modalità generatore e riconfigurare il widget."
+  "invalidConfiguration": "Il widget non è configurato o i layer nella configurazione non sono più presenti nella mappa. Aprire l'app nella modalità generatore e riconfigurare il widget.",
+  "essentialAppsLicenseErrorForApp": "L’account non dispone della licenza per l’uso di un’app non pubblica. È necessario richiedere all’amministratore dell'organizzazione l’assegnazione di un tipo di utente che includa le app essenziali o una licenza aggiuntiva per le app essenziali.",
+  "essentialAppsLicenseErrorForBuilder": "L’account non dispone della licenza per Web AppBuilder. È necessario richiedere all’amministratore dell'organizzazione l’assegnazione di un tipo di utente che includa le app essenziali o una licenza aggiuntiva per le app essenziali."
 });

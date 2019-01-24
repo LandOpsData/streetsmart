@@ -537,10 +537,14 @@ define([
       //currentVersion is added from 10.0 SP1
       //typeIdField is added from 10.0
       var currentVersion = 0;
-      if (layerInfo.currentVersion) {
-        currentVersion = parseFloat(layerInfo.currentVersion);
+
+      var _layerDef = layerInfo.currentVersion ? layerInfo :
+        layerInfo.toJson().layerDefinition;
+
+      if (_layerDef.currentVersion) {
+        currentVersion = parseFloat(_layerDef.currentVersion);
       }
-      return currentVersion >= 10.0 || layerInfo.hasOwnProperty('typeIdField');
+      return currentVersion >= 10.0 || _layerDef.hasOwnProperty('typeIdField');
     };
 
     //1 means service support orderby and pagination

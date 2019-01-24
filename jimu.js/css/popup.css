@@ -214,3 +214,13 @@
 
 
 /************related records popup projector end***************************/
+
+/* jimu-popup-link: link menu for mobile, when click logo*/
+.jimu-popup-link-close-btn{
+  width: 30px;
+  height: 30px;
+  background-image: url(images/close_btn_bg.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  user-select: none;
+}

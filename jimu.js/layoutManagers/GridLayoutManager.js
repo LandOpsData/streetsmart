@@ -21,6 +21,8 @@ define([
   'dojo/_base/html',
   'dojo/topic',
   'dojo/on',
+  'dojo/keys',
+  'dojo/query',
   'dojo/dom-construct',
   'dojo/dom-geometry',
   'dojo/Deferred',
@@ -34,7 +36,7 @@ define([
   './GridMobileController'
 ],
 
-function(declare, lang, array, html, topic, on, domConstruct, domGeometry,
+function(declare, lang, array, html, topic, on, keys, query, domConstruct, domGeometry,
   Deferred, debounce, require, WidgetManager, PanelManager,
   utils, LoadingShelter, BaseLayoutManager, MobileController) {
   /* global jimuConfig:true */
@@ -165,6 +167,9 @@ function(declare, lang, array, html, topic, on, domConstruct, domGeometry,
       var loading = new LoadingShelter(), def;
       loading.placeAt(this.layoutId);
       loading.startup();
+
+      this._setTabindex(appConfig);
+
       // load dashboard grouops
       if (this._createLayoutDeferred && !this._createLayoutDeferred.isResolved()) {
         def = this._createLayoutDeferred;
@@ -191,6 +196,192 @@ function(declare, lang, array, html, topic, on, domConstruct, domGeometry,
         console.timeEnd('Load widgetOnScreen');
         topic.publish('preloadWidgetsLoaded');
       }));
+    },
+
+    _setTabindex: function(appConfig){
+      var rtoWindowElements = [];
+      var rtoMapElements = [];
+
+      appConfig.visitElement(function(e, info){
+        //the pool widgets tabindex will be handled by controller.
+        if(!info.isOnScreen){
+          return;
+        }
+        var pos = e.position || e.panel && e.panel.position;
+        if(!pos || Array.isArray(e.widgets)){
+          return;
+        }
+        //only handle the widgets that are in map container
+        if(e.gid === 'widgetOnScreen' && e.visible){
+          if(pos.relativeTo === 'browser'){//like AT
+            rtoWindowElements.push(e);
+          }else{
+            rtoMapElements.push(e);
+          }
+        }
+      });
+
+      var layoutBox = domGeometry.getMarginBox(this.layoutId);
+      var mapBox = domGeometry.getMarginBox(this.mapId);
+
+      rtoWindowElements = rtoWindowElements.sort(lang.hitch(this, sortElements, layoutBox));
+      //if splash widget is in this array, set it as first tabindex
+      rtoWindowElements.sort(function(e1, e2){
+        if(e1.name === 'Splash'){
+          return -1;
+        }else if(e2.name === 'Splash'){
+          return 1;
+        }else{
+          return 0;
+        }
+      });
+
+      rtoMapElements = rtoMapElements.sort(lang.hitch(this, sortElements, mapBox));
+
+      var tabIndex = 1;
+      rtoWindowElements.forEach(function(e){
+        e.tabIndex = tabIndex;
+
+        if(e.isController){
+          tabIndex += 5000;
+        }else{
+          tabIndex += 200;
+        }
+      });
+
+      //make layoutPanels support enter-key and esc-key events.
+      var layoutPanels = query('.lm_item.lm_stack', this.layoutContainer);
+      for(var i = 0; i <= layoutPanels.length - 1; i ++){
+        var panel = layoutPanels[i];
+        panel.tabIndex = tabIndex - 1;
+        this.own(on(panel, 'keydown', lang.hitch(this, function(panel, evt) {
+          if(html.hasClass(evt.target, 'lm_stack')){
+            var widgetDom;
+            if(evt.keyCode === keys.ENTER){
+              widgetDom = query('.jimu-widget', panel)[0];
+              if(widgetDom){
+                if(html.hasClass(widgetDom.parentNode, 'map')){
+                  this.map.container.focus();
+                }else{
+                  utils.focusFirstFocusNode(widgetDom);
+                }
+              }
+            }else if(evt.keyCode === keys.TAB){
+              if(!evt.shiftKey && !panel.nextSibling && !panel.parentNode.nextSibling){
+                //stop cursor enters into map container.
+                evt.preventDefault();
+                //focus first widget that is related browser.
+                if(rtoWindowElements.length > 0){
+                  var wId = rtoWindowElements[0].id;
+                  if(wId.indexOf('Splash') < 0){
+                    widgetDom = query('#' + wId)[0];
+                    widgetDom.focus();
+                  }
+                  else if(rtoWindowElements.length > 1){
+                    widgetDom = query('#' + rtoWindowElements[1].id)[0];
+                    widgetDom.focus();
+                  }else{
+                    layoutPanels[0].focus();
+                  }
+                }else{
+                  layoutPanels[0].focus();
+                }
+              }
+            }
+          }else if(evt.keyCode === keys.ESCAPE){
+            panel.focus();
+          }
+        }, panel)));
+      }
+
+      //map supports key-events
+      html.setAttr(this.map.container, 'tabindex', tabIndex);
+      html.setAttr(this.map.container, 'aria-label', window.jimuNls.gridLayout.mapArea);
+      this.own(on(this.map.container, 'keydown', lang.hitch(this, function(evt) {
+        if(html.getAttr(evt.target, 'id') === 'map'){
+          if(evt.keyCode === keys.ESCAPE){
+            utils.trapToNextFocusContainer(this.map.container);
+          }else if(evt.shiftKey && evt.keyCode === keys.TAB){
+            evt.preventDefault();
+          }
+        }
+      })));
+      this.own(on(this.map.container, 'focus', lang.hitch(this, function(evt) {
+        if(utils.isInNavMode() && html.getAttr(evt.target, 'id') === 'map'){
+          var myTarget = document.getElementById("map_container");
+          myTarget.addEventListener("mouseover", function(){});
+          //simulate a hover event
+          myTarget.simulateEvent = new MouseEvent('mouseover', {
+            'view': window,
+            'bubbles': true,
+            'cancelable': true
+          });
+          this.map.isKeyboardNavigationOrigin = this.map.isKeyboardNavigation;
+          var isTrue = myTarget.dispatchEvent(myTarget.simulateEvent);
+          if(isTrue){
+            this.map.enableKeyboardNavigation();
+          }
+        }
+      })));
+      this.own(on(this.map.container, 'blur', lang.hitch(this, function(evt) {
+        if(utils.isInNavMode() && html.getAttr(evt.target, 'id') === 'map'){
+          var myTarget = document.getElementById('map_container');
+          myTarget.removeEventListener("mouseover", function(){});
+          //reset to original state
+          if(!this.map.isKeyboardNavigationOrigin){
+            this.map.disableKeyboardNavigation();
+          }
+        }
+      })));
+
+
+      tabIndex += 1000;
+
+      rtoMapElements.forEach(function(e){
+        if(e.inPanel){ //inPanel widgets only need tabindex to init icons
+          e.tabIndexJimu = tabIndex;
+        }else{
+          e.tabIndex = tabIndex;
+        }
+
+        if(e.isController){
+          tabIndex += 5000;
+        }else{
+          tabIndex += 200;
+        }
+      });
+
+      function changePosition(pos, box){
+        var widgetBox = {w: 100, h: 100};// hard code the widget box here for simple.
+
+        if(!pos){
+          return;
+        }
+        if(typeof pos.bottom !== 'undefined'){
+          pos.top = box.h - pos.bottom - widgetBox.h;
+          delete pos.bottom;
+        }
+        if(typeof pos.right !== 'undefined'){
+          pos.left = box.w - pos.right - widgetBox.w;
+          delete pos.right;
+        }
+      }
+
+      //sort nodes by position, compare top and then left.
+      function sortElements(box, e1, e2){
+        var pos1 = lang.clone(e1.position || e1.panel && e1.panel.position);
+        var pos2 = lang.clone(e2.position || e2.panel && e2.panel.position);
+
+        //change position to x, y
+        changePosition(pos1, box);
+        changePosition(pos2, box);
+
+        if(pos1.top === pos2.top){
+          return pos1.left - pos2.left;
+        }else{
+          return pos1.top - pos2.top;
+        }
+      }
     },
 
     createMapDiv: function(mapId){

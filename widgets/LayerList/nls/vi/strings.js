@@ -5,6 +5,7 @@ define({
   "labelLayer": "Tên lớp",
   "itemZoomTo": "Phóng tới",
   "itemTransparency": "Độ trong suốt",
+  "itemSetVisibilityRange": "Thiết lập vùng hiển thị",
   "itemTransparent": "Độ trong suốt",
   "itemOpaque": "Độ mờ",
   "itemMoveUp": "Di chuyển lên trên",

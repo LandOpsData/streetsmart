@@ -929,6 +929,7 @@ define([
       var yAxisOption = {
         nameLocation: 'center'
       };
+
       //setting value labels and category labels
       if (config.type === 'column' || config.type === 'line' && config.labels) {
         xAxisOption.data = config.labels;
@@ -939,6 +940,7 @@ define([
         yAxisOption.type = 'category';
         xAxisOption.type = 'value';
       }
+      var format = null;
       //setting axis show, name, textStyle
       if (xAxis) {
         xAxisOption.name = xAxis.name;
@@ -949,6 +951,14 @@ define([
         if (xAxis.nameTextStyle) {
           xAxisOption.nameTextStyle = xAxis.nameTextStyle;
         }
+        format = xAxis.format;
+        if (format) {
+          if (format.type === 'int') {
+            xAxisOption.minInterval = 1;
+          } else {
+            xAxisOption.minInterval = 0;
+          }
+        }
       }
       if (yAxis) {
         // yAxisOption.name = yAxis.name;
@@ -956,10 +966,14 @@ define([
         if (yAxis.textStyle) {
           yAxisOption.axisLabel = yAxis.textStyle;
         }
-        // if (yAxis.nameTextStyle) {
-        //   yAxisOption.nameTextStyle = yAxis.nameTextStyle;
-        // }
-
+        format = yAxis.format;
+        if (format) {
+          if (format.type === 'int') {
+            yAxisOption.minInterval = 1;
+          } else {
+            yAxisOption.minInterval = 0;
+          }
+        }
       }
       //setting axis RTL
       if (window.isRTL) {
@@ -2182,7 +2196,7 @@ define([
             return;
           }
         });
-        if(typeof val === 'number'){
+        if (typeof val === 'number') {
           val = this.tryLocaleNumber(val);
         }
         return val;

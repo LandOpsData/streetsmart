@@ -5,6 +5,7 @@ define({
   "labelLayer": "लेयर का नाम",
   "itemZoomTo": "जूम करें",
   "itemTransparency": "पारदर्शिता",
+  "itemSetVisibilityRange": "दृश्यता सीमा सेट करें",
   "itemTransparent": "पारदर्शी",
   "itemOpaque": "अपारदर्शी",
   "itemMoveUp": "ऊपर जाएँ",

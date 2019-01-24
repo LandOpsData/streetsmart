@@ -92,7 +92,8 @@ define({
     "stay": "Rămâneți",
     "search": "Căutare",
     "searchMore": "Căutare suplimentară",
-    "tooltipText": "Text al sfatului ecran"
+    "tooltipText": "Text al sfatului ecran",
+    "findAddressOrPlace": "Găsire adresă sau loc"
   },
   "errorCode": "Cod",
   "errorMessage": "Mesaj",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Adăugaţi widgeturi aici prin intermediul filei Widget",
     "modifyLayout": "Modificare aspect",
     "dragToAdd": "Trageţi pentru a adăuga",
-    "mapArea": "SUPRAFAŢĂ HARTĂ"
+    "mapArea": "SUPRAFAŢĂ HARTĂ",
+    "sceneArea": "SCENE AREA"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "Contul dumneavoastră nu are permisiunea de a crea sau modifica date.",
   "noEditableLayers": "Contul dumneavoastră nu are permisiunea de a crea sau modifica date. Sau această hartă web nu include niciun strat tematic editabil.",
-  "invalidConfiguration": "Widgetul nu este configurat sau straturile tematice din configuraţie nu se mai află pe hartă.  Deschideţi aplicaţia în modul de creare şi reconfiguraţi widgetul."
+  "invalidConfiguration": "Widgetul nu este configurat sau straturile tematice din configuraţie nu se mai află pe hartă.  Deschideţi aplicaţia în modul de creare şi reconfiguraţi widgetul.",
+  "essentialAppsLicenseErrorForApp": "Contul dvs. nu este licențiat să utilizeze o aplicație care nu este publică. Solicitați-i administratorului organizației să vă aloce un tip de utilizator care include aplicații esențiale sau o licență pentru aplicații esențiale de completare.",
+  "essentialAppsLicenseErrorForBuilder": "Contul dvs. nu este licențiat pentru Web AppBuilder. Solicitați-i administratorului organizației să vă aloce un tip de utilizator care include aplicații esențiale sau o licență pentru aplicații esențiale de completare."
 });

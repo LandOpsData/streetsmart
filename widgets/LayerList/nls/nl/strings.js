@@ -5,6 +5,7 @@ define({
   "labelLayer": "Kaartlaagnaam",
   "itemZoomTo": "Zoomen naar",
   "itemTransparency": "Transparant",
+  "itemSetVisibilityRange": "Zichtbaarheidsbereik instellen",
   "itemTransparent": "Transparant",
   "itemOpaque": "Niet transparant",
   "itemMoveUp": "Naar boven verplaatsen",

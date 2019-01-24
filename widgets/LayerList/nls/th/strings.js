@@ -5,6 +5,7 @@ define({
   "labelLayer": "ชื่อชั้นข้อมูล",
   "itemZoomTo": "ขยายไปยัง",
   "itemTransparency": "โปร่งแสง",
+  "itemSetVisibilityRange": "กำหนดช่วงที่มองเห็นได้",
   "itemTransparent": "โปร่งแสง",
   "itemOpaque": "ทึบแสง",
   "itemMoveUp": "เลื่อนขึ้น",

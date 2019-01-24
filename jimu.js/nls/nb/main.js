@@ -92,7 +92,8 @@ define({
     "stay": "Bli værende",
     "search": "Søk",
     "searchMore": "Søk i flere",
-    "tooltipText": "Tekst for verktøytips"
+    "tooltipText": "Tekst for verktøytips",
+    "findAddressOrPlace": "Finn adresse eller sted"
   },
   "errorCode": "Kode",
   "errorMessage": "Melding",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Legg til widgeter her via Widget-fanen",
     "modifyLayout": "Endre oppsett",
     "dragToAdd": "Dra for å legge til",
-    "mapArea": "KARTOMRÅDE"
+    "mapArea": "KARTOMRÅDE",
+    "sceneArea": "SCENEOMRÅDE"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "Kontoen har ikke rettigheter til å opprette eller endre data.",
   "noEditableLayers": "Kontoen din har ikke tillatelse til å opprette eller endre data, eller det kan hende dette webkartet ikke inneholder lag som kan redigeres.",
-  "invalidConfiguration": "Widgeten er ikke konfigurert eller lagene i konfigurasjonen finnes ikke i kartet lenger. Åpne appen i byggemodus, og konfigurer widgeten på nytt."
+  "invalidConfiguration": "Widgeten er ikke konfigurert eller lagene i konfigurasjonen finnes ikke i kartet lenger. Åpne appen i byggemodus, og konfigurer widgeten på nytt.",
+  "essentialAppsLicenseErrorForApp": "Kontoen din er ikke lisensiert til å bruke apper som ikke er offentlige. Be administratoren for organisasjonen om å tilordne deg en brukertype som omfatter Essential Apps eller en tilleggslisens for Essential Apps.",
+  "essentialAppsLicenseErrorForBuilder": "Kontoen din er ikke lisensiert for Web AppBuilder. Be administratoren for organisasjonen om å tilordne deg en brukertype som omfatter Essential Apps eller en tilleggslisens for Essential Apps."
 });

@@ -17,6 +17,8 @@
 define([
     'dojo/Deferred',
     'dojo/_base/lang',
+    'dojo/on',
+    'dojo/keys',
     'dojo/Evented',
     'dojo/_base/html',
     'dojo/_base/array',
@@ -31,7 +33,7 @@ define([
     'jimu/dijit/_filter/pageControlForQuery',
     'jimu/dijit/Popup'
   ],
-  function(Deferred, lang, Evented, html, array, declare, query, ValueProvider,
+  function(Deferred, lang, on, keys, Evented, html, array, declare, query, ValueProvider,
     AdvancedListValueSelect, _TemplatedMixin,_WidgetsInTemplateMixin,template, jimuUtils,
     pageControlForQuery, Popup) {
 
@@ -149,6 +151,23 @@ define([
             this.listSelect.on("advancedListValueSelect_addNextPage", lang.hitch(this, this._addNextPage));
             this.listSelect.on("advancedListValueSelect_searchKey", lang.hitch(this, this._searchKey));
             this.listSelect.on("advancedListValueSelect_searchKeyLocal", lang.hitch(this, this._searchKeyLocal));
+
+            this.listSelect.on("advancedListValueSelect_itemsConfirmed", lang.hitch(this, function(){
+              if(html.getStyle(this.cbxPopup.domNode, 'display') === 'block'){
+                this._resetListSelectState(this);
+                this.cbxPopup.hide();
+              }
+              this.domNode.focus();
+            }));
+
+            html.setAttr(this.domNode, 'role', 'application');
+            this.own(on(this.domNode, 'keydown', lang.hitch(this, function(evt){
+              var target = evt.target || evt.srcElement;
+              if(html.hasClass(target, 'jimu-filter-mutcheck-list-value-provider') &&
+                evt.keyCode === keys.ENTER){
+                this._checkedBtnEvent();
+              }
+            })));
 
             if(!this.staticValues && typeof this._checkedBtnEvent === 'function'){
               if(!this.codedValues || (this.codedValues && this.filterCodedValue)){
@@ -662,8 +681,11 @@ define([
             if(!this.popupIsNoData){
               this.cbxPopup.show();
               this._resetPopupStyles();
-              if(this.listSelect.valueInput){
+              if(this.listSelect.valueInput &&
+                html.getStyle(this.listSelect.searchKeyInput, 'display') === 'block'){
                 this.listSelect.valueInput.focus();
+              }else{
+                this.listSelect.listContent.focus();
               }
               this.listSelect.queryState = false;
             }else{
@@ -695,6 +717,7 @@ define([
                   moveToCenter: false,
                   customPosition: {left: popupPosition.left, top: popupPosition.top},
                   hiddenAfterInit: hiddenAfterInit,
+                  useFocusLogic: false,
                   onClose: lang.hitch(this, function () {
                     this.cbxPopup.hide();
                     return false;
@@ -709,8 +732,11 @@ define([
                   if(ifWindowResize){//when window resizes
                     return;
                   }
-                  if(this.listSelect.valueInput){
+                  if(this.listSelect.valueInput &&
+                    html.getStyle(this.listSelect.searchKeyInput, 'display') === 'block'){
                     this.listSelect.valueInput.focus();
+                  }else{
+                    this.listSelect.listContent.focus();
                   }
                 }));
               }

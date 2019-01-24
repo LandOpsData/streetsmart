@@ -92,7 +92,8 @@ define({
     "stay": "Permanecer",
     "search": "Buscar",
     "searchMore": "Buscar más",
-    "tooltipText": "Texto de información sobre herramientas"
+    "tooltipText": "Texto de información sobre herramientas",
+    "findAddressOrPlace": "Buscar dirección o lugar"
   },
   "errorCode": "Código",
   "errorMessage": "Mensaje",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Agregar widgets aquí a través de la pestaña Widget",
     "modifyLayout": "Modificar diseño",
     "dragToAdd": "Arrastrar para agregar",
-    "mapArea": "ÁREA DE MAPA"
+    "mapArea": "ÁREA DE MAPA",
+    "sceneArea": "ÁREA DE ESCENA"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "Su cuenta no tiene permiso para crear o modificar datos.",
   "noEditableLayers": "Su cuenta no tiene permiso para crear o modificar datos, o bien este mapa web no contiene ninguna capa editable.",
-  "invalidConfiguration": "El widget no está configurado o las capas de la configuración ya no están en el mapa. Abra la aplicación en el modo de builder y vuelva a configurar el widget."
+  "invalidConfiguration": "El widget no está configurado o las capas de la configuración ya no están en el mapa. Abra la aplicación en el modo de builder y vuelva a configurar el widget.",
+  "essentialAppsLicenseErrorForApp": "Su cuenta no tiene licencia para utilizar aplicaciones que no son públicas. Pídale al administrador de su organización que le asigne un tipo de usuario que incluya aplicaciones esenciales o una licencia complementaria de aplicaciones esenciales.",
+  "essentialAppsLicenseErrorForBuilder": "Su cuenta no tiene licencia para Web AppBuilder. Pídale al administrador de su organización que le asigne un tipo de usuario que incluya aplicaciones esenciales o una licencia complementaria de aplicaciones esenciales."
 });

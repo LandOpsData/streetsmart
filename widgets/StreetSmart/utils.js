@@ -1,4 +1,4 @@
-define(["esri/SpatialReference","esri/geometry/Point"],function(SpatialReference,Point){"use strict";return{proj4:null,setProj4:function setProj4(proj4){this.proj4=proj4},/**
+define(["esri/SpatialReference","esri/geometry/Point"],function(SpatialReference,Point){"use strict";return{proj4:null,DEG_TO_RAD:Math.PI/180,RAD_TO_DEG:180/Math.PI,toRadians:function toRadians(deg){return deg*this.DEG_TO_RAD},toDegrees:function toDegrees(rad){return rad*this.RAD_TO_DEG},setProj4:function setProj4(proj4){this.proj4=proj4},/**
          * transform a point with Proj4js
          * (use this function if no serverside transformation is needed (for a point)
          * If source srs is the same as target srs ignore transformation

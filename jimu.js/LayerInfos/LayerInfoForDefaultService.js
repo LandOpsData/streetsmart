@@ -19,10 +19,11 @@ define([
   'dojo/_base/array',
   'dojo/_base/lang',
   'dojo/Deferred',
+  'dojo/topic',
   'dojo/dom-construct',
   './LayerInfoForDefault',
   './LayerObjectFacory'
-], function(declare, array, lang, Deferred, domConstruct, LayerInfoForDefault, LayerObjectFacory) {
+], function(declare, array, lang, Deferred, topic, domConstruct, LayerInfoForDefault, LayerObjectFacory) {
   return declare(LayerInfoForDefault, {
     _legendsNode: null,
     //_layerObjectLoadingIndicator: null,
@@ -384,7 +385,7 @@ define([
       return filter;
     },
 
-    setFilter: function(layerDefinitionExpression) {
+    setFilter: function(layerDefinitionExpression, objectPassWithFilterChangeEvent) {
       // summary:
       //   set layer definition expression to layerObject.
       // paramtter
@@ -404,7 +405,10 @@ define([
         } else {
           layerDefinitions = [];
         }
-
+        var parameterObject = lang.mixin({}, objectPassWithFilterChangeEvent);
+        lang.setObject('_wabProperties.objectPassWithFilterChangeEvent',
+                       parameterObject,
+                       mapService.layerInfo.layerObject);
         layerDefinitions[mapService.subId] = layerDefinitionExpression;
         mapService.layerInfo.layerObject.setLayerDefinitions(layerDefinitions);
       }
@@ -559,6 +563,22 @@ define([
       }
 
       return scaleRange;
+    },
+
+    setScaleRange: function(minScale, maxScale) {
+      var mapService = this.originOperLayer.mapService;
+      var jsapiLayerInfo = mapService.layerInfo._getJsapiLayerInfoById(mapService.subId);
+      if(mapService.layerInfo.layerObject &&
+         mapService.layerInfo.layerObject.supportsDynamicLayers &&
+         mapService.layerInfo.layerObject.setDynamicLayerInfos &&
+         jsapiLayerInfo &&
+         (jsapiLayerInfo.minScale !== minScale || jsapiLayerInfo.maxScale !== maxScale)) {
+
+        jsapiLayerInfo.minScale = minScale;
+        jsapiLayerInfo.maxScale = maxScale;
+        mapService.layerInfo.layerObject.setDynamicLayerInfos(mapService.layerInfo._jsapiLayerInfos);
+        topic.publish('layerInfos/layerInfo/scaleRangeChanged', [this]);
+      }
     },
 
     /****************

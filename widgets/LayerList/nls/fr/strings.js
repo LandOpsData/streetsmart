@@ -5,6 +5,7 @@ define({
   "labelLayer": "Nom de la couche",
   "itemZoomTo": "Zoom",
   "itemTransparency": "Transparence",
+  "itemSetVisibilityRange": "Définir la plage de visibilité",
   "itemTransparent": "Transparent",
   "itemOpaque": "Opaque",
   "itemMoveUp": "Monter",

@@ -5,6 +5,7 @@ define({
   "labelLayer": "Réteg neve",
   "itemZoomTo": "Nagyítás erre:",
   "itemTransparency": "Átlátszóság",
+  "itemSetVisibilityRange": "Láthatósági tartomány beállítása",
   "itemTransparent": "Átlátszó",
   "itemOpaque": "Átlátszatlan",
   "itemMoveUp": "Feljebb",

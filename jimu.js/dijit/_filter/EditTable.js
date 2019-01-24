@@ -19,6 +19,7 @@ define([
     'dojo/_base/html',
     'dojo/Evented',
     'dojo/on',
+    'dojo/keys',
     'dojo/dom-attr',
     'dojo/_base/declare',
     'dijit/_WidgetBase',
@@ -30,7 +31,7 @@ define([
     'dojo/text!./EditTable.html',
     'jimu/utils'
   ],
-    function(lang, html, Evented, on, domAttr, declare, _WidgetBase, query,
+    function(lang, html, Evented, on, keys, domAttr, declare, _WidgetBase, query,
       ValidationTextBox, NumberTextBox,
       _TemplatedMixin, _WidgetsInTemplateMixin,template, jimuUtils) {
 
@@ -56,6 +57,7 @@ define([
 
           if(this.tableType === 'unique'){
             this.inputType = 'radio';
+            html.addClass(this.listContent, 'radio-items-list-content');
           }else{
             this.inputType = 'checkbox';
           }
@@ -146,7 +148,7 @@ define([
 
           this._dijit.on('keydown', (function(e){
             var code = e.keyCode || e.which;
-            if (code === 13) {
+            if (code === keys.ENTER) {
               this._dijit.emit('blur');
             }
           }).bind(this));
@@ -185,30 +187,49 @@ define([
 
             // setTimeout(lang.hitch(this, this._dijitBlurTimeout), 300);
             setTimeout(lang.hitch(this, function(){
-              var newValue, displayTxt, labelTxt;
+              var newValue, displayTxt, labelTxt, nodeData;
               if(!this.isSearch && this.editState !== 'active'){
-                this.currentValLabel = this._dijit.displayedValue === '' ? this.customValue :
-                  (this.isNumberField ? this._getLocalNumber(this._dijit.value) : this._dijit.value);
                 var inputParentNode = this.updateInputDiv.parentNode;
+                nodeData = decodeURIComponent(html.getAttr(inputParentNode, 'data'));
+                if(html.hasClass(inputParentNode, 'name')){
+                  this.currentValLabel = this._dijit.displayedValue === '' ?
+                  (nodeData === this.customValue ? this.customValue :
+                    (this.isNumberField ? this._getLocalNumber(nodeData) : nodeData)):
+                  (this.isNumberField ? this._getLocalNumber(this._dijit.value) : this._dijit.value);
+                }else{
+                  this.currentValLabel = this._dijit.displayedValue === '' ?
+                    (nodeData === this.customLabel ? this.customLabel : nodeData) : this._dijit.displayedValue;
+                }
                 if(html.hasClass(inputParentNode, 'name') &&
                   (this.newLabel !== 'NaN' && this.newLabel !== this.customValue) &&
                   this._getNodeText(inputParentNode.nextSibling) === this.customLabel){//value triggers label only at first time.
                   labelTxt = this.isNumberField ? this.currentValLabel : this.newLabel;
                   html.setAttr(inputParentNode.nextSibling, 'data', encodeURIComponent(labelTxt));
                   this._setNodeText(inputParentNode.nextSibling, labelTxt);
+                  html.setAttr(inputParentNode.nextSibling, 'title', labelTxt);
                 }
 
                 newValue = html.hasClass(inputParentNode, 'name') ?
-                  (this._dijit.displayedValue === '' ? this.customValue : this._dijit.value) : this.newLabel;
+                  (this._dijit.displayedValue === '' ?
+                  (nodeData === this.customValue ? this.customValue : nodeData) : this._dijit.value) : this.newLabel;
                 html.setAttr(inputParentNode, 'data', encodeURIComponent(newValue));
                 displayTxt = html.hasClass(inputParentNode, 'name') ? this.currentValLabel : this.newLabel;
                 this._setNodeText(inputParentNode, displayTxt);
+                html.setAttr(inputParentNode, 'title', displayTxt);
                 this._dijit = null;
                 this.isSearch = false;
               }else if(this.editState === 'active'){
-                this.currentValLabel = this._dijitPre.displayedValue === '' ? this.customValue :
-                (this.isNumberField ? this._getLocalNumber(this._dijitPre.value): this._dijitPre.value);
                 var inputPreParentNode = this.updateInputDivPre.parentNode;
+                nodeData = decodeURIComponent(html.getAttr(inputPreParentNode, 'data'));
+                if(html.hasClass(inputPreParentNode, 'name')){
+                  this.currentValLabel = this._dijitPre.displayedValue === '' ?
+                  (nodeData === this.customValue ? this.customValue :
+                  (this.isNumberField ? this._getLocalNumber(nodeData) : nodeData)):
+                  (this.isNumberField ? this._getLocalNumber(this._dijitPre.value) : this._dijitPre.value);
+                }else{
+                  this.currentValLabel = this._dijitPre.displayedValue === '' ?
+                    (nodeData === this.customLabel ? this.customLabel : nodeData) : this._dijitPre.displayedValue;
+                }
                 if(html.hasClass(inputPreParentNode, 'name') &&
                   (this.newLabel !== 'NaN' && this.newLabel !== this.customValue) &&
                   (this._getNodeText(inputPreParentNode.nextSibling) === this.customLabel ||
@@ -221,13 +242,16 @@ define([
                     labelTxt = this.isNumberField ? this.currentValLabel : this.newLabel;
                     html.setAttr(inputPreParentNode.nextSibling, 'data', encodeURIComponent(labelTxt));
                     this._setNodeText(inputPreParentNode.nextSibling, labelTxt);
+                    html.setAttr(inputPreParentNode.nextSibling, 'title', labelTxt);
                   }
                 }
                 newValue = html.hasClass(inputPreParentNode, 'name') ?
-                (this._dijitPre.displayedValue === '' ? this.customValue : this._dijitPre.value) : this.newLabel;
-                html.setAttr(inputPreParentNode, 'data', newValue);
+                  (this._dijitPre.displayedValue === '' ?
+                  (nodeData === this.customValue ? this.customValue : nodeData) : this._dijitPre.value) : this.newLabel;
+                html.setAttr(inputPreParentNode, 'data', encodeURIComponent(newValue));
                 displayTxt = html.hasClass(inputPreParentNode, 'name') ? this.currentValLabel : this.newLabel;
                 this._setNodeText(inputPreParentNode, displayTxt);
+                html.setAttr(inputPreParentNode, 'title', displayTxt);
                 this.updateInputDivPre = null;
                 this._dijitPre = null;
                 this.editState = 'negative';
@@ -277,6 +301,7 @@ define([
         },
 
         _setNewLabel: function(value, name){
+          var nameNode;
           if(value === undefined && name === undefined){
             if(this._dijit.displayedValue !== ''){
               if(this.codedValues){
@@ -291,15 +316,26 @@ define([
               }
             }else{
               value = name = this.customValue;
+              if(this.updateInputDiv && this.updateInputDiv.parentNode){
+                nameNode = this.updateInputDiv.parentNode;
+                var nodeData = decodeURIComponent(html.getAttr(nameNode, 'data'));
+                if(nodeData !== this.customValue){
+                  value = this.isNumberField ? parseFloat(nodeData) : nodeData;
+                  if(this.codedValues){
+                    name = this._getLabelFromCodevalue(value);
+                  }else{
+                    name = this.isNumberField ? this._getLocalNumber(value) : value;
+                  }
+                }
+              }
             }
           }
-          // this._dijit.set('value', name);
-          // name = name ? name : this.newLabel;
           if(this.updateInputDiv && this.updateInputDiv.parentNode){
-            var nameNode = this.updateInputDiv.parentNode;
+            nameNode = this.updateInputDiv.parentNode;
             if(name !== this.customValue && this._getNodeText(nameNode.nextSibling) === this.customLabel){
               html.setAttr(nameNode.nextSibling, 'data', encodeURIComponent(name));
               this._setNodeText(nameNode.nextSibling, name);
+              html.setAttr(nameNode.nextSibling, 'title', name);
             }
             if(!this.codedValues){
               value = value ? value : decodeURIComponent(html.getAttr(nameNode, 'data'));
@@ -310,6 +346,7 @@ define([
               html.removeClass(itemDom, 'custom');
             }
             this._setNodeText(nameNode, name);
+            html.setAttr(nameNode, 'title', name);
           }
           this.updateInputDiv = null;
           this._dijit = null;
@@ -460,6 +497,12 @@ define([
                             '<div class="up action jimu-float-trailing"></div>' +
                          '</div>'
           }, this.listContent);
+          if(isCustom){
+            var nameNode = query('.name', target)[0];
+            html.setAttr(nameNode, 'title', name);
+            var labelNode = nameNode.nextSibling;
+            html.setAttr(labelNode, 'title', label);
+          }
           return target;
         },
 
@@ -592,6 +635,14 @@ define([
 
             var valLabel = labelsArray ? labelsArray[key].label : data.value;
             this._createTarget(data.value, valLabel, data.alias, checkedClass);
+          }
+          //add title attr for name nodes and alias nodes
+          var nameNodes = query('.name', this.listContent);
+          for(var k = 0; k < nameNodes.length; k ++){
+            var nameNode = nameNodes[k];
+            html.setAttr(nameNode, 'title', this._getNodeText(nameNode));
+            var labelNode = nameNode.nextSibling;
+            html.setAttr(labelNode, 'title', this._getNodeText(labelNode));
           }
         },
 

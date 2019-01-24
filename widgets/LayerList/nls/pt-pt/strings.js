@@ -5,6 +5,7 @@ define({
   "labelLayer": "Nome da camada",
   "itemZoomTo": "Efetuar zoom para",
   "itemTransparency": "Transparência",
+  "itemSetVisibilityRange": "Definir intervalo de visibilidade",
   "itemTransparent": "Transparente",
   "itemOpaque": "Opaco",
   "itemMoveUp": "Mover para cima",

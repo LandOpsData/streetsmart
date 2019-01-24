@@ -38,6 +38,7 @@ define([
   ], function(declare, lang, array, html, on, has, query, Deferred, _WidgetBase, _TemplatedMixin,
   UndoManager, OperationBase, RelationshipQuery, Popup, PopupMobile, graphicsUtils, PopupTemplate,
   jimuUtils, ConfigManager, DropdownMenu, jimuLayerInfos) {
+    /*jshint unused: false*/
     var clazz = declare([_WidgetBase, _TemplatedMixin], {
       baseClass: "related-records-popup-projector",
       templateString: "<div>" +
@@ -150,6 +151,12 @@ define([
       },
 
       _getRelatedRecordsByRelatedQuery: function(operationData) {
+        return operationData.oriJimuLayerInfo.getRelatedRecords(operationData.feature,
+                                                                operationData.destJimuLayerInfo);
+      },
+
+      /*
+      _getRelatedRecordsByRelatedQuery: function(operationData) {
         var def = new Deferred();
         var relatedQuery = new RelationshipQuery();
         var queryRelationship = this._getOriRelationshipByDestLayer(operationData);
@@ -179,6 +186,7 @@ define([
 
         return def;
       },
+      */
 
       _ignoreCaseToGetFieldObject: function(layerObject, fieldKey) {
         var result = null;

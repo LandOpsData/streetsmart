@@ -92,7 +92,8 @@ define({
     "stay": "Ostani",
     "search": "Potraži",
     "searchMore": "Pretraži više",
-    "tooltipText": "Tekst opisa elementa"
+    "tooltipText": "Tekst opisa elementa",
+    "findAddressOrPlace": "Pronađi adresu ili mjesto"
   },
   "errorCode": "Kod",
   "errorMessage": "Poruka",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Ovdje dodajte widgete putem kartice widgeta",
     "modifyLayout": "Izmijeni izgled",
     "dragToAdd": "Povuci za dodavanje",
-    "mapArea": "PODRUČJE KARTE"
+    "mapArea": "PODRUČJE KARTE",
+    "sceneArea": "PODRUČJE SCENE"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "Vaš račun nema dopuštenje za stvaranje ili mijenjanje podataka.",
   "noEditableLayers": "Vaš račun nema dozvolu za stvaranje ili izmjenu podataka. Ili ova web-karta ne sadrži nikakve slojeve koji se mogu uređivati.",
-  "invalidConfiguration": "Widget nije konfiguriran ili slojevi u konfiguraciji više nisu u karti. Otvorite app u načinu sastavljača i ponovo konfigurirajte widget."
+  "invalidConfiguration": "Widget nije konfiguriran ili slojevi u konfiguraciji više nisu u karti. Otvorite app u načinu sastavljača i ponovo konfigurirajte widget.",
+  "essentialAppsLicenseErrorForApp": "Vaš račun nije licenciran za upotrebu appa koji nije javan. Obratite se administratoru svoje organizacije da vam dodijeli vrstu korisnika koja sadrži licencu za osnovne appove ili za dodatke za osnovne appove.",
+  "essentialAppsLicenseErrorForBuilder": "Vaš račun nije licenciran za Web AppBuilder. Obratite se administratoru svoje organizacije da vam dodijeli vrstu korisnika koja sadrži licencu za osnovne appove ili za dodatke za osnovne appove."
 });

@@ -27,6 +27,7 @@ define([
     'dojo/_base/lang',
     'dojo/_base/array',
     'dojo/on',
+    'dojo/keys',
     'dojo/mouse',
     'dojo/topic',
     'dojo/cookie',
@@ -46,7 +47,7 @@ define([
     'dojo/ready'
   ],
   function(ConfigManager, LayoutManager, DataManager, WidgetManager, FeatureActionManager, SelectionManager,
-    DataSourceManager, FilterManager, html, lang, array, on, mouse,
+    DataSourceManager, FilterManager, html, lang, array, on, keys, mouse,
     topic, cookie, Deferred, all, ioquery, esriConfig, esriRequest, urlUitls, IdentityManager,
     portalUrlUtils, jimuUtils, require, i18n, mainBundle, esriMain, dojoReady) {
     /* global jimuConfig:true */
@@ -164,6 +165,9 @@ define([
 
     // disable middle mouse button scroll
     on(window, 'mousedown', function(evt) {
+      if(jimuUtils.isInNavMode()){
+        html.removeClass(document.body, 'jimu-nav-mode');
+      }
       if (!mouse.isMiddle(evt)) {
         return;
       }
@@ -172,6 +176,11 @@ define([
       evt.stopPropagation();
       evt.returnValue = false;
       return false;
+    });
+    on(window, 'keydown', function(evt) {
+      if(evt.keyCode === keys.TAB && !jimuUtils.isInNavMode()){
+        html.addClass(document.body, 'jimu-nav-mode');
+      }
     });
 
     String.prototype.startWith = function(str) {
@@ -212,10 +221,10 @@ define([
     }, jimuConfig);
 
 
-    window.wabVersion = '2.10';
-    // window.productVersion = 'Online 6.3';
-    window.productVersion = 'Web AppBuilder for ArcGIS (Developer Edition) 2.10';
-    // window.productVersion = 'Portal for ArcGIS 10.5.1';
+    window.wabVersion = '2.11';
+    // window.productVersion = 'Online 6.4';
+    window.productVersion = 'Web AppBuilder for ArcGIS (Developer Edition) 2.11';
+    // window.productVersion = 'Portal for ArcGIS 10.7';
 
     function initApp() {
       var urlParams, configManager, layoutManager;
@@ -302,6 +311,11 @@ define([
     }
     //ie css
     var ieVersion = jimuUtils.has('ie');
+    if(ieVersion > 9){
+      html.addClass(document.body, 'ie-nav-mode');
+    }else{
+      html.addClass(document.body, 'ie-low-nav-mode');
+    }
     if(ieVersion > 10){
       html.addClass(document.body, 'ie-gte-10');
     }

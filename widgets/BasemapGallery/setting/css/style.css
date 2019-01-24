@@ -307,7 +307,7 @@
   font-size: 14px;
   color: #000000;
 }
-.jimu-widget-basemapgallery-setting .mode-section div {
+.jimu-widget-basemapgallery-setting .mode-section > div {
   margin-bottom: 15px;
   cursor: pointer;
 }

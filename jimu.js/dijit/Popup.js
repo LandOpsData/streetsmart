@@ -22,6 +22,7 @@ define([
     'dojo/_base/html',
     'dojo/_base/fx',
     'dojo/on',
+    'dojo/keys',
     'dojo/sniff',
     'dojo/touch',
     'dojo/query',
@@ -29,7 +30,7 @@ define([
     'dijit/_WidgetBase',
     'jimu/utils'
   ],
-  function(declare, lang, Evented, array, html, baseFx, on, has, touch,
+  function(declare, lang, Evented, array, html, baseFx, on, keys, has, touch,
     query, Move, _WidgetBase, jimuUtils) {
     var count = 0;
     /* global jimuConfig */
@@ -101,6 +102,8 @@ define([
       customPosition: null,
       hiddenAfterInit: false,
 
+      useFocusLogic: true,
+
       constructor: function() {
         this.buttons = [];
         this.enabledButtons = [];
@@ -109,7 +112,14 @@ define([
         this.container = jimuConfig.layoutId;
       },
 
+      focusLastActiveNode: function(){
+        if(this.focusedNodeBeforeOpen && this.useFocusLogic){
+          this.focusedNodeBeforeOpen.focus();
+        }
+      },
+
       postCreate: function() {
+        this.focusedNodeBeforeOpen = document.activeElement;
         this._preProcessing();
 
         this.inherited(arguments);
@@ -131,6 +141,9 @@ define([
         // if(this.autoHeight){
         setTimeout(lang.hitch(this, function() { //tolerance height
           this._calcAndSetPosition(true, false);
+
+          //init focusable nodes
+          this.initFocusNodes();
         }), 50);
         // }else{
         //   this._calcAndSetPosition(true, false);
@@ -170,7 +183,106 @@ define([
           duration: 200
         }).play();
 
-        this.domNode.focus();
+
+        html.setAttr(this.domNode, 'role', 'application');
+        this.own(on(this.domNode, 'keydown', lang.hitch(this, function(evt) {
+          if (evt.keyCode === keys.ESCAPE) {
+            this.close();
+          }
+          jimuUtils.preventMapNavigation(evt);
+        })));
+      },
+
+      initFocusNodes: function(){
+        if(this.useFocusLogic){
+          this.firstFocusNode = this._getFirstFocusNode();
+          this.lastFocusNode = this._getLastFocusNode();
+          if(this.firstFocusNode){
+            this.own(on(this.firstFocusNode, 'keydown', lang.hitch(this, function(evt) {
+              if(evt.shiftKey && evt.keyCode === keys.TAB) {
+                evt.preventDefault();
+                this.firstFocusNode.focus();
+              }
+            })));
+            this.firstFocusNode.focus();
+          }
+          if(this.lastFocusNode){
+            this.own(on(this.lastFocusNode, 'keydown', lang.hitch(this, function(evt) {
+              if(!evt.shiftKey && evt.keyCode === keys.TAB) {
+                evt.preventDefault();
+                this.firstFocusNode.focus();
+              }
+            })));
+          }
+        }
+      },
+
+      _getFirstFocusNode: function(){
+        var firstNode = this.closeBtnNode;
+        if(!firstNode){
+          if (typeof this.content !== 'string') {
+            var focusableNodes;
+            if(this.content.domNode) {
+              focusableNodes = jimuUtils.getFocusNodesInDom(this.content.domNode);
+            }else if (this.content.nodeType === 1) {
+              focusableNodes = jimuUtils.getFocusNodesInDom(this.content);
+            }
+            if(focusableNodes.length > 0 ){
+              firstNode = focusableNodes[0];
+            }else if(this.buttons.length){
+              firstNode = this._getFirstBtn();
+            }
+          }else if(this.buttons.length){
+            firstNode = this._getFirstBtn();
+          }
+        }
+        return firstNode;
+      },
+
+      _getLastFocusNode: function(){
+        var lastNode = this._getLastBtn();
+        if(!lastNode){
+          if(this.content && typeof this.content !== 'string') {
+            var focusableNodes;
+            if(this.content.domNode) {
+              focusableNodes = jimuUtils.getFocusNodesInDom(this.content.domNode);
+            }else if (this.content.nodeType === 1) {
+              focusableNodes = jimuUtils.getFocusNodesInDom(this.content);
+            }
+            if(focusableNodes.length > 0 ){
+              lastNode = focusableNodes[focusableNodes.length - 1];
+            }else{
+              lastNode = this.closeBtnNode;
+            }
+          }else{
+            lastNode = this.closeBtnNode;
+          }
+        }
+        return lastNode;
+      },
+
+      _getFirstBtn: function(){
+        var firstBtn = null;
+        var btns = query('.jimu-btn', this.buttonContainer);
+        for(var i = 0; i <= btns.length - 1; i++) {
+          if(html.getStyle(btns[i], 'display') !== 'none'){
+            firstBtn = btns[i];
+            break;
+          }
+        }
+        return firstBtn;
+      },
+
+      _getLastBtn: function(){
+        var lastBtn = null;
+        var btns = query('.jimu-btn', this.buttonContainer);
+        for(var i = btns.length - 1; i >= 0; i--) {
+          if(html.getStyle(btns[i], 'display') !== 'none'){
+            lastBtn = btns[i];
+            break;
+          }
+        }
+        return lastBtn;
       },
 
       _preProcessing: function() {
@@ -197,7 +309,8 @@ define([
           innerHTML: this.titleLabel || '&nbsp'
         }, this.titleNode);
         this.closeBtnNode = html.create('div', {
-          'class': 'close-btn jimu-icon jimu-icon-close jimu-float-trailing'
+          'class': 'close-btn jimu-icon jimu-icon-close jimu-float-trailing',
+          'tabindex': 0
         }, this.titleNode);
 
         var eventName = null;
@@ -207,6 +320,11 @@ define([
           eventName = 'click';
         }
         this.own(on(this.closeBtnNode, eventName, lang.hitch(this, this.close)));
+        this.own(on(this.closeBtnNode, 'keydown', lang.hitch(this, function(evt){
+          if(evt.keyCode === keys.ENTER){
+            this.close();
+          }
+        })));
       },
 
       _initDomNode: function() {
@@ -237,7 +355,8 @@ define([
           html.setStyle(this.buttonContainer, 'display', 'none');
         }
 
-        for (var i = this.buttons.length - 1; i > -1; i--) {
+        // for (var i = this.buttons.length - 1; i > -1; i--) {
+        for(var i = 0; i <= this.buttons.length - 1; i++) {
           this._createButton(this.buttons[i]);
           if (this.buttons[i].disable) {
             this.disableButton(i);
@@ -507,6 +626,10 @@ define([
             html.destroy(cloneNode);
           }
         }).play();
+
+        this.focusLastActiveNode();
+
+        window.currentMsgPopup = null;
       },
 
       addButton: function(btn) {
@@ -524,20 +647,22 @@ define([
           'class': 'jimu-btn jimu-popup-action-btn jimu-float-trailing jimu-trailing-margin1 ' +
             appendedClasses,
           'innerHTML': button.label,
+          'tabindex': 0,
           'title': button.title || button.label
         }, this.buttonContainer);
-        this.enabledButtons.unshift(node);
+        this.enabledButtons.push(node);
 
         var disableNode = html.create('div', {
           'class': 'jimu-btn jimu-state-disabled jimu-float-trailing jimu-trailing-margin1 ' +
             appendedClasses,
           'title': button.title || button.label,
           'innerHTML': button.label,
+          'tabindex': 0,
           'style': {
             display: 'none'
           }
         }, this.buttonContainer);
-        this.disabledButtons.unshift(disableNode);
+        this.disabledButtons.push(disableNode);
 
         this.own(on(node, 'click', lang.hitch(this, function(evt) {
           //we don't close popup because that maybe the
@@ -548,23 +673,16 @@ define([
             this.close();
           }
         })));
-        // var existKey = false;
-        // if (typeof button.key === 'number') {
-        //   for (var attr in keys) {
-        //     if (keys[attr] === button.key) {
-        //       existKey = true;
-        //       break;
-        //     }
-        //   }
-        // }
-        // if (existKey) {
-        //   this.own(on(this.domNode, 'keydown', lang.hitch(this, function(event) {
-        //     var keyCode = event.keyCode !== undefined ? event.keyCode : event.which;
-        //     if (keyCode === button.key && this.pauseKeys.indexOf(keyCode) === -1) {
-        //       node.click();
-        //     }
-        //   })));
-        // }
+
+        this.own(on(node, 'keydown', lang.hitch(this, function(evt) {
+          if(evt.keyCode === 13){
+            if (button.onClick) {
+              button.onClick(evt);
+            } else {
+              this.close();
+            }
+          }
+        })));
       },
 
       setButtonProps: function(idx, props) {

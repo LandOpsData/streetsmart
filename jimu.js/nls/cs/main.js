@@ -92,7 +92,8 @@ define({
     "stay": "Zůstat",
     "search": "Hledat",
     "searchMore": "Vyhledat více",
-    "tooltipText": "Text v popisu tlačítka"
+    "tooltipText": "Text v popisu tlačítka",
+    "findAddressOrPlace": "Najít adresu nebo místo"
   },
   "errorCode": "Kód",
   "errorMessage": "Zpráva",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Na kartě Widget sem můžete přidat widgety",
     "modifyLayout": "Změnit rozvržení",
     "dragToAdd": "Přetažením přidejte",
-    "mapArea": "OBLAST MAPY"
+    "mapArea": "OBLAST MAPY",
+    "sceneArea": "OBLAST SCÉNY"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "Váš online účet nemá přístupová práva k vytváření nebo úpravě dat.",
   "noEditableLayers": "Váš účet nemá oprávnění vytvářet či upravovat data nebo tato webová mapa neobsahuje žádné editovatelné vrstvy.",
-  "invalidConfiguration": "Widget není nakonfigurován nebo se vrstvy v konfiguraci již nenacházejí v mapě. Spusťte aplikaci v režimu tvorby a upravte konfiguraci widgetu."
+  "invalidConfiguration": "Widget není nakonfigurován nebo se vrstvy v konfiguraci již nenacházejí v mapě. Spusťte aplikaci v režimu tvorby a upravte konfiguraci widgetu.",
+  "essentialAppsLicenseErrorForApp": "Váš účet nevlastní licenci k používání aplikace, která není veřejná. Požádejte prosím správce své organizace, aby vám přidělil typ uživatele, jehož součástí jsou základní aplikace nebo doplňková licence základních aplikací.",
+  "essentialAppsLicenseErrorForBuilder": "Váš účet nevlastní licenci Web AppBuilder. Požádejte prosím správce své organizace, aby vám přidělil typ uživatele, jehož součástí jsou základní aplikace nebo doplňková licence základních aplikací."
 });

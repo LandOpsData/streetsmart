@@ -32,6 +32,12 @@ function(declare, Evented, on, lang, html, Popup, FeaturelayerSource, LoadingInd
     height: 560,
     titleLabel: '',
 
+    //dijitArgs: {
+    //  layerChooserFromMap:,// optional, default value is 'jimu/dijit/FeaturelayerChooserFromMap'
+    //  multiple: false,
+    //  createMapResponse: ,
+    //  portalUrl: ,
+    //}
     dijitArgs: null,//refer to the parameters of dijit FeaturelayerSource
 
     //events:

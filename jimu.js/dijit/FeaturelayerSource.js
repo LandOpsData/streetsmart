@@ -49,6 +49,7 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
     //FeaturelayerChooserFromPortal options
     portalUrl: null,
 
+    layerChooserFromMap: null, // optional, default value is 'jimu/dijit/FeaturelayerChooserFromMap'
     //public methods:
     //getSelectedItems
     //getSelectedRadioType
@@ -121,7 +122,8 @@ function(declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, templat
         },
         multiple: this.multiple,
         createMapResponse: this.createMapResponse,
-        onlyShowWebMapLayers: true
+        onlyShowWebMapLayers: true,
+        layerChooserFromMap: this.layerChooserFromMap
       };
       this.flcMap = new FeaturelayerChooserWithButtons(args1);
       this.flcMap.operationTip = this.nls.selectLayer;

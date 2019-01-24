@@ -33,6 +33,7 @@ function(declare, _WidgetBase, lang, html, domClass, on, Evented, keys) {
     checked: false,
     status: true,
     label: "",
+    title: "", //it's used for screen reader when no label'
 
     postCreate: function(){
       this.checkNode = html.create('div', {
@@ -93,31 +94,36 @@ function(declare, _WidgetBase, lang, html, domClass, on, Evented, keys) {
         }
       }
     },
+
+
     _initSection508: function () {
-      //with "tabindex" param
-      if ("undefined" !== typeof this.tabindex) {
-        html.setAttr(this.checkNode, "tabindex", this.tabindex);
-        //css class
-        this.own(on(this.checkNode, 'focus', lang.hitch(this, function () {
-          html.addClass(this.checkNode, "dijitCheckBoxFocused");
-        })));
-        this.own(on(this.checkNode, 'blur', lang.hitch(this, function () {
-          html.removeClass(this.checkNode, "dijitCheckBoxFocused");
-        })));
-        //keypress event
-        this.own(on(this.checkNode, 'keypress', lang.hitch(this, function (evt) {
-          var charOrCode = evt.charCode || evt.keyCode;
-          if (html.hasClass(this.checkNode, "dijitCheckBoxFocused") && keys.SPACE === charOrCode) {
-            if (this.status) {
-              if (this.checked) {
-                this.uncheck();
-              } else {
-                this.check();
-              }
+      html.setAttr(this.domNode, 'tabindex', '0');
+      if(this.label === ''){
+        html.setAttr(this.domNode, 'title', this.title);//read content's string
+      }
+      html.setAttr(this.domNode, 'role', 'checkbox');
+      this._changeAriaCheckedAttr();
+      //css class
+      this.own(on(this.domNode, 'focus', lang.hitch(this, function () {
+        html.addClass(this.checkNode, "dijitCheckBoxFocused");
+      })));
+      this.own(on(this.domNode, 'blur', lang.hitch(this, function () {
+        html.removeClass(this.checkNode, "dijitCheckBoxFocused");
+      })));
+      //use keydown instead of keypress event, for#14747
+      this.own(on(this.domNode, 'keydown', lang.hitch(this, function (evt) {
+        var charOrCode = evt.charCode || evt.keyCode;
+        if (html.hasClass(this.checkNode, "dijitCheckBoxFocused") &&
+          (keys.SPACE === charOrCode || keys.ENTER === charOrCode)) {
+          if (this.status) {
+            if (this.checked) {
+              this.uncheck();
+            } else {
+              this.check();
             }
           }
-        })));
-      }
+        }
+      })));
     },
 
     setValue: function(value){
@@ -190,6 +196,12 @@ function(declare, _WidgetBase, lang, html, domClass, on, Evented, keys) {
         this.onChange(this.checked);
       }
       this.emit('change', this.checked);
+      this._changeAriaCheckedAttr();
+    },
+
+    _changeAriaCheckedAttr: function(){
+      var ariaChecked = this.checked ? 'true' : 'false';
+      html.setAttr(this.domNode, 'aria-checked', ariaChecked);
     },
 
     focus: function () {

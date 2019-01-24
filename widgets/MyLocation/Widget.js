@@ -20,12 +20,13 @@ define([
     "esri/dijit/LocateButton",
     'dojo/_base/html',
     'dojo/on',
+    'dojo/keys',
     'dojo/_base/lang',
     'jimu/utils',
     'jimu/dijit/Message',
     'dojo/touch'
   ],
-  function(declare, BaseWidget, LocateButton, html, on, lang, jimuUtils) {
+  function(declare, BaseWidget, LocateButton, html, on, keys, lang, jimuUtils) {
     var clazz = declare([BaseWidget], {
 
       name: 'MyLocation',
@@ -37,6 +38,7 @@ define([
         this.inherited(arguments);
         this.placehoder = html.create('div', {
           'class': 'place-holder',
+          'aria-label': this.nls._widgetLabel,
           title: this.label
         }, this.domNode);
 
@@ -48,6 +50,7 @@ define([
           html.setAttr(this.placehoder, 'title', this.nls.httpNotSupportError);
         } else if (window.navigator.geolocation) {
           this.own(on(this.placehoder, 'click', lang.hitch(this, this.onLocationClick)));
+          this.own(on(this.domNode, 'keydown', lang.hitch(this, this.onLocationKeyDown)));
           this.own(on(this.map, 'zoom-end', lang.hitch(this, this._scaleChangeHandler)));
         } else {
           html.setAttr(this.placehoder, 'title', this.nls.browserError);
@@ -66,6 +69,13 @@ define([
           html.addClass(this.placehoder, "locating");
         }
       },
+
+      onLocationKeyDown: function(e){
+        if(e.keyCode === keys.ENTER){
+          this.onLocationClick();
+        }
+      },
+
       //use current scale in Tracking
       _scaleChangeHandler: function() {
         var scale = this.map.getScale();

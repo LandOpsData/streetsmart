@@ -5,6 +5,7 @@ define({
   "labelLayer": "Nazwa warstwy",
   "itemZoomTo": "Powiększ do",
   "itemTransparency": "Przezroczystość",
+  "itemSetVisibilityRange": "Ustawianie zakresu widoczności",
   "itemTransparent": "Przezroczysty",
   "itemOpaque": "Nieprzezroczysty",
   "itemMoveUp": "Przesuń w górę",

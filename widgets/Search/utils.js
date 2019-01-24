@@ -109,7 +109,7 @@ define([
                 name: geocode.name || this._getGeocodeName(geocode.url),
                 url: geocode.url,
                 singleLineFieldName: geocode.singleLineFieldName,
-                placeholder: "Find address or place" || geocode.placeholder ||
+                placeholder: geocode.placeholder || window.jimuNls.common.findAddressOrPlace ||
                   geocode.name || this._getGeocodeName(geocode.url),
                 maxResults: 6,
                 searchInCurrentMapExtent: false,
@@ -160,7 +160,7 @@ define([
         name: _layerInfo.title,
         layerId: _layerId,
         url: url,
-        placeholder: item.hintText,
+        placeholder: item.hintText || window.jimuNls.common.findAddressOrPlace,
         searchFields: [item.field.name],
         displayField: item.field.name,
         exactMatch: item.field.exactMatch || false,

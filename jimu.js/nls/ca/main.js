@@ -92,7 +92,8 @@ define({
     "stay": "Roman",
     "search": "Cerca",
     "searchMore": "Cerca'n més",
-    "tooltipText": "Text d'informació sobre eines"
+    "tooltipText": "Text d'informació sobre eines",
+    "findAddressOrPlace": "Cerca una adreça o un lloc"
   },
   "errorCode": "Codi",
   "errorMessage": "Missatge",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Afegiu widgets aquí per mitjà de la pestanya Widget.",
     "modifyLayout": "Modifica el disseny",
     "dragToAdd": "Arrossega per afegir",
-    "mapArea": "MAP AREA"
+    "mapArea": "MAP AREA",
+    "sceneArea": "SCENE AREA"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "El vostre compte no té permís per crear o modificar dades.",
   "noEditableLayers": "El vostre compte no té permís per crear ni modificar dades. O bé, aquest mapa web no conté cap capa editable.",
-  "invalidConfiguration": "El widget no està configurat o les capes de la configuració ja no es troben al mapa. Obriu l'aplicació en el mode del builder i torneu a configurar el widget."
+  "invalidConfiguration": "El widget no està configurat o les capes de la configuració ja no es troben al mapa. Obriu l'aplicació en el mode del builder i torneu a configurar el widget.",
+  "essentialAppsLicenseErrorForApp": "El vostre compte no té llicència per utilitzar una aplicació que no sigui pública. Demaneu a l'administrador de l'organització que us assigni un tipus d'usuari que inclogui les aplicacions bàsiques o una llicència d'aplicacions bàsiques de complement.",
+  "essentialAppsLicenseErrorForBuilder": "El vostre compte no té llicència per al Web AppBuilder. Demaneu a l'administrador de l'organització que us assigni un tipus d'usuari que inclogui les aplicacions bàsiques o una llicència d'aplicacions bàsiques de complement."
 });

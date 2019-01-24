@@ -35,6 +35,7 @@ define(
     "dojo/text!./LocatorSourceSetting.html",
     "jimu/dijit/CheckBox",
     "dijit/form/ValidationTextBox",
+    "dijit/form/RadioButton",
     "dijit/form/NumberTextBox"
   ],
   function(
@@ -100,6 +101,8 @@ define(
         html.setStyle(this.enableLocalSearch.domNode, 'display', 'none');
 
         this._setMessageNodeContent(this.exampleHint);
+        this.own(on(this.panToRadio, 'click', lang.hitch(this, this._onRadioClicke)));
+        this.own(on(this.zoomToRadio, 'click', lang.hitch(this, this._onRadioClicke)));
 
         this.config = this.config ? this.config : {};
         this.setConfig(this.config);
@@ -129,7 +132,8 @@ define(
         var url = config.url;
         if (!url) {
           // set default zoomToRadio if there is no url.
-          html.setAttr(this.zoomToRadio, 'checked', '');
+          //html.setAttr(this.zoomToRadio, 'checked', '');
+          this.zoomToRadio.set('checked', true);
           return;
         }
         this.config = config;
@@ -181,7 +185,7 @@ define(
           singleLineFieldName: this.singleLineFieldName,
           placeholder: jimuUtils.stripHTML(this.placeholder.get('value')),
           countryCode: jimuUtils.stripHTML(this.countryCode.get('value')),
-          panToScale: this.panToRadio.checked ? true : false,
+          panToScale: this.panToRadio.get('checked') ? true : false,
           zoomScale: this.zoomScale.get('value') || this._defaultZoomScale,
           maxSuggestions: this.maxSuggestions.get('value') || 6,
           maxResults: this.maxResults.get('value') || 6,
@@ -269,11 +273,14 @@ define(
 
         this.searchInCurrentMapExtent.setValue(!!config.searchInCurrentMapExtent);
 
-        html.removeAttr(this.zoomToRadio, 'checked');
+        //html.removeAttr(this.zoomToRadio, 'checked');
+        this.zoomToRadio.set('checked', false);
         if(this.config.panToScale) {
-          html.setAttr(this.panToRadio, 'checked', '');
+          //html.setAttr(this.panToRadio, 'checked', '');
+          this.panToRadio.set('checked', true);
         } else {
-          html.setAttr(this.zoomToRadio, 'checked', '');
+          //html.setAttr(this.zoomToRadio, 'checked', '');
+          this.zoomToRadio.set('checked', true);
         }
 
         this.zoomScale.set('value', config.zoomScale || this._defaultZoomScale);
@@ -543,9 +550,9 @@ define(
       },
 
       _controlZoomScaleTextBox: function() {
-        if(this.panToRadio.checked){
+        if(this.panToRadio.get('checked')){
           this.zoomScale.set("disabled", true);
-        } else if(this.zoomToRadio.checked){
+        } else if(this.zoomToRadio.get('checked')){
           this.zoomScale.set("disabled", false);
         }
       },

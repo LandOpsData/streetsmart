@@ -5,6 +5,7 @@ define({
   "labelLayer": "Имя слоя",
   "itemZoomTo": "Приблизить к",
   "itemTransparency": "Прозрачность",
+  "itemSetVisibilityRange": "Задать диапазон видимости",
   "itemTransparent": "Прозрачный",
   "itemOpaque": "Непрозрачный",
   "itemMoveUp": "Выше",

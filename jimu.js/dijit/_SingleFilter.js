@@ -217,7 +217,8 @@ function(Evented, declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin
     },
 
     _initSelf:function(){
-      this.layerInfo = lang.mixin({}, this.layerInfo);
+      //it throws error when parameter is layerObjt(not layerDef) and call its toJson() to get layerDef
+      //this.layerInfo = lang.mixin({}, this.layerInfo);
 
       //case sensitive
       if(this.isHosted){
@@ -285,6 +286,7 @@ function(Evented, declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin
       this._handle2 = null;
     },
 
+    //Compatible with layerObject
     _isServiceSupportDistinctValues: function(url, layerDefinition){
       //StreamServer doesn't provide API interface to get unique values
       if(this._isStreamServer(url)){
@@ -294,7 +296,9 @@ function(Evented, declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin
       // return layerDefinition.advancedQueryCapabilities && layerDefinition.advancedQueryCapabilities.supportsDistinct;
       // }
       //MapServer or FeatureServer
-      var version = parseFloat(layerDefinition.currentVersion);
+      var _layerDef = layerDefinition.currentVersion ? layerDefinition :
+        layerDefinition.toJson().layerDefinition;
+      var version = parseFloat(_layerDef.currentVersion);
       return version >= 10.1;
     },
 
@@ -945,6 +949,9 @@ function(Evented, declare, _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin
 
       if(ifPredefined){
         this.cbxAskValues.setStatus(false);
+        this.cascadeSelect.setDisabled(true);//disable select for predefined filter.
+      }else{
+        this.cascadeSelect.setDisabled(false);//enable it for unique/multiple list
       }
     },
 

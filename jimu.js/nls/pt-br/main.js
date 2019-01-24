@@ -92,7 +92,8 @@ define({
     "stay": "Permanecer",
     "search": "Pesquisar",
     "searchMore": "Pesquisar mais",
-    "tooltipText": "Texto de dica da ferramenta"
+    "tooltipText": "Texto de dica da ferramenta",
+    "findAddressOrPlace": "Encontrar endereço ou lugar"
   },
   "errorCode": "Código",
   "errorMessage": "Mensagem",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Adicionar widgets aqui pela guia Widget",
     "modifyLayout": "Modificar layout",
     "dragToAdd": "Arrastar para adicionar",
-    "mapArea": "ÁREA DO MAPA"
+    "mapArea": "ÁREA DO MAPA",
+    "sceneArea": "ÁREA DE CENA"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "Sua conta não tem permissão para criar ou modificar dados.",
   "noEditableLayers": "Sua conta não tem permissão para criar ou modificar dados. Ou este mapa da web não contém camadas editáveis.",
-  "invalidConfiguration": "O Widget não está configurado ou as camadas na configuração não estão mais no mapa.  Abra o aplicativo no modo do construtor e configure novamente o widget."
+  "invalidConfiguration": "O Widget não está configurado ou as camadas na configuração não estão mais no mapa.  Abra o aplicativo no modo do construtor e configure novamente o widget.",
+  "essentialAppsLicenseErrorForApp": "Sua conta não está licenciada para utilizar um aplicativo que não seja público. Solicite ao administrador da sua organização que lhe atribua um tipo de usuário que inclua os Aplicativos Fundamentais ou uma licença complementar dos Aplicativos Fundamentais.",
+  "essentialAppsLicenseErrorForBuilder": "Sua conta não é licenciada para Web AppBuilder. Solicite ao administrador da sua organização que lhe atribua um tipo de usuário que inclua os Aplicativos Fundamentais ou uma licença complementar dos Aplicativos Fundamentais."
 });

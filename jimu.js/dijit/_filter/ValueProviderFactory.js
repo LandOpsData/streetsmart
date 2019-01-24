@@ -593,6 +593,20 @@ define([
         return fieldNames;
       },
 
+      _getSameShortTypeFieldNameLabels: function(fieldName){
+        var fieldNameLabels = [];
+        var info = this._getFieldInfo(this.layerDefinition, fieldName);
+        var shortType = clazz.getShortTypeByEsriType(info.type);
+        array.forEach(this.layerDefinition.fields, lang.hitch(this, function(fieldInfo){
+          if(fieldInfo.name !== fieldName){
+            if(clazz.getShortTypeByEsriType(fieldInfo.type) === shortType){
+              fieldNameLabels.push({value: fieldInfo.name, label: fieldInfo.alias});
+            }
+          }
+        }));
+        return fieldNameLabels;
+      },
+
       getValueProvider: function(partObj, runtime){
         /*{
             "fieldObj": {
@@ -628,15 +642,10 @@ define([
           //for codedValues
           var codedValues = jimuUtils.getCodedValueListForCodedValueOrSubTypes(this.layerDefinition, fieldName);
 
-          if(valueType === 'field'){
-            var otherFieldNames = this._getSameShortTypeFieldNames(fieldName);
-            if(otherFieldNames.length > 0){
-              staticValues = array.map(otherFieldNames, lang.hitch(this, function(fieldName){
-                return {
-                  value: fieldName,
-                  label: fieldName
-                };
-              }));
+          if(valueType === 'field'){//display with alias and query with name.#14620
+            var otherFieldNameLabels = this._getSameShortTypeFieldNameLabels(fieldName);
+            if(otherFieldNameLabels.length > 0){
+              staticValues = otherFieldNameLabels;
             }
           }else{
             if(codedValues && codedValues.length > 0 && valueTypeInfo.codedValueProviderType){

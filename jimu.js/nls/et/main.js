@@ -92,7 +92,8 @@ define({
     "stay": "Jää siia",
     "search": "Otsing",
     "searchMore": "Otsi rohkem",
-    "tooltipText": "Kohtspikri tekst"
+    "tooltipText": "Kohtspikri tekst",
+    "findAddressOrPlace": "Otsi aadressi või kohta"
   },
   "errorCode": "Kood",
   "errorMessage": "Sõnum",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Lisage siia vidin vidina vahekaardi kaudu",
     "modifyLayout": "Muuda paigutust",
     "dragToAdd": "Lisamiseks lohistage",
-    "mapArea": "KAARDI KUVAULATUS"
+    "mapArea": "KAARDI KUVAULATUS",
+    "sceneArea": "STSEENI ULATUS"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "Teie kontol puudub andmete loomise või muutmise õigus.",
   "noEditableLayers": "Teie kontol pole õigust andmeid luua või muuta või see veebikaart ei sisalda muudetavaid kihte.",
-  "invalidConfiguration": "Vidin on konfigureerimata või pole konfiguratsioonis sisalduvad kihid enam kaardil. Avage rakendus koosturirežiimis ja konfigureerige vidin uuesti."
+  "invalidConfiguration": "Vidin on konfigureerimata või pole konfiguratsioonis sisalduvad kihid enam kaardil. Avage rakendus koosturirežiimis ja konfigureerige vidin uuesti.",
+  "essentialAppsLicenseErrorForApp": "Teie kontol puudub litsents töölaua kasutamiseks, mis ei ole avalik. Paluge oma organisatsiooni administraatoril määrata teile kasutajatüüp, mis sisaldab olulisi rakendusi või oluliste rakenduse lisalitsentsi.",
+  "essentialAppsLicenseErrorForBuilder": "Teie kontol puudub litsents Web AppBuilderi jaoks. Paluge oma organisatsiooni administraatoril määrata teile kasutajatüüp, mis sisaldab olulisi rakendusi või oluliste rakenduse lisalitsentsi."
 });

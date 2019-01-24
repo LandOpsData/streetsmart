@@ -110,6 +110,7 @@ define([
     },
 
     addLayerNode: function(layerInfo, level, toTableNode, position) {
+      //jshint unused:false
 
       var layerTrNode, layerTdNode, ckSelectDiv, ckSelect, imageNoLegendDiv, handle,
         imageGroupDiv, imageNoLegendNode, popupMenuNode, i, imageShowLegendDiv, divLabel;
@@ -192,17 +193,16 @@ define([
       // set tdNode width
       domStyle.set(layerTdNode, 'width', level * 12 + 40 + 'px');
 
-      var layerTitleTdNode = domConstruct.create('td', {
-        'class': 'col col2'
-      }, layerTrNode);
-
-      
       /*
       var groupLayerClass = layerInfo.getSubLayers().length > 0 ? "" : "disable";
       imageGroupDiv = domConstruct.create('div', {
         'class': 'image-group-div jimu-float-leading ' + groupLayerClass
-      }, layerTitleTdNode);
+      }, layerTdNode);
       */
+
+      var layerTitleTdNode = domConstruct.create('td', {
+        'class': 'col col2'
+      }, layerTrNode);
 
       var grayedTitleClass = '';
       try {
@@ -629,6 +629,12 @@ define([
           popupMenu.showTransNode(layerInfo.getOpacity());
         } else {
           popupMenu.hideTransNode();
+        }
+      } else if(item.key === 'setVisibilityRange') {
+        if (domStyle.get(popupMenu.setVisibilityRangeNode, 'display') === 'none') {
+          popupMenu.showSetVisibilityRangeNode(layerInfo);
+        } else {
+          popupMenu.hideSetVisibilityRangeNode();
         }
       } else {
         result = popupMenu.popupMenuInfo.onPopupMenuClick(evt);

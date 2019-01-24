@@ -335,9 +335,11 @@ define([
               shelter.show();
 
               var fileData = cropImage.getData();
-              this._readFileData(fileData);
-              this.cropPopup.close();
+              if(fileData){
+                this._readFileData(fileData);
+              }
 
+              this.cropPopup.close();
               cropImage.destroy();
               shelter.hide();
             })

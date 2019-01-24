@@ -26,12 +26,12 @@ define([
     'dojo/keys',
     'dojo/dom-style',
     'jimu/dijit/Popup',
-    'jimu/utils',
     './Edit',
     '../utils',
     './GroupSelector',
     '../BasemapItem',
-    'jimu/dijit/LoadingIndicator'
+    'jimu/dijit/LoadingIndicator',
+    'dijit/form/RadioButton'
   ],
   function(
     declare,
@@ -44,7 +44,6 @@ define([
     keys,
     domStyle,
     Popup,
-    jimuUtils,
     Edit,
     utils,
     GroupSelector,
@@ -74,11 +73,11 @@ define([
         this.basemaps = [];
         this.mapItems = [];
         this.tipsSection.innerHTML = this.nomapTips;
-        jimuUtils.combineRadioCheckBoxWithLabel(this.respectOnlineRaido, this.respectOnlineLabel);
-        jimuUtils.combineRadioCheckBoxWithLabel(this.customRaido, this.customLabel);
+        // jimuUtils.combineRadioCheckBoxWithLabel(this.respectOnlineRaido, this.respectOnlineLabel);
+        // jimuUtils.combineRadioCheckBoxWithLabel(this.customRaido, this.customLabel);
 
         this.own(on(this.respectOnlineRaido, 'click', lang.hitch(this, function(){
-          if (this.respectOnlineRaido.checked) {
+          if (this.respectOnlineRaido.get('checked')) {
             html.setStyle(this.customBasemapSection, 'display', 'none');
             html.setStyle(this.tipsSection, 'display', 'none');
             html.addClass(this.baseMapsDiv, 'mode-online');
@@ -87,7 +86,7 @@ define([
           }
         })));
         this.own(on(this.customRaido, 'click', lang.hitch(this, function(){
-          if (this.customRaido.checked) {
+          if (this.customRaido.get('checked')) {
             html.setStyle(this.customBasemapSection, 'display', 'block');
             html.setStyle(this.nomapTipsSection, 'display', 'none');
             html.removeClass(this.baseMapsDiv, 'mode-online');
@@ -126,13 +125,13 @@ define([
 
         if (config.basemapGallery.mode === CUSTOM_BASEMAP || // compatible with old version
             (!('mode' in config.basemapGallery) && this.basemaps.length > 0)) {
-          this.customRaido.checked = true;
+          this.customRaido.set('checked', true);
           html.removeClass(this.baseMapsDiv, 'mode-online');
           domStyle.set(this.customBasemapSection, 'display', 'block');
           this.clearBaseMapsDiv();
           this._createMapItems();
         } else {
-          this.respectOnlineRaido.checked = true;
+          this.respectOnlineRaido.set('checked', true);
           html.addClass(this.baseMapsDiv, 'mode-online');
           domStyle.set(this.customBasemapSection, 'display', 'none');
           this.clearBaseMapsDiv();
@@ -141,9 +140,9 @@ define([
       },
 
       getConfig: function() {
-        if (this.respectOnlineRaido.checked) {
+        if (this.respectOnlineRaido.get('checked')) {
           this.config.basemapGallery.mode = RESPECT_ONLINE;
-        } else if(this.customRaido.checked) {
+        } else if(this.customRaido.get('checked')) {
           this.config.basemapGallery.mode = CUSTOM_BASEMAP;
         }
         this.config.basemapGallery.basemaps = this.basemaps;

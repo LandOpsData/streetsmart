@@ -21,12 +21,13 @@ define([
     'dojo/_base/declare',
     'dijit/_WidgetBase',
     'dojo/on',
+    'dojo/keys',
     'dojo/query',
     'dijit/_TemplatedMixin',
     'dijit/_WidgetsInTemplateMixin',
     'dojo/text!./AdvancedListValueSelect.html',
     'jimu/utils'
-  ],function(lang, Evented, html, declare, _WidgetBase, on, query,
+  ],function(lang, Evented, html, declare, _WidgetBase, on, keys, query,
       _TemplatedMixin, _WidgetsInTemplateMixin, template, jimuUtils) {
 
     return declare([_WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin, Evented], {
@@ -106,14 +107,207 @@ define([
             this.selectedToggleDiv.style.display = 'block';
             this.selectedToggle = query('.showAllIcon', this.selectedToggleDiv)[0];
             this.own(on(this.selectedToggleDiv, 'click', lang.hitch(this, '_toggleFilter')));
+            this.own(on(this.selectedToggleDiv, 'keydown', lang.hitch(this, function(evt){
+              if(evt.keyCode === keys.ENTER){
+                this._toggleFilter(evt);
+              }
+            })));
             this._addSelectedContainerEvent();
           }
+          this._addKeyDownEvent();
+        },
+
+        _addKeyDownEvent: function(){
+          this.own(on(this.multipleSelect, 'keydown', lang.hitch(this, function(evt){
+            var key = evt.which || evt.keyCode;
+            var target = evt.target;
+            //esc or tab(before the first node or after the last node), close popup
+            if(key === keys.ESCAPE ||
+              (target.tagName === 'INPUT' && evt.shiftKey && key === keys.TAB) ||
+              (((this.controlType === 'multipleDynamic' && html.hasClass(target, 'clearAllSelectedIcon')) ||
+              (this.controlType !== 'multipleDynamic' && html.hasClass(target, 'item'))) &&
+              !evt.shiftKey && key === keys.TAB)){
+              evt.preventDefault();
+              if(this.currentHoverItem){
+                html.removeClass(this.currentHoverItem, 'active');
+                this.currentHoverItem = null;
+              }
+              this.emit("advancedListValueSelect_itemsConfirmed");
+            }
+          })));
+
+          //listContent - event
+          this.own(on(this.listContent, 'focus', lang.hitch(this, function(){
+            if(!jimuUtils.isInNavMode()){
+              return;
+            }
+            this.currentItem = this.getCurrentItem();
+            this.currentItem = this.currentItem ? this.currentItem : this._getCheckInputItems()[0];
+            this.currentHoverItem = this.currentItem.parentNode;
+            this.currentHoverItem.focus();//focus current item directly
+            html.addClass(this.currentHoverItem, 'active');
+            setTimeout(lang.hitch(this, function(){//for IE
+              html.addClass(this.currentHoverItem, 'active');
+            }), 50);
+          })));
+          this.own(on(this.listContent, 'blur', lang.hitch(this, function(){
+            if(jimuUtils.isInNavMode() && this.currentHoverItem){
+              html.removeClass(this.currentHoverItem, 'active');
+            }
+          })));
+          //pervent cursor enter content from showAllIconBtn by shift&tab-key #firefox
+          this.own(on(this.showAllIconBtn, 'keydown', lang.hitch(this, function(evt){
+            if(evt.shiftKey && evt.keyCode === keys.TAB){
+              evt.preventDefault();
+              if(html.getStyle(this.selectedContainer, 'display') === 'block'){
+                this.selectedListContent.focus();
+              }else{
+                this.listContent.focus();
+              }
+            }
+          })));
+          this.own(on(this.listContent, 'keydown', lang.hitch(this, function(evt){
+            if(!jimuUtils.isInNavMode()){
+              return;
+            }
+
+            var key = evt.which || evt.keyCode;
+            //prevent default behaviors
+            if([keys.SPACE, keys.UP_ARROW, keys.DOWN_ARROW].indexOf(key) > -1){//space, up, down
+              evt.preventDefault();
+            }
+
+            if(key === keys.TAB && html.hasClass(evt.target, 'item')){
+              evt.preventDefault();
+              if(this.currentHoverItem){
+                html.removeClass(this.currentHoverItem, 'active');
+              }
+              if(evt.shiftKey){
+                if(this.searchKeyInput.style.display === 'block'){
+                  this.valueInput.focus();
+                }else{
+                  this.emit("advancedListValueSelect_itemsConfirmed");
+                }
+              }else{
+                if(this.controlType === 'multipleDynamic'){
+                  this.showAllIconBtn.focus();
+                }
+              }
+            }else if(key === keys.SPACE || key === keys.ENTER){//space or enter
+              var currentItem = query('.checkInput', this.currentHoverItem)[0];
+              var labelTarget = query('.label', this.currentHoverItem)[0];
+              this._setCBXChecked(currentItem, this._getNodeText(labelTarget));
+              if(this.inputType === 'radio'){
+                html.removeClass(this.currentHoverItem, 'active');
+                this.currentHoverItem = null;
+                this.emit("advancedListValueSelect_itemsConfirmed");
+              }
+            }
+            else if(key === keys.UP_ARROW || key === keys.DOWN_ARROW){//up or down
+              var currentHoverItem = key === keys.UP_ARROW ? this.currentHoverItem.previousSibling :
+              this.currentHoverItem.nextSibling;
+              currentHoverItem = currentHoverItem ? currentHoverItem : this.currentHoverItem; //current
+              //set position
+              if (this.listContainer.scrollHeight > this.listContainer.clientHeight) {
+                //currentHoverItem's position is wrong by one item???
+                var searchHeight = 30;
+                var scrollBottom = this.listContainer.clientHeight + this.listContainer.scrollTop;
+                var elementBottom = currentHoverItem.offsetTop + currentHoverItem.offsetHeight;
+                elementBottom = elementBottom - searchHeight;
+                if (elementBottom > scrollBottom) {
+                  this.listContainer.scrollTop = elementBottom - this.listContainer.clientHeight;
+                }
+                else if (currentHoverItem.offsetTop < this.listContainer.scrollTop + searchHeight) {
+                  this.listContainer.scrollTop = currentHoverItem.offsetTop - searchHeight;
+                }
+              }
+              html.removeClass(this.currentHoverItem, 'active');
+              this.currentHoverItem = currentHoverItem;
+              html.addClass(this.currentHoverItem, 'active');
+              this.currentHoverItem.focus();
+            }
+          })));
+
+          //selectContent - event
+          this.own(on(this.selectedListContent, 'focus', lang.hitch(this, function(){
+            if(!jimuUtils.isInNavMode()){
+              return;
+            }
+            var items = query(".item", this.selectedListContent);
+            if(items.length){
+              this.currentHoverItem = items[0];
+              this.currentHoverItem.focus();
+              html.addClass(this.currentHoverItem, 'active');
+              setTimeout(lang.hitch(this, function(){//for IE
+                html.addClass(this.currentHoverItem, 'active');
+              }), 50);
+            }
+          })));
+          this.own(on(this.selectedListContent, 'blur', lang.hitch(this, function(){
+            if(jimuUtils.isInNavMode() && this.currentHoverItem){
+              html.removeClass(this.currentHoverItem, 'active');
+            }
+          })));
+          this.own(on(this.selectedContainer, 'keydown', lang.hitch(this, function(evt){
+            if(!jimuUtils.isInNavMode()){
+              return;
+            }
+            var key = evt.which || evt.keyCode;
+            if(key === keys.TAB){
+              evt.preventDefault();
+              if(this.currentHoverItem){
+                html.removeClass(this.currentHoverItem, 'active');
+              }
+              this.showAllIconBtn.focus();
+              // this.showSelectedIconBtn.focus();
+              return;
+            }
+            var items = query(".item", this.selectedListContent);
+            if(items.length === 0){
+              return;
+            }
+
+            //prevent default behaviors
+            if([keys.SPACE, keys.UP_ARROW, keys.DOWN_ARROW].indexOf(key) > -1){//space, up, down
+              evt.preventDefault();
+            }
+
+            if(key === keys.SPACE || key === keys.ENTER){//space or enter
+              var inputTarget = query('.checkInput', this.currentHoverItem)[0];
+              var labelTarget = query('.label', this.currentHoverItem)[0];
+              this._setCBXSelectedChecked(inputTarget, this._getNodeText(labelTarget));//trigger
+            }
+            else if(key === keys.UP_ARROW || key === keys.DOWN_ARROW){//up or down
+              var currentHoverItem = key === keys.UP_ARROW ? this.currentHoverItem.previousSibling :
+                this.currentHoverItem.nextSibling;
+              currentHoverItem = currentHoverItem ? currentHoverItem : this.currentHoverItem; //current
+              //set position
+              if (this.selectedContainer.scrollHeight > this.selectedContainer.clientHeight) {
+                //currentHoverItem's position is wrong by one item???
+                var scrollBottom = this.selectedContainer.clientHeight + this.selectedContainer.scrollTop;
+                var elementBottom = currentHoverItem.offsetTop + currentHoverItem.offsetHeight;
+                if (elementBottom > scrollBottom) {
+                  this.selectedContainer.scrollTop = elementBottom - this.selectedContainer.clientHeight;
+                }
+                else if (currentHoverItem.offsetTop < this.selectedContainer.scrollTop) {
+                  this.selectedContainer.scrollTop = currentHoverItem.offsetTop;
+                }
+              }
+
+              html.removeClass(this.currentHoverItem, 'active');
+              this.currentHoverItem = currentHoverItem;
+              html.addClass(this.currentHoverItem, 'active');
+              this.currentHoverItem.focus();
+            }
+          })));
         },
 
         _toggleFilter: function(evt){
           var target = evt.target;
           if(html.hasClass(target, 'clearAllSelectedIcon')){ //clear selected all
             this._clearAllSelected();
+            this.currentItem = null;
+            this.currentHoverItem = null;
             return;
           }
 
@@ -123,9 +317,11 @@ define([
 
           if(html.hasClass(target, 'showAllIcon')){
             this.selectedContainer.style.display = 'none';
+            this.listContent.focus();
           }else{
             this._initSelectedContainerItems();
             this.selectedContainer.style.display = 'block';
+            this.selectedListContent.focus();
           }
 
           html.removeClass(this.selectedToggle, 'iconHover');
@@ -169,8 +365,10 @@ define([
           for(var index = 0; index < this.checkedList.length; index ++){
             var value = this.checkedList[index];
             var label = this.disPlayLabel === 'value' ? value : this.checkedLabelList[index];
-            var dataAttr = this.isNumberField ? "data=" + value : "data='" + value + "'";
-            var item = '<div class="item">' +
+            // var dataAttr = this.isNumberField ? "data=" + value : "data='" + value + "'";
+            var dataValue = this.isNumberField ? value : encodeURIComponent(value);
+            var dataAttr = "data=\"" + dataValue + "\"";
+            var item = '<div class="item" tabindex="-1">' +
                   '<div class="checkInput ' + this.inputType + ' checked" ' + dataAttr + '></div>' +
                   '<div class="label jimu-ellipsis-Blanks' + labelRuntimeClass + '" style="max-width:' +
                   this._itemLabelW + 'px">' +
@@ -198,36 +396,38 @@ define([
               evt.stopPropagation();
               return;
             }
-            //show
-            var target = cbxTarget, name = this._getNodeText(labelTarget);
-            var value = name;
-            if(this.disPlayLabel === 'alias' || this.disPlayLabel === 'label'){
-              value = decodeURIComponent(html.getAttr(target, 'data'));
-            }
-            if(html.hasClass(target, 'checked')){
-              if(this.inputType === 'radio'){
-                return;
-              }
-              html.removeClass(target, 'checked');
-              //update list
-              this._updateCheckedList('remove', value, name);
-              this.checkCBXItems();
-              this.emit("advancedListValueSelect_itemUnChecked", name);
-            }else{
-              if(this.inputType === 'radio' && this.currentItem){
-                if(this.currentItem === true){
-                  this.currentItem = this.getCurrentItem();
-                }
-                html.removeClass(this.currentItem, 'checked');
-              }
-              html.addClass(target, 'checked');
-              this._updateCheckedList('add', value, name);
-              this.checkCBXItems();
-              this.emit("advancedListValueSelect_itemChecked", name);
-            }
-
+            this._setCBXSelectedChecked(cbxTarget, this._getNodeText(labelTarget));
             evt.stopPropagation();
           })));
+        },
+
+        _setCBXSelectedChecked: function(target, name){
+          //show
+          var value = name;
+          if(this.disPlayLabel === 'alias' || this.disPlayLabel === 'label'){
+            value = decodeURIComponent(html.getAttr(target, 'data'));
+          }
+          if(html.hasClass(target, 'checked')){
+            if(this.inputType === 'radio'){
+              return;
+            }
+            html.removeClass(target, 'checked');
+            //update list
+            this._updateCheckedList('remove', value, name);
+            this.checkCBXItems();
+            this.emit("advancedListValueSelect_itemUnChecked", name);
+          }else{
+            if(this.inputType === 'radio' && this.currentItem){
+              if(this.currentItem === true){
+                this.currentItem = this.getCurrentItem();
+              }
+              html.removeClass(this.currentItem, 'checked');
+            }
+            html.addClass(target, 'checked');
+            this._updateCheckedList('add', value, name);
+            this.checkCBXItems();
+            this.emit("advancedListValueSelect_itemChecked", name);
+          }
         },
 
         _getNodeText: function(target){
@@ -430,7 +630,7 @@ define([
                 realCheckedNum = 1;
               }
               var _dataAttr = "data='" + this.emptyStr + "'";
-              innerHTML = '<div class="item emptyItem' + itemActiveClass + '">' +
+              innerHTML = '<div class="item emptyItem' + itemActiveClass + '" tabindex="-1">' +
                   '<div class="checkInput ' + this.inputType + _checkedClass + '" ' + _dataAttr + '></div>' +
                   '<div class="label' + labelBig + ' jimu-ellipsis-Blanks' + labelRuntimeClass +
                   '" style="max-width:' + this._itemLabelW + 'px">' +
@@ -473,7 +673,7 @@ define([
             // var dataAttr = this.isNumberField ? "data=" + valueLabel.value : "data='" + valueLabel.value + "'";
             var dataValue = this.isNumberField ? valueLabel.value : encodeURIComponent(valueLabel.value);//string maybe has ',""
             var dataAttr = "data=\"" + dataValue + "\"";
-            var item = '<div class="item">' +
+            var item = '<div class="item" tabindex="-1">' +
                   // '<div class="checkInput ' + this.inputType + checkedClass + '" data=' + valueLabel.value + '></div>' +
                   '<div class="checkInput ' + this.inputType + checkedClass + '" ' + dataAttr + '></div>' +
                   '<div class="label' + labelBig + ' jimu-ellipsis-Blanks' + labelRuntimeClass +
@@ -492,6 +692,20 @@ define([
           this.listContent.innerHTML = innerHTML + items;
           // var containerH = html.getStyle(this.listContainer, 'height') + 15;
           // html.setStyle(this.listContainer, 'height', containerH + 'px');
+
+          //active empty option
+          var emptyOpton = query('.emptyItem', this.listContent)[0];
+          if(emptyOpton){
+            var checkedItem = query('.checked', this.listContent)[0];
+            //checked item maybe doesn't exist in current list
+            this.currentHoverItem = checkedItem ? checkedItem.parentNode : true;
+          }else{//multiple
+            // this.currentHoverItem = query('.item', this.listContent)[0];
+            this.currentItem = this.getCurrentItem();
+            this.currentItem = this.currentItem ? this.currentItem : this._getCheckInputItems()[0];
+            this.currentHoverItem = this.currentItem.parentNode;
+          }
+          html.addClass(this.currentHoverItem, 'active');
           return this.listContent;
         },
 

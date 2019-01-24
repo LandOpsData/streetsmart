@@ -5,6 +5,7 @@ define({
   "labelLayer": "שם שכבה",
   "itemZoomTo": "התמקד אל",
   "itemTransparency": "שקיפות",
+  "itemSetVisibilityRange": "קבע טווח ניראות",
   "itemTransparent": "שקוף",
   "itemOpaque": "אטום",
   "itemMoveUp": "הזז למעלה",

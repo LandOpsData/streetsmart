@@ -5,6 +5,7 @@ define({
   "labelLayer": "اسم الطبقة",
   "itemZoomTo": "تكبير إلى",
   "itemTransparency": "معدل الشفافية:",
+  "itemSetVisibilityRange": "تعيين نطاق الرؤية",
   "itemTransparent": "شفاف",
   "itemOpaque": "غير شفاف",
   "itemMoveUp": "نقل لأعلى",

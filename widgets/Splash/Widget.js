@@ -18,6 +18,7 @@ define(['dojo/_base/declare',
     'dojo/_base/lang',
     'dojo/_base/html',
     'dojo/on',
+    'dojo/keys',
     'dojo/query',
     'dojo/cookie',
     'dijit/_WidgetsInTemplateMixin',
@@ -29,7 +30,7 @@ define(['dojo/_base/declare',
     'jimu/dijit/LoadingShelter',
     'dojo/Deferred'
   ],
-  function(declare, lang, html, on, query, cookie, _WidgetsInTemplateMixin, BaseWidget, topic,
+  function(declare, lang, html, on, keys, query, cookie, _WidgetsInTemplateMixin, BaseWidget, topic,
            CheckBox, utils, esriLang, LoadingShelter, Deferred) {
     var clazz = declare([BaseWidget, _WidgetsInTemplateMixin], {
       baseClass: 'jimu-widget-splash',
@@ -39,6 +40,8 @@ define(['dojo/_base/declare',
 
       postCreate: function() {
         this.inherited(arguments);
+        html.setAttr(this.domNode, 'aria-label', this.nls._widgetLabel);
+
         //LoadingShelter
         this.shelter = new LoadingShelter({
           hidden: true
@@ -69,11 +72,9 @@ define(['dojo/_base/declare',
           }
           this.confirmCheck = new CheckBox({
             label: utils.stripHTML(hint),
-            checked: false,
-            tabindex: 0
+            checked: false
           }, this.confirmCheck);
           this.own(on(this.confirmCheck, 'change', lang.hitch(this, this.onCheckBoxClick)));
-          html.setAttr(this.confirmCheck.domNode, 'title', utils.stripHTML(hint));
           this.confirmCheck.startup();
         }
       },
@@ -108,6 +109,31 @@ define(['dojo/_base/declare',
         this._normalizeDomNodePosition();
 
         this._setConfig();
+
+        this.own(on(this.domNode, 'keydown', lang.hitch(this, function(evt){
+          if(html.hasClass(evt.target, this.baseClass) && evt.keyCode === keys.ESCAPE){
+            this.close();
+          }
+        })));
+
+        this.own(on(this.splashDesktop, 'keydown', lang.hitch(this, function(evt){
+          if(html.hasClass(evt.target, 'jimu-widget-splash-desktop')){
+            if(evt.keyCode === keys.TAB){
+              evt.preventDefault();
+            }
+            //allow user to use tab-key to focus first node from widgetDom on this spacial widget.
+            if(evt.keyCode === keys.ENTER || (!evt.shiftKey && evt.keyCode === keys.TAB)){
+              utils.focusFirstFocusNode(this.domNode);
+            }
+          }
+        })));
+
+        var focusableNodes = utils.getFocusNodesInDom(this.domNode);
+        for(var i = 0; i < focusableNodes.length; i ++){
+          html.setAttr(focusableNodes[i], 'tabindex', 0);
+        }
+        utils.initFirstFocusNode(this.domNode, focusableNodes[0]);
+        utils.initLastFocusNode(this.domNode, this.okNode);
       },
 
       _setConfig: function() {
@@ -331,6 +357,12 @@ define(['dojo/_base/declare',
             cookie(isFirstKey, null, {expires: -1});
           }
           this.close();
+        }
+      },
+      onOkKeydown: function(evt){
+        if(evt.keyCode === keys.ENTER){
+          this.onOkClick();
+          utils.trapToNextFocusContainer(this.domNode, true);
         }
       },
 

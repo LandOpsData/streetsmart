@@ -92,7 +92,8 @@ define({
     "stay": "Kal",
     "search": "Arama",
     "searchMore": "Daha fazla arayın",
-    "tooltipText": "Araç ipucu metni"
+    "tooltipText": "Araç ipucu metni",
+    "findAddressOrPlace": "Adres veya yer bul"
   },
   "errorCode": "Kod",
   "errorMessage": "İleti",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Araç sekmesiyle araçları buraya ekleyin",
     "modifyLayout": "Yerleşimi değiştirin",
     "dragToAdd": "Eklemek için sürükleyin",
-    "mapArea": "HARİTA ALANI"
+    "mapArea": "HARİTA ALANI",
+    "sceneArea": "SAHNE ALANI"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "Hesabınızın veri oluşturma veya değiştirme izni yok.",
   "noEditableLayers": "Hesabınız veri oluşturmak ya da değiştirmek için gerekli izne sahip değil veya bu web haritası düzenlenebilir katman içermiyor.",
-  "invalidConfiguration": "Araç yapılandırılmamış veya yapılandırmadaki katmanlar artık haritada değil. Uygulamayı oluşturucu modda açın ve aracı yeniden yapılandırın."
+  "invalidConfiguration": "Araç yapılandırılmamış veya yapılandırmadaki katmanlar artık haritada değil. Uygulamayı oluşturucu modda açın ve aracı yeniden yapılandırın.",
+  "essentialAppsLicenseErrorForApp": "Hesabınız herkese açık olmayan bir uygulama kullanmak için lisanslandırılmamış. Lütfen kuruluş yöneticinizden Temel Uygulamalar veya eklenti Temel Uygulamalar lisansı içeren bir kullanıcı türü atamasını isteyin.",
+  "essentialAppsLicenseErrorForBuilder": "Hesabınız Web AppBuilder için lisanslandırılmamış. Lütfen kuruluş yöneticinizden Temel Uygulamalar veya eklenti Temel Uygulamalar lisansı içeren bir kullanıcı türü atamasını isteyin."
 });

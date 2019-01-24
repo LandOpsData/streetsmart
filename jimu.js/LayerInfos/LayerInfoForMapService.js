@@ -130,16 +130,33 @@ esriRequest, esriLang) {
       // this._jsapiLayerInfos = this.layerObject.dynamicLayerInfos;
     },
 
+    _cloneInfoTemplates: function(infoTemplates) {
+      var newInfoTempaltes = {};
+      for (var subId in infoTemplates) {
+        if(infoTemplates.hasOwnProperty(subId) && (typeof infoTemplates[subId] !== 'function')) {
+          var infoTemplateWrap = infoTemplates[subId];
+          if(infoTemplateWrap.infoTemplate && infoTemplateWrap.infoTemplate.toJson) {
+            newInfoTempaltes[subId] = {
+              infoTemplate: new infoTemplateWrap.infoTemplate.constructor(infoTemplateWrap.infoTemplate.toJson()),
+              layerUrl: infoTemplateWrap.layerUrl,
+              resourceInfo: infoTemplateWrap.resourceInfo
+            };
+          }
+        }
+      }
+      return newInfoTempaltes;
+    },
+
     _initControlPopup: function() {
       this.controlPopupInfo = {
         enablePopup: undefined,
-        infoTemplates: lang.clone(this.layerObject.infoTemplates)
+        infoTemplates: this._cloneInfoTemplates(this.layerObject.infoTemplates)
       };
       // backup infoTemplates to layer.
-      this.layerObject._infoTemplates = lang.clone(this.layerObject.infoTemplates);
+      this.layerObject._infoTemplates = this._cloneInfoTemplates(this.layerObject.infoTemplates);
       aspect.after(this.layerObject, "setInfoTemplates", lang.hitch(this, function(){
-        this.layerObject._infoTemplates = lang.clone(this.layerObject.infoTemplates);
-        this.controlPopupInfo.infoTemplates = lang.clone(this.layerObject.infoTemplates);
+        this.layerObject._infoTemplates = this._cloneInfoTemplates(this.layerObject.infoTemplates);
+        this.controlPopupInfo.infoTemplates = this._cloneInfoTemplates(this.layerObject.infoTemplates);
         this.traversal(function(layerInfo) {
           if(layerInfo._afterSetInfoTemplates) {
             layerInfo._afterSetInfoTemplates();
@@ -833,6 +850,14 @@ esriRequest, esriLang) {
                               'setLayerDefinitions',
                               lang.hitch(this, this._onFilterChanged));
         this._eventHandles.push(handle);
+
+        /*
+        // bind scale range change event
+        handle = aspect.after(this.layerObject,
+                              'setDynamicLayerInfos',
+                              lang.hitch(this, this._onSetDynamicLayerInfos));
+        this._eventHandles.push(handle);
+        */
       }
     },
 
@@ -967,9 +992,13 @@ esriRequest, esriLang) {
       }
 
       if(changedLayerInfos.length > 0) {
-        topic.publish('layerInfos/layerInfo/filterChanged', changedLayerInfos);
+        topic.publish('layerInfos/layerInfo/filterChanged',
+                      changedLayerInfos,
+                      lang.getObject("_wabProperties.objectPassWithFilterChangeEvent", true, this.layerObject));
         // update old layerDefinitions
         this._oldFilter = currentLayerDefinitions;
+        // clear the temporary variable 'objectPassWithFilterChangeEvent'
+        lang.setObject('_wabProperties.objectPassWithFilterChangeEvent', {}, this.layerObject);
       }
 
     }

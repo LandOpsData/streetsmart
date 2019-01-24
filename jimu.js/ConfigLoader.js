@@ -129,10 +129,19 @@ function (declare, lang, array, html, dojoConfig, cookie,
                   }));
                 }));
               }else{
-                return this._getAppConfigFromTemplateAppId(appConfig.portalUrl,
-                this.urlParams.appid).then(lang.hitch(this, function(appConfig){
-                  this._tryUpdateAppConfigByLocationUrl(appConfig);
-                  return this._processInPortalAppProtocol(appConfig);
+                // checkEssentialAppsLicense
+                var portalUrl = portalUrlUtils.getStandardPortalUrl(appConfig.portalUrl);
+                var portal = portalUtils.getPortal(portalUrl);
+                return jimuUtils.checkEssentialAppsLicense(this.urlParams.appid, portal, tokenUtils.isInBuilderWindow())
+                .then(lang.hitch(this, function() {
+                  return this._getAppConfigFromTemplateAppId(appConfig.portalUrl,
+                  this.urlParams.appid).then(lang.hitch(this, function(appConfig){
+                    this._tryUpdateAppConfigByLocationUrl(appConfig);
+                    return this._processInPortalAppProtocol(appConfig);
+                  }));
+                }), lang.hitch(this, function(error) {
+                  console.error(error);
+                  throw Error(window.jimuNls.essentialAppsLicenseErrorForApp);
                 }));
               }
             }else{
@@ -196,7 +205,7 @@ function (declare, lang, array, html, dojoConfig, cookie,
           }));
         }
       }), lang.hitch(this, function(err){
-        this.showError(err);
+        //this.showError(err);
         //we still return a rejected deferred
         var def = new Deferred();
         def.reject(err);
@@ -412,6 +421,8 @@ function (declare, lang, array, html, dojoConfig, cookie,
           'class': 'app-error',
           innerHTML: jimuUtils.sanitizeHTML(err.message)
         }, document.body);
+        /*globals jimuConfig*/
+        html.setStyle(jimuConfig.loadingId, 'display', 'none');
       }
     },
 
@@ -474,8 +485,16 @@ function (declare, lang, array, html, dojoConfig, cookie,
               //integrated in portal, open as a WAB app
               this._getAppConfigFromAppId(portalUrl, this.urlParams.id)
               .then(lang.hitch(this, function(appConfig){
-                this._tryUpdateAppConfigByLocationUrl(appConfig);
-                return this._processInPortalAppProtocol(appConfig);
+
+                // checkEssentialAppsLicense
+                return jimuUtils.checkEssentialAppsLicense(this.urlParams.id, portal, tokenUtils.isInBuilderWindow())
+                .then(lang.hitch(this, function() {
+                  this._tryUpdateAppConfigByLocationUrl(appConfig);
+                  return this._processInPortalAppProtocol(appConfig);
+                }), lang.hitch(this, function(error) {
+                  console.error(error);
+                  throw Error(window.jimuNls.essentialAppsLicenseErrorForApp);
+                }));
               })).then(function(appConfig){
                 def.resolve(appConfig);
               }, function(err){

@@ -92,7 +92,8 @@ define({
     "stay": "Rester",
     "search": "Rechercher",
     "searchMore": "Rechercher encore",
-    "tooltipText": "Texte de l’info-bulle"
+    "tooltipText": "Texte de l’info-bulle",
+    "findAddressOrPlace": "Rechercher une adresse ou un lieu"
   },
   "errorCode": "Code",
   "errorMessage": "Message",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Ajouter ici des widgets via l'onglet Widget",
     "modifyLayout": "Modifier la mise en page",
     "dragToAdd": "Faire glisser pour ajouter",
-    "mapArea": "MAP AREA"
+    "mapArea": "MAP AREA",
+    "sceneArea": "SURFACE DE LA SCÈNE"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "Votre compte ne dispose pas des autorisations de création ou de modification des données.",
   "noEditableLayers": "Votre compte ne dispose pas des autorisations de création ou de modification des données ou cette page web ne contient aucune couche modifiable.",
-  "invalidConfiguration": "Le widget n'est pas configuré ou les couches de la configuration ne figurent plus sur la carte. Ouvrez l'application en mode de générateur et reconfigurez le widget."
+  "invalidConfiguration": "Le widget n'est pas configuré ou les couches de la configuration ne figurent plus sur la carte. Ouvrez l'application en mode de générateur et reconfigurez le widget.",
+  "essentialAppsLicenseErrorForApp": "La licence de votre compte ne permet pas d’utiliser une application non publique. Demandez à l’administrateur de votre organisation de vous attribuer un type d’utilisateur qui inclut une licence Essential Apps ou une licence Essential Apps additionnelle.",
+  "essentialAppsLicenseErrorForBuilder": "La licence de votre compte ne permet pas d'utiliser Web AppBuilder. Demandez à l’administrateur de votre organisation de vous attribuer un type d’utilisateur qui inclut une licence Essential Apps ou une licence Essential Apps additionnelle."
 });

@@ -46,6 +46,7 @@ function(on, Evented, lang, html, declare, _WidgetBase, _TemplatedMixin, _Widget
       '</div>' +
     '</div>',
 
+    layerChooserFromMap: null, // optional, default value is 'jimu/dijit/FeaturelayerChooserFromMap'
     //events:
     //ok
     //cancel
@@ -63,7 +64,11 @@ function(on, Evented, lang, html, declare, _WidgetBase, _TemplatedMixin, _Widget
 
     postCreate: function(){
       this.inherited(arguments);
-      this.layerChooser = new FeaturelayerChooserFromMap(this.options);
+      if(this.layerChooserFromMap) {
+        this.layerChooser = this.layerChooserFromMap;
+      } else {
+        this.layerChooser = new FeaturelayerChooserFromMap(this.options);
+      }
       this.layerChooser.placeAt(this.chooserContainer);
       html.setStyle(this.layerChooser.domNode, {
         width: '100%',

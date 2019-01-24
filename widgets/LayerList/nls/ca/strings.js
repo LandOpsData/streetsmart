@@ -5,6 +5,7 @@ define({
   "labelLayer": "Nom de la capa",
   "itemZoomTo": "Aplica el zoom a",
   "itemTransparency": "Transparència",
+  "itemSetVisibilityRange": "Defineix l'interval de visibilitat",
   "itemTransparent": "Transparent",
   "itemOpaque": "Opac",
   "itemMoveUp": "Mou cap amunt",

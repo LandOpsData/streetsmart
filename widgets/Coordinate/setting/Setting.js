@@ -419,17 +419,11 @@ define([
           this.config.displayOrderLonLat = false;
         })));
         if (this.config.displayOrderLonLat) {
-          this._selectRadioBtnItem("lonLat");
+          this.lonLat.set('checked', true);
           this.config.displayOrderLonLat = true;
         } else {
-          this._selectRadioBtnItem("latLon");
+          this.latLon.set('checked', true);
           this.config.displayOrderLonLat = false;
-        }
-      },
-      _selectRadioBtnItem: function(name) {
-        var _radio = this[name];
-        if (_radio && _radio.check) {
-          _radio.check(true);
         }
       }
     });

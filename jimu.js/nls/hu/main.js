@@ -92,7 +92,8 @@ define({
     "stay": "Marad",
     "search": "Keresés",
     "searchMore": "Bővebb keresés",
-    "tooltipText": "Eszköztipp szövege"
+    "tooltipText": "Eszköztipp szövege",
+    "findAddressOrPlace": "Cím vagy hely keresése"
   },
   "errorCode": "Kód",
   "errorMessage": "Üzenet",
@@ -710,7 +711,8 @@ define({
     "addWidgetTip": "Itt widgeteket adhat hozzá a Widget fül segítségével",
     "modifyLayout": "Elrendezés módosítása",
     "dragToAdd": "Hozzáadás húzással",
-    "mapArea": "TÉRKÉPTERÜLET"
+    "mapArea": "TÉRKÉPTERÜLET",
+    "sceneArea": "3D TÉRKÉP TERÜLET"
   },
   "coordinateControl": {
     "notations": {
@@ -764,5 +766,7 @@ define({
   },
   "noEditPrivileges": "A fiókja nem teszi lehetővé az adatok létrehozását vagy módosítását.",
   "noEditableLayers": "A fiókja nem teszi lehetővé az adatok létrehozását vagy módosítását. Vagy ez a webtérkép nem tartalmaz szerkeszthető rétegeket.",
-  "invalidConfiguration": "A widget nincs konfigurálva, vagy a konfigurációban lévő rétegek már nem szerepelnek a térképen. Nyissa meg az alkalmazást építő módban, és konfigurálja újra a widgetet."
+  "invalidConfiguration": "A widget nincs konfigurálva, vagy a konfigurációban lévő rétegek már nem szerepelnek a térképen. Nyissa meg az alkalmazást építő módban, és konfigurálja újra a widgetet.",
+  "essentialAppsLicenseErrorForApp": "Az Ön fiókjának licence nem terjed ki a nem nyilvános alkalmazásokra. Igényelje a szervezete adminisztrátorától, hogy rendeljen Önhöz olyan felhasználótípust, amely tartalmazza az alapvető alkalmazásokat, vagy egy kiegészítő alapvető alkalmazásokra vonatkozó licencet.",
+  "essentialAppsLicenseErrorForBuilder": "Az Ön fiókjának licence nem terjed ki a Web AppBuilder alkalmazásra. Igényelje a szervezete adminisztrátorától, hogy rendeljen Önhöz olyan felhasználótípust, amely tartalmazza az alapvető alkalmazásokat, vagy egy kiegészítő alapvető alkalmazásokra vonatkozó licencet."
 });

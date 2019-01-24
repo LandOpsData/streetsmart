@@ -216,16 +216,6 @@ define([
       this.geomsrvc = new EsriGeometryService(this.parentWidget.appConfig.geometryService);
       this.dt = new EsriDraw(this.parentWidget.map);
       this.initUI();
-      //get the current extent center
-      this.currentClickPoint = this.parentWidget.map.extent.getCenter();
-
-      this.getDDPoint(this.currentClickPoint).then(dojoLang.hitch(this, function (mapPoint) {
-        this.currentClickPointDD = mapPoint;
-        this.currentClickPointDDDD = mapPoint;
-        this.formatButton.title = this.nls.formatInput;
-      }), dojoLang.hitch(this, function (err) {
-        console.error(err);
-      }));
       this.setUIListeners();
     },
 
@@ -278,6 +268,7 @@ define([
       if (this.zoomScale === null) {
         this.setHidden(this.zoomButton, true);
       }
+      this.formatButton.title = this.nls.formatInput;
     },
 
     /**
@@ -777,6 +768,7 @@ define([
       this.currentClickPoint = evt.mapPoint;
       this.getDDPoint(evt.mapPoint).then(dojoLang.hitch(this, function (mapPoint) {
         this.currentClickPointDD = mapPoint;
+        this.currentClickPointDDDD = mapPoint;
         if (evt.inputFromText) {
           this.inputFromText = true;
         } else {
@@ -1196,32 +1188,42 @@ define([
     },
 
     /**
-     *
+     * Updates the input coordinate textbox (coordtext)
      **/
     updateDisplay: function () {
-      this.getFormattedCoordinates(this.currentClickPointDD);
-      if (this.input) {
-        if (this.graphicsLayer !== null) {
-          this.graphicsLayer.clear();
-          if (this.currentClickPoint.spatialReference.wkid ===
-            this.parentWidget.map.spatialReference.wkid) {
-            this.graphicsLayer.add(new EsriGraphic(this.currentClickPoint));
-          } else {
-            this.getProjectedPoint(this.currentClickPointDD).then(dojoLang.hitch(this,
-              function (mapPoint) {
-                this.graphicsLayer.add(new EsriGraphic(mapPoint));
-              }
-            ), dojoLang.hitch(this,
-              function (err) {
-                console.error(err);
-              }));
+      if (this.currentClickPoint) {
+        this.getFormattedCoordinates(this.currentClickPointDD);
+        if (this.input) {
+          if (this.graphicsLayer !== null) {
+            this.graphicsLayer.clear();
+            if (this.currentClickPoint.spatialReference.wkid ===
+              this.parentWidget.map.spatialReference.wkid) {
+              this.graphicsLayer.add(new EsriGraphic(this.currentClickPoint));
+            } else {
+              this.getProjectedPoint(this.currentClickPointDD).then(dojoLang.hitch(this,
+                function (mapPoint) {
+                  this.graphicsLayer.add(new EsriGraphic(mapPoint));
+                }
+              ), dojoLang.hitch(this,
+                function (err) {
+                  console.error(err);
+                }));
+            }
           }
+          dojoTopic.publish('INPUTPOINTDIDCHANGE', {
+            mapPoint: this.currentClickPointDD,
+            inputFromText: true
+          });
         }
-        dojoTopic.publish('INPUTPOINTDIDCHANGE', {
-          mapPoint: this.currentClickPointDD,
-          inputFromText: true
-        });
       }
+    },
+
+    /**
+     * Clears current coordinate and text input
+     */
+    clear: function () {
+      this.coordtext.value = "";
+      this.currentClickPoint = null;
     },
 
     /**

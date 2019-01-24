@@ -1411,6 +1411,7 @@ a:visited:hover {
 .claro.is-mobile .esriAttributeTableRefreshImage {
   display: none;
 }
+/*
 .claro .jimu-widget-swipe {
   background-color: transparent;
   margin: 5px;
@@ -1438,7 +1439,7 @@ a:visited:hover {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-}
+}*/
 .claro .LayerSwipe .vertical,
 .claro .LayerSwipe .horizontal {
   background-color: #f8f8f8;
