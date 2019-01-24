@@ -326,14 +326,18 @@ define([
         } else if (mode === 'field') {
           value = sortOrder.isLabelAxis ? obj.label : obj.values[0];
         } else if (mode === 'feature') {
-          var attributes;
+          var attributes, field = sortOrder.field;
           if (obj && obj.features && obj.features[0]) {
             attributes = obj.features[0].attributes;
             if (attributes) {
               if (sortOrder.isLabelAxis) {
                 value = attributes[labelField];
               } else {
-                value = attributes[sortOrder.field];
+                if (field) {
+                  value = attributes[field];
+                } else if (obj.values.length) {
+                  value = obj.values[0];
+                }
               }
             }
           }

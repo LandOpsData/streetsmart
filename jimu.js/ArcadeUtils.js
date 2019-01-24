@@ -304,7 +304,7 @@ function(
   mo.InfoTemplate = {};
   /**
   * Get one graphic's all attributes.
-  * @param {operlayer} layer that need to have id, popupInfo, layerObject(has fields).
+  * @param {operlayer} layerInfo, it needs to have layerObject(already).
   * @param {object} graphic, it contains geometry, a symbol, attributes, or an infoTemplate
   * @return {object} attributes object, including orginal attributes and arcade attributes
                      format:{'OBJECTID':1, 'expression/expr1':"394-Waterous", 'relationships/0/CHAINS':123}
@@ -327,7 +327,7 @@ function(
 
   /**
   * Get Graphics's attributes value list which configurate in InfoTemplate.
-  * @param {operlayer} layer that need to have id, popupInfo, layerObject(has fields).
+  * @param {operlayer} layerInfo, it needs to have layerObject(already).
   * @param {array} graphicList, graphic object array.
   * @return {array} every item in array is an object
                     it contains the attributes's values which configurate in InfoTemplate.
@@ -351,7 +351,7 @@ function(
     }
     var parsedExprs = mo.InfoTemplate._parseArcadeExpressions(expressionInfos);
     var popupExprTemplates = null;
-    var popupDesc = operlayer.popupInfo.description;
+    var popupDesc = operlayer.getPopupInfo().description;
     //from popupDesc
     if(popupDesc !== null){
       popupExprTemplates = mo.InfoTemplate._convertPopupDescToFieldNamesArray(popupDesc);
@@ -376,7 +376,7 @@ function(
     var hasRelationships = false, relationships = {}, relationshipFieldPattern = /\{relationships\/\d+\//gm,
       relationshipIdPattern = /\d+/, matches;
 
-    matches = operLayer.popupInfo.description.match(relationshipFieldPattern);
+    matches = operLayer.getPopupInfo().description.match(relationshipFieldPattern);
     if (matches) {
       hasRelationships = true;
       array.forEach(matches, function (match) {
