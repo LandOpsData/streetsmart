@@ -1,0 +1,41 @@
+{
+  "legend": {
+    "arrangement": 0,
+    "autoUpdate": true,
+    "respectCurrentMapScale": true
+  },
+  "layerState": {
+    "EVM_Vegetation_v4_DesktopEditor_FullEditing_VW_1880": {
+      "selected": true
+    },
+    "EVM_Vegetation_V3_FullEditing_VW_9607": {
+      "selected": true
+    },
+    "EVM_Vegetation_v4_DesktopEditor_FullEditing_VW_2222": {
+      "selected": true
+    },
+    "EVM_Cond_Parcel_Relation_V1_DesktopEditor_AO_VW_1523": {
+      "selected": true
+    },
+    "EVM_Vegetation_V3_FullEditing_VW_9213": {
+      "selected": true
+    },
+    "EVM_Cond_Parcel_Relation_V1_DesktopEditor_AO_VW_131": {
+      "selected": true
+    },
+    "EVM_Cond_Parcel_Relation_V1_DesktopEditor_AO_VW_4011": {
+      "selected": true
+    },
+    "EVM_GARB_Desktop_Editor_ViewOnly_8360": {
+      "selected": true
+    },
+    "EVM_Fire_Division_v1_2616": {
+      "selected": true
+    },
+    "EVM_Fire_Division_v1_5825": {
+      "selected": true
+    }
+  },
+  "syncWithWebmap": false,
+  "showLegendForBasemap": false
+}
