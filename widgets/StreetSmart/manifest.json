@@ -1,0 +1,26 @@
+{
+  "name": "StreetSmart",
+  "label": "Street Smart by CycloMedia",
+  "title": "Street Smart by CycloMedia",
+  "2D": true,
+  "3D": false,
+  "platform": "HTML",
+  "version": "19.2.0",
+  "wabVersion": "2.1",
+  "author": "CycloMedia Technology B.V.",
+  "description": "Street Smart Widget for ArcGIS",
+  "copyright": "© Copyright 2017 CycloMedia Technology B.V.",
+  "license": "GNU Lesser General Public License",
+  "properties": {
+		"inPanel":true,
+		"hasLocale": true,
+		"hasStyle":true,
+		"hasConfig":true,
+		"hasUIFile":true,
+		"hasSettingPage":true,
+		"hasSettingUIFile":true,
+		"hasSettingLocale":true,
+		"hasSettingStyle":true,
+		"IsController":false
+  }
+}

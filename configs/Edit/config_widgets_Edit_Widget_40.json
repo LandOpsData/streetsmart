@@ -1,0 +1,760 @@
+{
+  "editor": {
+    "enableUndoRedo": true,
+    "toolbarVisible": true,
+    "toolbarOptions": {
+      "mergeVisible": false,
+      "cutVisible": false,
+      "reshapeVisible": false
+    },
+    "honorSettingOfWebmap": true,
+    "layerInfos": [
+      {
+        "featureLayer": {
+          "id": "ALtoTC_VegPoint_v2a_VL_PI_2865"
+        },
+        "disableGeometryUpdate": false,
+        "allowCreate": true,
+        "allowDelete": true,
+        "fieldInfos": [
+          {
+            "fieldName": "OBJECTID",
+            "label": "OBJECTID",
+            "isEditable": false,
+            "visible": false
+          },
+          {
+            "fieldName": "WORK_CAT",
+            "label": "Work Category",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "WORK_SRC",
+            "label": "Work Source",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "PI_LANID",
+            "label": "PI LanID",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "INS_DATE",
+            "label": "Inspection Date",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "PI_COMPANY",
+            "label": "PI Company",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "INS_NOTE",
+            "label": "Inspection Note",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "SITEADDR",
+            "label": "Site Address",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "LOC_COMMENTS",
+            "label": "Location Comments",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "VEG_TYPE",
+            "label": "Veg Type",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "SPECIES",
+            "label": "Species",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "DIAMETER",
+            "label": "Tree DBH (in)",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "HEIGHT",
+            "label": "Tree Height (ft)",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "BRUSH_VOL",
+            "label": "Brush Volume",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "PRIORITY",
+            "label": "Priority",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "CYCLE",
+            "label": "Cycle",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "PRESCRIP",
+            "label": "Prescription",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "CLEARANCE",
+            "label": "Clearance (ft)",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "DEAD",
+            "label": "Tree Dead or Dying",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "MWS",
+            "label": "Major Woody Stem",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "MWS_DOC_NUM",
+            "label": "MWS Document",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "MWS_EXEMPT",
+            "label": "MWS Exemption",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "RX_COMMENTS",
+            "label": "Prescription Comments",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "POLE_NUM_1",
+            "label": "Pole Number 1",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "POLE_NUM_2",
+            "label": "Pole Number 2",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "UNDERBUILD",
+            "label": "Underbuild",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "WOOD_MAN",
+            "label": "Wood Management",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "WM_COMMENTS",
+            "label": "WM Comments",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "SPEC_EQUIP",
+            "label": "Special Equipment",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "SPEC_EQUIP_COMM",
+            "label": "Special Equipment Notes",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "CREWTYPE",
+            "label": "Crew Type Notes",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "CTNOTE",
+            "label": "Crew Type Notes",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "TRAFFIC",
+            "label": "Traffic Control",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "LINE_KILL",
+            "label": "Line Kill",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "ENV_CONCERN",
+            "label": "Environmental Concern",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "ENV_NOTES",
+            "label": "Environmental Notes",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "POINT_ID",
+            "label": "Point ID",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "PARCEL_ID",
+            "label": "PARCEL_ID",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "OWNER_NAME",
+            "label": "Owner Name",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "CIRCUITNAME",
+            "label": "Circuit Name",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "AUTO_ID",
+            "label": "Auto ID",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "PROJ_NAME",
+            "label": "Project Name",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "PROJ_NUM",
+            "label": "Project Number",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "WORK_REQUEST",
+            "label": "Work Request",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "TW_STATUS",
+            "label": "Tree Work Status",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "BLOCK_HOLD",
+            "label": "Blocked or Hold Reason",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "WORK_DATE",
+            "label": "Tree Work Date",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "CREW_LANID",
+            "label": "Crew Foreman (F/L)",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "ISNET_NUM",
+            "label": "ISNET Badge Number",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "TW_COMPANY",
+            "label": "TW Company",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "TW_SUB",
+            "label": "Subcontractor",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "ACT_WORK",
+            "label": "Actual Work (if changed)",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "ACT_BRUSH_VOL",
+            "label": "Actual Brush Volume (if changed)",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "BILL_TYPE",
+            "label": "Billing Type",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "TW_COMMENTS",
+            "label": "TW Comments",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "ACTLRMVLS",
+            "label": "Actual Tree Removals",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "ACTLTRIMS",
+            "label": "Actual Tree Trims",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "REL_OPS",
+            "label": "Release to Ops",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "DIVISION",
+            "label": "Division",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "G_ID_TEXT",
+            "label": "GlobalID Text",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "Creator",
+            "label": "Creator",
+            "isEditable": false,
+            "visible": false
+          },
+          {
+            "fieldName": "Created",
+            "label": "Created",
+            "isEditable": false,
+            "visible": false
+          },
+          {
+            "fieldName": "Editor",
+            "label": "Editor",
+            "isEditable": false,
+            "visible": false
+          },
+          {
+            "fieldName": "Edited",
+            "label": "Edited",
+            "isEditable": false,
+            "visible": false
+          },
+          {
+            "fieldName": "GlobalID",
+            "label": "",
+            "isEditable": false,
+            "visible": false
+          }
+        ]
+      },
+      {
+        "featureLayer": {
+          "id": "LidarDemoSpanClearing_VL_UpdateAttributesOnly_382"
+        },
+        "disableGeometryUpdate": false,
+        "allowCreate": true,
+        "allowDelete": true,
+        "fieldInfos": [
+          {
+            "fieldName": "OBJECTID",
+            "label": "OBJECTID",
+            "isEditable": false,
+            "visible": false
+          },
+          {
+            "fieldName": "ORIG_FID",
+            "label": "ORIG_FID",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "GlobalID",
+            "label": "",
+            "isEditable": false,
+            "visible": false
+          },
+          {
+            "fieldName": "Shape__Area",
+            "label": "Shape__Area",
+            "isEditable": false,
+            "visible": false
+          },
+          {
+            "fieldName": "Shape__Length",
+            "label": "Shape__Length",
+            "isEditable": false,
+            "visible": false
+          },
+          {
+            "fieldName": "CreationDate",
+            "label": "CreationDate",
+            "isEditable": false,
+            "visible": false
+          },
+          {
+            "fieldName": "Creator",
+            "label": "Creator",
+            "isEditable": false,
+            "visible": false
+          },
+          {
+            "fieldName": "EditDate",
+            "label": "EditDate",
+            "isEditable": false,
+            "visible": false
+          },
+          {
+            "fieldName": "Editor",
+            "label": "Editor",
+            "isEditable": false,
+            "visible": false
+          }
+        ]
+      },
+      {
+        "featureLayer": {
+          "id": "LidarDemoSpanClearing_VL_UpdateAttributesOnly_7503"
+        },
+        "disableGeometryUpdate": false,
+        "allowCreate": true,
+        "allowDelete": true,
+        "fieldInfos": [
+          {
+            "fieldName": "OBJECTID",
+            "label": "OBJECTID",
+            "isEditable": false,
+            "visible": false
+          },
+          {
+            "fieldName": "Violation12Ft",
+            "label": "Violation12Ft",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "ViolationStatus",
+            "label": "ViolationStatus",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "GlobalID",
+            "label": "",
+            "isEditable": false,
+            "visible": false
+          },
+          {
+            "fieldName": "Shape__Area",
+            "label": "Shape__Area",
+            "isEditable": false,
+            "visible": false
+          },
+          {
+            "fieldName": "Shape__Length",
+            "label": "Shape__Length",
+            "isEditable": false,
+            "visible": false
+          },
+          {
+            "fieldName": "CreationDate",
+            "label": "CreationDate",
+            "isEditable": false,
+            "visible": false
+          },
+          {
+            "fieldName": "Creator",
+            "label": "Creator",
+            "isEditable": false,
+            "visible": false
+          },
+          {
+            "fieldName": "EditDate",
+            "label": "EditDate",
+            "isEditable": false,
+            "visible": false
+          },
+          {
+            "fieldName": "Editor",
+            "label": "Editor",
+            "isEditable": false,
+            "visible": false
+          }
+        ]
+      },
+      {
+        "featureLayer": {
+          "id": "LidarDemoSpanClearing_VL_UpdateAttributesOnly_2125"
+        },
+        "disableGeometryUpdate": false,
+        "allowCreate": true,
+        "allowDelete": true,
+        "fieldInfos": [
+          {
+            "fieldName": "OBJECTID",
+            "label": "OBJECTID",
+            "isEditable": false,
+            "visible": false
+          },
+          {
+            "fieldName": "id",
+            "label": "id",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "routeID",
+            "label": "routeID",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "routeName",
+            "label": "routeName",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "latitude",
+            "label": "latitude",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "longitude",
+            "label": "longitude",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "altitude",
+            "label": "altitude",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "Length",
+            "label": "Length",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "Span_ID",
+            "label": "Span_ID",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "Line_Type",
+            "label": "Type",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "CIRCUITNAM",
+            "label": "CIRCUITNAM",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "Violation_Count",
+            "label": "Violation_Count",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "spanstatus",
+            "label": "spanstatus",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "StatusVerifiedby",
+            "label": "StatusVerifiedby",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "StatusChangeDate",
+            "label": "StatusChangeDate",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "GlobalID",
+            "label": "",
+            "isEditable": false,
+            "visible": false
+          },
+          {
+            "fieldName": "Shape__Length",
+            "label": "Shape__Length",
+            "isEditable": false,
+            "visible": false
+          }
+        ]
+      },
+      {
+        "featureLayer": {
+          "id": "LidarDemoSpanClearing_VL_UpdateAttributesOnly_9822"
+        },
+        "disableGeometryUpdate": false,
+        "allowCreate": true,
+        "allowDelete": true,
+        "fieldInfos": [
+          {
+            "fieldName": "OBJECTID",
+            "label": "OBJECTID",
+            "isEditable": false,
+            "visible": false
+          },
+          {
+            "fieldName": "id",
+            "label": "id",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "routeID",
+            "label": "routeID",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "routeName",
+            "label": "routeName",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "latitude",
+            "label": "latitude",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "longitude",
+            "label": "longitude",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "altitude",
+            "label": "altitude",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "Pole_Type",
+            "label": "Pole_Type",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "Height_ft",
+            "label": "Height_ft",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "F_ID",
+            "label": "F_ID",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "ST_NAME",
+            "label": "ST_NAME",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "Drive_Area",
+            "label": "Drive_Area",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "Accuracy",
+            "label": "Accuracy",
+            "isEditable": true,
+            "visible": true
+          },
+          {
+            "fieldName": "GlobalID",
+            "label": "",
+            "isEditable": false,
+            "visible": false
+          }
+        ]
+      }
+    ],
+    "useFilterEdit": false,
+    "autoApplyEditWhenGeometryIsMoved": false,
+    "snappingTolerance": 15,
+    "popupTolerance": 5,
+    "stickyMoveTolerance": 0,
+    "usingSaveButton": false
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "legend": {
+    "arrangement": 0,
+    "autoUpdate": true,
+    "respectCurrentMapScale": true
+  },
+  "layerState": {
+    "ALtoTC_VegPoint_v2a_VL_PI_2865": {
+      "selected": true
+    },
+    "LidarDemoSpanClearing_VL_UpdateAttributesOnly_382": {
+      "selected": true
+    },
+    "LidarDemoSpanClearing_VL_UpdateAttributesOnly_7503": {
+      "selected": true
+    },
+    "LidarDemoSpanClearing_VL_UpdateAttributesOnly_2125": {
+      "selected": true
+    },
+    "LidarDemoSpanClearing_VL_UpdateAttributesOnly_9822": {
+      "selected": true
+    },
+    "SourceSideDevices_8540": {
+      "selected": true
+    },
+    "SourceSideDevices_6415": {
+      "selected": true
+    },
+    "SourceSideDevices_2932": {
+      "selected": true
+    },
+    "SourceSideDevices_9782": {
+      "selected": true
+    },
+    "MIDDLETOWN_1101_TCF_NC_PILOT_50": {
+      "selected": true
+    },
+    "ReferenceCircuitLines_rvsn1_707": {
+      "selected": true
+    }
+  },
+  "syncWithWebmap": false,
+  "showLegendForBasemap": false
+}

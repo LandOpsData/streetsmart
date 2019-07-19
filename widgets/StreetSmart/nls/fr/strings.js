@@ -1,0 +1,1 @@
+define({zoomWarning:"Zoomez sur la carte pour ouvrir l'imagerie Cyclomedia.",agreementWarning:"Veuillez accepter les conditions et accords de CycloMedia dans les param\xE8tres du widget",tipDragDrop:"Glisser-d\xE9poser sur la carte pour ouvrir Panorama",startMeasurement:"Commencez \xE0 mesurer"});

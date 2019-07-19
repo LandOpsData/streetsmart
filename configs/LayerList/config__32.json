@@ -1,0 +1,51 @@
+{
+  "showTitle": true,
+  "showBasemap": false,
+  "showLegend": true,
+  "expandAllLayersByDefault": false,
+  "contextMenu": {
+    "ZoomTo": true,
+    "Transparency": true,
+    "SetVisibilityRange": true,
+    "EnableOrDisablePopup": true,
+    "ControlLabels": true,
+    "MoveupOrMovedown": true,
+    "OpenAttributeTable": true,
+    "DescriptionOrShowItemDetailsOrDownload": true
+  },
+  "layerOptions": {
+    "ALtoTC_VegPoint_v2a_VL_PI_2865": {
+      "display": true
+    },
+    "LidarDemoSpanClearing_VL_UpdateAttributesOnly_382": {
+      "display": true
+    },
+    "LidarDemoSpanClearing_VL_UpdateAttributesOnly_7503": {
+      "display": true
+    },
+    "LidarDemoSpanClearing_VL_UpdateAttributesOnly_2125": {
+      "display": true
+    },
+    "LidarDemoSpanClearing_VL_UpdateAttributesOnly_9822": {
+      "display": true
+    },
+    "SourceSideDevices_8540": {
+      "display": true
+    },
+    "SourceSideDevices_6415": {
+      "display": true
+    },
+    "SourceSideDevices_2932": {
+      "display": true
+    },
+    "SourceSideDevices_9782": {
+      "display": true
+    },
+    "MIDDLETOWN_1101_TCF_NC_PILOT_50": {
+      "display": true
+    },
+    "ReferenceCircuitLines_rvsn1_707": {
+      "display": true
+    }
+  }
+}

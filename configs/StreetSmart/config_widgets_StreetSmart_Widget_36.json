@@ -1,0 +1,27 @@
+{
+  "uName": "PGE_EsriWAB2",
+  "uPwd": "rc6wtefw",
+  "locale": "en-US",
+  "atlasHost": "https://atlas.cyclomedia.com",
+  "agreement": true,
+  "measurement": "",
+  "overlay": "",
+  "navigation": true,
+  "saveMeasurements": false,
+  "overlays": true,
+  "linkMapMove": false,
+  "srs": "EPSG:26910",
+  "timetravel": true,
+  "showStreetName": false,
+  "buttonVisibility": {
+    "OVERLAYS": true,
+    "ELEVATION": true,
+    "REPORT_BLURRING": true,
+    "OPEN_OBLIQUE": false,
+    "MEASURE": true,
+    "SAVE_IMAGE": true,
+    "IMAGE_INFORMATION": true,
+    "ZOOM_IN": true,
+    "ZOOM_OUT": true
+  }
+}
