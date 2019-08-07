@@ -13,7 +13,7 @@
       "useLogo": false
     }
   },
-  "portalUrl": "https://wevm.maps.arcgis.com",
+  "portalUrl": "https://www.arcgis.com",
   "appId": "1pFo3pC7nQyhb9wf",
   "authorizedCrossOriginDomains": [],
   "title": "North Coast Desktop PI",
@@ -241,7 +241,7 @@
     "itemId": "242beb24f36b4693b1385d1c3c30e6d5",
     "mapOptions": {},
     "id": "map",
-    "portalUrl": "https://wevm.maps.arcgis.com",
+    "portalUrl": "https://www.arcgis.com",
     "mapRefreshInterval": {
       "useWebMapRefreshInterval": true
     }
